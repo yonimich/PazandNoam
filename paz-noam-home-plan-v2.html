@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paz &amp; Noam · Home plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5efe6;--card:#fbf8f3;--ink:#2f2a24;--muted:#7a6f62;--line:#e3d9cb;--accent:#a8552d;--sage:#7d8c6c;--walnut:#6f553f;--surface-1:#efe7db;--surface-2:#fbf8f3;--border-strong:#d6c9b6;--text-primary:#2f2a24;--text-secondary:#7a6f62;--radius:999px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Inter,system-ui,sans-serif}
+header{padding:44px 6vw 18px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+header h1{font:600 clamp(34px,4.6vw,56px)/1.02 'Cormorant Garamond',Georgia,serif;margin:0;letter-spacing:-.01em}
+header p{margin:6px 0 0;color:var(--muted)}
+.meta{font-size:13px;color:var(--muted);text-align:right}
+nav{position:sticky;top:0;z-index:5;background:rgba(245,239,230,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:0 6vw;display:flex;gap:4px;overflow-x:auto}
+.tab{font:500 14px Inter,sans-serif;background:none;border:0;padding:16px 14px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.tab.on{color:var(--ink);border-bottom-color:var(--accent)}
+main{padding:28px 6vw 70px}.panel{display:none}.panel.on{display:block}
+.kicker{text-transform:uppercase;letter-spacing:.14em;font-size:11.5px;color:var(--accent);margin:0 0 6px;font-weight:600}
+.head h2{font:600 clamp(28px,3.4vw,42px)/1.1 'Cormorant Garamond',Georgia,serif;margin:0 0 10px}
+.intro{max-width:720px;color:#544a3f;margin:0 0 22px;font-size:16px}
+.viewer{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 10px 30px rgba(80,60,30,.06)}
+.wrap{position:relative;width:100%;height:min(66vh,620px);border-radius:12px;overflow:hidden;background:var(--surface-1)}
+.wrap canvas{width:100%;height:100%;display:block;touch-action:none}
+.bar{display:flex;gap:8px;align-items:center;margin-top:12px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.bar button{font:500 13px Inter,sans-serif;padding:7px 14px;border-radius:999px;border:1px solid var(--border-strong);background:#fff;color:var(--ink);cursor:pointer}
+.bar button.sel{background:var(--walnut);color:#fff;border-color:var(--walnut)}.sep{width:1px;height:22px;background:var(--border-strong);margin:0 4px}
+.bar button:hover{border-color:var(--accent);color:var(--accent)}
+#cabBtn{background:var(--walnut);color:#fff;border-color:var(--walnut)}#cabBtn:hover{color:#fff;opacity:.9}
+.hint{margin-left:auto}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.note{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.note h4{margin:0 0 6px;font:600 12px Inter;text-transform:uppercase;letter-spacing:.1em;color:var(--sage)}.note p{margin:0;font-size:14px;color:#4c4339}
+.pricewrap{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:860px}
+th{text-align:left;font:600 11.5px Inter;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:14px 16px;border-bottom:1px solid var(--line);background:#f3ece1}
+td{padding:10px 16px;border-bottom:1px solid #eee5d8}
+td.e{color:#c3b6a3}td.e:empty::after{content:'—'}
+tr.grp td{font:600 19px 'Cormorant Garamond',Georgia,serif;padding-top:20px;color:var(--ink);background:var(--card)}
+tr.sub td{font-weight:600;background:#f7f1e8}tr.tot td{font-weight:700;background:#efe5d6;font-size:15px}
+.sec{font:600 28px 'Cormorant Garamond',Georgia,serif;margin:40px 0 14px}
+.tl{list-style:none;margin:0;padding:0;border-left:2px solid var(--line);margin-left:8px}
+.tl li{position:relative;display:flex;gap:16px;align-items:flex-start;padding:4px 0 20px 26px}
+.tl .dot{position:absolute;left:-8px;top:8px;width:14px;height:14px;border-radius:50%;background:var(--card);border:2px solid var(--accent)}
+.tl li:last-child .dot{background:var(--accent)}
+.tl h4{margin:0;font-size:15px}.tl p{margin:2px 0 0;color:var(--muted);font-size:14px}
+.tl .when{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap;border:1px dashed var(--border-strong);border-radius:999px;padding:3px 12px}
+.pc small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.alt{color:#4c4339;font-size:13px}td b{font-weight:600}.same{color:#b3a690;font-size:12.5px;font-style:italic}
+.opt{display:inline-block;font:600 10.5px Inter;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);border:1px solid #e3c2ad;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:1px}
+tr.optrow td{background:#fbf6ef;color:#6b6054}
+tr.sub td:nth-child(4),tr.tot td:nth-child(4),tr.sub td:nth-child(5),tr.tot td:nth-child(5){font-weight:400;font-size:13px;color:#5c5145}
+.save{display:inline-block;font:600 10.5px Inter;text-transform:uppercase;letter-spacing:.08em;color:#5f7a4d;border:1px solid #bfd0b0;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:1px}
+tr.saverow td{background:#f4f6ee}.room{font-size:12px;color:var(--muted)}
+button.pc{display:flex;flex-direction:column;justify-content:flex-start;text-align:left;font:inherit;color:inherit;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s}
+button.pc:hover{border-color:var(--accent);transform:translateY(-1px)}
+button.pc i{display:block;font-style:normal;font-size:12px;color:var(--accent);margin-top:auto;padding-top:10px;font-weight:600}
+button.pc.on{border-color:var(--accent);box-shadow:0 0 0 2px rgba(168,85,45,.18)}button.pc.on i::after{content:' ✓'}
+.pc.ext{background:#f4f6ee;border-color:#cfdbc1}.pc.ext h4{color:#5f7a4d}
+.pgroups{scroll-margin-top:70px}.pgrp{display:none;margin-bottom:18px}.pgroups.all .pgrp:not([data-g="ext"]),.pgrp.on{display:block}
+.ptitle{font:600 24px 'Cormorant Garamond',Georgia,serif;margin:6px 0 10px}.ptitle span{font:400 13px Inter;color:var(--muted);margin-left:8px}
+.phint{color:var(--muted);font-size:13.5px;margin:-4px 0 16px}
+.totbar{display:flex;align-items:baseline;gap:14px;background:#efe5d6;border:1px solid #dccdb6;border-radius:14px;padding:14px 18px;font-weight:600}.totbar b{font:600 26px 'Cormorant Garamond',Georgia,serif;color:var(--accent)}.totbar .m{color:var(--muted);font-weight:400;font-size:13.5px}
+.nocot{display:block;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:#5f7a4d!important;font-weight:600}
+.later{display:inline-block;font:600 10.5px Inter;text-transform:uppercase;letter-spacing:.08em;color:#8a6a3a;border:1px solid #e1cfae;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:1px}
+.ck{display:flex;gap:10px;align-items:flex-start;cursor:pointer}.ck input{margin-top:3px;width:16px;height:16px;accent-color:var(--accent);flex:none;cursor:pointer}
+th .ck{align-items:center}th .ck input{margin-top:0}
+tr.it.off td{opacity:.42}tr.it.off td:first-child{opacity:.6}tr.it.off td:first-child span{text-decoration:line-through}
+.preset{color:var(--accent);font-weight:600}.resetline{font-size:13px;color:var(--muted);margin:4px 0 0}.xin{color:#5f7a4d;font-weight:600}
+.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:18px}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px}.pc p{margin:0;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.pc h4{margin:4px 0 0;font:600 26px 'Cormorant Garamond',Georgia,serif}.pc h4 span{color:var(--muted);font-size:20px}
+.pc.tot{background:#efe5d6;border-color:#dccdb6}.pc.tot h4{color:var(--accent)}
+td.n,th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}td.q{white-space:nowrap;color:var(--muted)}td.note{color:var(--muted);font-size:13px;line-height:1.45}
+.owned{margin-top:14px;background:var(--card);border:1px dashed var(--border-strong);border-radius:14px;padding:14px 18px}.owned h4{margin:0 0 4px;font:600 12px Inter;text-transform:uppercase;letter-spacing:.08em;color:var(--sage)}.owned p{margin:0;font-size:14px;color:#4c4339}
+.zoom{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;gap:8px;background:rgba(251,248,243,.94);border:1px solid var(--line);border-radius:999px;padding:6px 10px;box-shadow:0 4px 14px rgba(60,40,20,.12)}
+.zb{width:30px;height:30px;border-radius:50%;border:1px solid var(--border-strong);background:#fff;color:var(--ink);font:500 18px/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.zb:hover{border-color:var(--accent);color:var(--accent)}
+.sc{position:relative;width:130px;height:30px;display:flex;align-items:center}
+.sc input{width:100%;margin:0;accent-color:var(--accent);position:relative;z-index:1;background:transparent}
+.ticks{position:absolute;left:7px;right:7px;bottom:1px;height:6px;background:repeating-linear-gradient(90deg,#b9ab96 0 1px,transparent 1px 10%);opacity:.8}
+.zv{font:600 12px Inter,sans-serif;color:var(--muted);min-width:34px;text-align:right}
+.ovgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.ovc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+.ovc h3{font:600 26px 'Cormorant Garamond',Georgia,serif;margin:0 0 10px}
+.ovc ul{margin:0;padding-left:18px}.ovc li{margin:0 0 8px;color:#4c4339;font-size:14.5px}
+.ovc:nth-child(1) h3{color:var(--accent)}.ovc:nth-child(2) h3{color:var(--sage)}.ovc:nth-child(3) h3{color:var(--walnut)}
+.ovnote{color:var(--muted);font-size:13.5px;margin-top:18px}
+@media (max-width:640px){.sc{width:80px}.zv{display:none}}
+body:not(.alt) .pa{display:none!important}body.alt .pm{display:none!important}
+nav{align-items:center}.plansw{margin-left:auto;display:flex;gap:0;border:1px solid var(--border-strong);border-radius:999px;padding:3px;background:#fff;flex:none}
+.psb{font:500 13px Inter,sans-serif;border:0;background:none;padding:7px 14px;border-radius:999px;cursor:pointer;color:var(--muted);white-space:nowrap}.psb em{font-style:normal;font-size:11px;color:#a5762a;margin-left:4px}
+.psb.on{background:var(--walnut);color:#fff}.psb.on em{color:#f3d9a8}body.alt .psb[data-p="alt"]{background:#b7832f}
+.altbar{background:#f6e7c9;border:1px solid #e3c68f;color:#5c4415;border-radius:14px;padding:12px 18px;margin:0 0 22px;font-size:14px}.altbar a{color:#8a5a12;font-weight:600;margin-left:6px}
+.lose{background:#fbf1de;border:1px solid #e9cf9c;border-radius:16px;padding:18px 22px;margin-top:22px}.lose h3{font:600 24px 'Cormorant Garamond',Georgia,serif;margin:0 0 8px;color:#8a5a12}.lose ul{margin:0 0 8px;padding-left:18px}.lose li{margin:0 0 4px;font-size:14.5px;color:#4c4339}.lose p{margin:0;font-size:14px;color:#6b5320;font-weight:600}
+.panel .kicker:has(+h2){}
+.tp{color:#a5762a;font-weight:600;font-size:13px}tr.tprow td{background:#fbf3e3}.tpc{color:#a5762a!important;font-weight:600}.tpn{color:#a5762a;font-weight:600}
+.cmp{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px}.cmp h3{font:600 26px 'Cormorant Garamond',Georgia,serif;margin:0 0 12px}
+.cmpg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.cmpc{border-radius:14px;padding:16px 18px;border:1px solid var(--line)}.cmpc.rec{background:#f4f6ee;border-color:#cfdbc1}.cmpc.alt{background:#fbf1de;border-color:#e9cf9c}
+.cmpc h4{margin:6px 0 4px;font-size:16px}.cmpc p{margin:0 0 8px;font-size:14px;color:#4c4339}.cmpc ul{margin:0 0 8px;padding-left:18px;font-size:14px;color:#4c4339}.cmpc .con{color:var(--muted);font-size:13px;margin:0}.cmpc .con.pro{color:#5f7a4d}
+.badge{display:inline-block;font:600 10.5px Inter;text-transform:uppercase;letter-spacing:.08em;border-radius:999px;padding:2px 8px}.rec .badge{color:#5f7a4d;border:1px solid #bfd0b0}.alt .badge{color:#a5762a;border:1px solid #e1cfae}.cmpn{color:var(--muted);font-size:13px;margin:10px 0 0}
+@media (max-width:640px){.psb em{display:none}}
+
+footer{padding:0 6vw 40px;color:var(--muted);font-size:12.5px}
+@media (max-width:640px){.hint{display:none}.tl .when{display:none}}
+</style></head><body>
+<header><div><h1>Paz &amp; Noam</h1><p>A home ready for two little ones, before January</p></div><div class="meta">Design concept · November 2026<br>Rented flat, North West London</div></header>
+<nav><button class="tab on" data-t="overview">Overview</button><button class="tab" data-t="kids">Kids' room</button><button class="tab" data-t="guest">Guest room &amp; study</button><button class="tab" data-t="living">Living room</button><button class="tab" data-t="price">Pricing &amp; timing</button><div class="plansw" role="group" aria-label="Plan"><button class="psb on" data-p="main">Main plan</button><button class="psb" data-p="alt">Alternative <em>less recommended</em></button></div></nav>
+<main><div class="altbar pa"><b>Alternative plan &middot; less recommended.</b> Bar keeps his room and the study stays the guest room. We lose: space for a rocking chair, storage, a play area, and toys and the play kitchen move to the study, which has no space to be a playroom. <a href="#" class="tomain">Back to the main plan</a></div><section class="panel on" id="p_overview"><div class="head"><p class="kicker">The brief</p><h2>Overview</h2><p class="intro">Paz and Noam live in a rented three-bedroom flat in North West London with their son Bar, who is three. Their second baby is due in January 2027, and the home needs to be ready before then.</p></div><div class="ovgrid"><div class="ovc"><h3>Challenges &amp; problems</h3><ul><li>Two children, one bedroom: Bar and the baby need to share, with space to sleep, play and change nappies</li><li>Toys are spreading into the living room, and it is starting to feel like a playroom</li><li>The flat is rented: limited drilling, built-ins stay, and the landlord's double bed can't be taken apart or removed</li><li>Radiators sit under the windows, which limits where furniture, covers and the cot can go</li><li>A tight deadline: everything has to be finished before the baby arrives, with no work once the baby is home</li><li>Storage is mostly open shelving today, so things are on show</li></ul></div><div class="ovc"><h3>Special requests</h3><ul><li>Both kids in the same room</li><li>Everything hidden away in closed storage</li><li>The living room must never become toyland; a closed toy cabinet there is fine</li><li>A proper kids' bed for Bar, around 160 × 90</li><li>Keep the things you love: the play kitchen, the chest of drawers, the floor lamp and the shelf</li></ul></div><div class="ovc"><h3>Requirements</h3><ul><li>Budget: as cheap as possible, but willing to invest in the right piece</li><li>Ready before January 2027; only the cot is added after the birth</li><li>Rental-friendly: freestanding furniture, removable options, landlord OK for any fixings</li><li>Child safety: tall furniture anchored, window restrictors, cord-free window dressings, safe cot placement</li><li>Enough storage for a 3-year-old's toys plus a growing baby's clothes and kit</li></ul></div></div><div class="cmp"><h3>Main plan vs alternative</h3><div class="cmpg">
+<div class="cmpc rec"><span class="badge">Recommended</span><h4>Main plan: swap the rooms</h4><p>The kids move into the larger study; the landlord's bed moves to Bar's room, which becomes the study and guest room.</p><ul>
+<li>Room for both beds, the changing chest and a play area</li><li>Toy storage and the play kitchen stay in the kids' room</li><li>Space for a rocking chair (Layout B)</li><li>The guest room stays calm, with no toys</li></ul><p class="con">Costs: moving the landlord's bed and more set-up work</p></div>
+<div class="cmpc alt"><span class="badge">Less recommended</span><h4>Alternative: keep Bar's room</h4><p>Bar's room becomes the shared kids' room; the study stays the study and guest room.</p><ul>
+<li>No space for a rocking chair</li><li>Less storage and no play area</li><li>Toy storage and the play kitchen move to the study</li><li>The study becomes the playroom, with no space for it</li></ul><p class="con pro">In its favour: Bar keeps his room, the landlord's bed doesn't move, and it's less work</p></div>
+</div><p class="cmpn">Use the switch at the top right to see the alternative.</p></div><p class="ovnote">This is the starting brief. Add or change anything with Paz and Noam as you go through it together.</p></section><section class="panel" id="p_kids"><div class="head"><p class="kicker">Bar and the baby, together</p><h2>Kids' room</h2><p class="intro">The former study becomes a shared room for Bar and the new baby. Everything is in place before January, so the only thing added after the birth is the cot.</p></div>
+<div class="viewer"><div class="wrap" id="wrap_kids"><canvas id="cv_kids"></canvas><div class="zoom" data-r="kids"><button class="zb" data-d="-1" aria-label="Zoom out">&minus;</button><div class="sc"><input type="range" min="0" max="100" step="1" aria-label="Zoom"><div class="ticks"></div></div><button class="zb" data-d="1" aria-label="Zoom in">+</button><span class="zv">0%</span></div></div><div class="bar"><button id="layA" class="sel" onclick="setLayout('A')">Layout A</button><button id="layB" onclick="setLayout('B')">Layout B</button><button id="cornerBtn" onclick="VIEWS['kids']('corner')" style="display:none">Corner storage</button><button id="seatBtn" onclick="swapSeat()" style="display:none">Show bean bag instead</button><span class="sep"></span><button onclick="VIEWS['kids']('3d')">3D view</button><button onclick="VIEWS['kids']('top')">Top view</button><button onclick="VIEWS['kids']('door')">From the corridor</button><button onclick="VIEWS['kids']('shelf')">Storage wall</button><button onclick="VIEWS['kids']('cotw')">Cot wall</button><button onclick="VIEWS['kids']('bedw')">Bed wall</button><button id="wardBtn" onclick="toggleWard()">Open wardrobe</button><span class="hint">Drag to rotate · use the slider to zoom</span></div></div>
+<div class="notes"><div class="note"><h4>Sleeping</h4><p>Bar's white single with two pull-out drawers runs along the bottom wall. The cot goes right beside the changing station, about 1 m from the radiator.</p></div><div class="note"><h4>Storage</h4><p>The chest of drawers under the changing mat holds the baby's clothes and changing kit. Cube storage with seagrass baskets hides the toys on the corridor wall.</p></div><div class="note"><h4>Bar's wardrobe</h4><p>The built-in becomes Bar's: everyday clothes on a low rail he can reach, coats above, folded stacks and labelled boxes on the shelves, next size up on top. Use the Open wardrobe button to see it.</p></div><div class="note"><h4>Play</h4><p>The play kitchen sits on the left wall, clear of the bed drawers. A round cream pompom rug softens the open corner by the window.</p></div><div class="note"><h4>Layout B</h4><p>Use the Layout B button: the hall storage goes, the play kitchen moves into the hall, and low cube storage wraps the corner by Bar's bed and under the window up to the radiator. A rocking chair (or bean bag) sits in the corner against the corridor wall, next to the cot, for feeds and stories.</p></div><div class="note"><h4>Look</h4><p>Beige slat panelling at 120 cm with a ledge, a slatted radiator cover, linen curtains on an oak pole (blackout lined, no cords), a warm LED strip under the panelling ledge, art rails for Bar's drawings, woodland prints above the cot and vehicle prints above Bar's bed.</p></div><div class="note"><h4>Safety</h4><p>Anchor the tall chest, fit window restrictors, add a clip-on bed guard, and use lightweight acrylic frames above the cot.</p></div></div></section><section class="panel" id="p_guest"><div class="head"><p class="kicker">A calm room for work and visitors</p><h2>Guest room &amp; study</h2><p class="intro">Bar's old room becomes a study that doubles as a guest room, using the landlord's double bed moved in whole.</p></div>
+<div class="viewer"><div class="wrap" id="wrap_guest"><canvas id="cv_guest"></canvas><div class="zoom" data-r="guest"><button class="zb" data-d="-1" aria-label="Zoom out">&minus;</button><div class="sc"><input type="range" min="0" max="100" step="1" aria-label="Zoom"><div class="ticks"></div></div><button class="zb" data-d="1" aria-label="Zoom in">+</button><span class="zv">0%</span></div></div><div class="bar"><button onclick="VIEWS['guest']('3d')">3D view</button><button onclick="VIEWS['guest']('top')">Top view</button><button onclick="VIEWS['guest']('door')">From the door</button><button onclick="VIEWS['guest']('desk')">Desk view</button><button onclick="VIEWS['guest']('art')">Art wall</button><button onclick="VIEWS['guest']('bed')">Bed &amp; headboard</button><span class="hint">Drag to rotate · use the slider to zoom</span></div></div>
+<div class="notes"><div class="note"><h4>Bed</h4><p>The double bed runs crossways between the two built-ins, with a freestanding beige channel-stitched headboard.</p></div><div class="note"><h4>Desk</h4><p>Their 120 cm desk sits in the bay facing the window, for daylight and a view.</p></div><div class="note"><h4>Art wall</h4><p>A large abstract landscape in greige and sage green faces the bed, lit by a thin brass picture light.</p></div><div class="note"><h4>Windows</h4><p>Honey-tone bamboo blinds on all three bay windows. Add a blackout lining if guests need a dark room.</p></div></div></section><section class="panel" id="p_living"><div class="head"><p class="kicker">Organised, warm, never toyland</p><h2>Living room</h2><p class="intro">Closed storage keeps the toys out of sight, while walnut, oak, rattan and green make the room feel warm and grown-up.</p></div>
+<div class="viewer"><div class="wrap" id="wrap_living"><canvas id="cv_living"></canvas><div class="zoom" data-r="living"><button class="zb" data-d="-1" aria-label="Zoom out">&minus;</button><div class="sc"><input type="range" min="0" max="100" step="1" aria-label="Zoom"><div class="ticks"></div></div><button class="zb" data-d="1" aria-label="Zoom in">+</button><span class="zv">0%</span></div></div><div class="bar"><button onclick="VIEWS['living']('3d')">3D view</button><button onclick="VIEWS['living']('top')">Top view</button><button onclick="VIEWS['living']('sofa')">From the sofa</button><button onclick="VIEWS['living']('tv')">TV wall</button><button onclick="VIEWS['living']('left')">Art wall</button><button onclick="VIEWS['living']('win')">Plant corner</button><button id="cabBtn" onclick="toggleCab()">Open cabinets</button><span class="hint">Drag to rotate · use the slider to zoom</span></div></div>
+<div class="notes"><div class="note"><h4>TV wall</h4><p>Three walnut-effect EKET cabinets span the chimney breast. Inside are 12 white boxes with handle holes. Use the Open cabinets button to see them.</p></div><div class="note"><h4>Recesses</h4><p>The white bookcase on the left gets doors on its lower half. On the right, a monstera in a tall planter stands next to their existing open shelf, with rattan boxes on the bottom two shelves.</p></div><div class="note"><h4>Side wall</h4><p>The wide radiator gets a slatted cover, centred on the wall, with a plaster-relief artwork and two brass picture lights above.</p></div><div class="note"><h4>Seating</h4><p>A white bouclé sofa with a chaise and burnt orange and beige cushions. The beige armchair has wooden arms, with the rattan floor lamp behind it. The coffee table is round.</p></div><div class="note"><h4>Details</h4><p>A glossy oxblood squiggle lamp and a small plant on the cabinets, plus a table lamp and books on the radiator cover.</p></div></div></section><section class="panel" id="p_kidsC"><div class="head"><p class="kicker">Alternative plan · less recommended</p><h2>Kids' room</h2><p class="intro">In the alternative, Bar stays in his own room and the baby joins him. Nothing moves between rooms, but the room is smaller, so the cot, the changing chest and Bar's bed take nearly all the floor.</p></div>
+<div class="viewer"><div class="wrap" id="wrap_kidsC"><canvas id="cv_kidsC"></canvas><div class="zoom" data-r="kidsC"><button class="zb" data-d="-1" aria-label="Zoom out">&minus;</button><div class="sc"><input type="range" min="0" max="100" step="1" aria-label="Zoom"><div class="ticks"></div></div><button class="zb" data-d="1" aria-label="Zoom in">+</button><span class="zv">0%</span></div></div><div class="bar"><button onclick="VIEWS['kidsC']('3d')">3D view</button><button onclick="VIEWS['kidsC']('top')">Top view</button><button onclick="VIEWS['kidsC']('door')">From the door</button><button onclick="VIEWS['kidsC']('bed')">Bar's bed</button><button onclick="VIEWS['kidsC']('cot')">Cot wall</button><button onclick="VIEWS['kidsC']('bay')">Changing station</button><span class="hint">Drag to rotate · use the slider to zoom</span></div></div>
+<div class="lose"><h3>What we lose by keeping Bar's room as the kids' room</h3><ul><li>No space for a rocking chair or feeding seat</li><li>Less storage: no cube unit, and the only drawers are the baby's changing chest</li><li>No play area: the floor between the beds is just a walkway</li><li>Toy storage moves to a different room (the study)</li><li>The play kitchen moves to a different room (the study hall)</li></ul><p>Effectively the study becomes the playroom, but with the double bed, the desk and the chest in it, there is no space for one.</p></div><div class="notes"><div class="note"><h4>Sleeping</h4><p>Bar's new 80 × 160 bed sits on the right wall between the two built-ins, clear of the big wardrobe's doors. The cot goes on the left wall, about 1 m across from Bar's bed.</p></div><div class="note"><h4>Changing</h4><p>A white chest of drawers with a changing mat on top stands under the side window at the foot of the cot. It covers the bottom of that window, so fit a window restrictor.</p></div><div class="note"><h4>Clothes</h4><p>The big built-in holds Bar's clothes; the small built-in takes the baby's. The corner by the built-ins stays empty so the doors open freely.</p></div><div class="note"><h4>Look</h4><p>The same beige slat panelling on the plain walls, a slatted radiator cover in the bay and a small round rug between the beds. Bamboo blinds on the bay windows.</p></div><div class="note"><h4>Safety</h4><p>Anchor the changing chest, fit window restrictors (the chest sits under a window) and add a bed guard if the bed has no rail.</p></div></div></section><section class="panel" id="p_guestC"><div class="head"><p class="kicker">Alternative plan · less recommended</p><h2>Study &amp; guest room</h2><p class="intro">The study stays the study and guest room. Because the kids' room has no space for toys, this room also takes the toy storage and the play kitchen.</p></div>
+<div class="viewer"><div class="wrap" id="wrap_guestC"><canvas id="cv_guestC"></canvas><div class="zoom" data-r="guestC"><button class="zb" data-d="-1" aria-label="Zoom out">&minus;</button><div class="sc"><input type="range" min="0" max="100" step="1" aria-label="Zoom"><div class="ticks"></div></div><button class="zb" data-d="1" aria-label="Zoom in">+</button><span class="zv">0%</span></div></div><div class="bar"><button onclick="VIEWS['guestC']('3d')">3D view</button><button onclick="VIEWS['guestC']('top')">Top view</button><button onclick="VIEWS['guestC']('door')">From the hall</button><button onclick="VIEWS['guestC']('hall')">Hall</button><button onclick="VIEWS['guestC']('bed')">Bed wall</button><button onclick="VIEWS['guestC']('desk')">Desk and storage</button><span class="hint">Drag to rotate · use the slider to zoom</span></div></div>
+<div class="lose"><h3>What we lose by keeping Bar's room as the kids' room</h3><ul><li>No space for a rocking chair or feeding seat</li><li>Less storage: no cube unit, and the only drawers are the baby's changing chest</li><li>No play area: the floor between the beds is just a walkway</li><li>Toy storage moves to a different room (the study)</li><li>The play kitchen moves to a different room (the study hall)</li></ul><p>Effectively the study becomes the playroom, but with the double bed, the desk and the chest in it, there is no space for one.</p></div><div class="notes"><div class="note"><h4>Bed</h4><p>The landlord's double bed stays where it is today, head against the left wall in the bottom corner, with a headboard and the green landscape art above.</p></div><div class="note"><h4>Desk and storage</h4><p>The desk stays on the top wall. A 2×4 cube unit with seagrass baskets stands next to it and holds the toys.</p></div><div class="note"><h4>Hall</h4><p>The play kitchen sits in the entrance hall, the only spot left for it.</p></div><div class="note"><h4>Chest of drawers</h4><p>Their walnut chest stays on the bottom wall next to the bed, as now.</p></div><div class="note"><h4>The catch</h4><p>This room effectively becomes the playroom, but with a double bed, a desk and a chest in it, there's no floor left to play on.</p></div></div></section><section class="panel" id="p_price"><div class="head"><p class="kicker">Budget &amp; plan</p><h2>Pricing &amp; timing</h2><p class="intro">Everything to buy across the three rooms, kept renter-friendly: DIY where it makes sense, second-hand or AliExpress where it doesn't matter. Each line has an estimate and, where there is one, a cheaper option. Prices are UK retail including VAT, checked in November 2026, without delivery or labour. Untick items to mix and match; optional extras start unticked.</p></div>
+<div class="pcards"><button class="pc pm" data-g="r0"><p>Kids' room</p><h4 data-v="e_r0"></h4><small><span data-v="c_r0"></span> with cheaper options</small><small class="nocot"><span data-v="ne_r0"></span> without the cot (<span data-v="nc_r0"></span> cheaper) &mdash; it comes ~6 months later</small><i>View items</i></button><button class="pc pm" data-g="r1"><p>Guest room &amp; study</p><h4 data-v="e_r1"></h4><small><span data-v="c_r1"></span> with cheaper options</small><i>View items</i></button><button class="pc pa" data-g="a0"><p>Kids' room (Bar's room)</p><h4 data-v="e_a0"></h4><small><span data-v="c_a0"></span> with cheaper options</small><small class="nocot"><span data-v="ne_a0"></span> without the cot (<span data-v="nc_a0"></span> cheaper) &mdash; it comes ~6 months later</small><small class="tpc">+ 3 items still to price</small><i>View items</i></button><button class="pc pa" data-g="a1"><p>Study &amp; guest room</p><h4 data-v="e_a1"></h4><small><span data-v="c_a1"></span> with cheaper options</small><i>View items</i></button><button class="pc pb" data-g="r2"><p>Living room</p><h4 data-v="e_r2"></h4><small><span data-v="c_r2"></span> with cheaper options</small><i>View items</i></button><button class="pc ext" data-g="ext"><p>Optional extras</p><h4 data-v="e_ext"></h4><small><span data-v="n_ext"></span> of 4 ticked · <span data-v="c_ext"></span> cheaper</small><i>View items</i></button><button class="pc tot" data-g="all"><p>All three rooms</p><h4 data-v="e_all"></h4><small><span data-v="c_all"></span> with cheaper options<span class="xin"></span></small><small class="nocot"><span data-v="ne_all"></span> without the cot (<span data-v="nc_all"></span> cheaper)</small><small class="tpc pa">+ 3 items still to price</small><i>View all</i></button></div>
+<p class="phint">Click a card to see its items. Untick anything to leave it out; the totals update as you go.</p>
+<div class="pgroups"><div class="pgrp pm" data-g="r0"><h3 class="ptitle">Kids' room</h3><div class="pricewrap"><table><thead><tr><th><label class="ck"><input type="checkbox" class="gall" data-g="r0" checked> Item</label></th><th>Qty</th><th class="n">Estimate</th><th>Cheaper option</th><th>Example products &amp; notes</th></tr></thead><tbody><tr class="it" data-g="r0" data-e="192" data-c="125" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Single bed with 2 drawers, white</span></label></td><td class="q">1</td><td class="n">£192</td><td><span class="alt">Basic pine 2-drawer bed (Wowcher deal)</span> <b>£125</b></td><td class="note">Flair Milo (Homebase). Remove if already bought</td></tr><tr class="it" data-g="r0" data-e="120" data-c="70" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Single mattress (90 × 190)</span></label></td><td class="q">1</td><td class="n">£120</td><td><span class="alt">Basic foam mattress</span> <b>£70</b></td><td class="note">Estimate; check the max depth the bed allows</td></tr><tr class="it" data-g="r0" data-e="20" data-c="20" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Clip-on bed guard</span></label></td><td class="q">1</td><td class="n">£20</td><td><span class="same">Already the cheap option</span></td><td class="note">Cuggl single bed rail (Argos)</td></tr><tr class="it" data-g="r0" data-e="150" data-c="150" data-l="1"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Cot + mattress <span class="later">Bought later (~6 months)</span></span></label></td><td class="q">1</td><td class="n">£150</td><td><span class="same">Already the cheap option</span></td><td class="note">Options Jonathan found. Buy the cot mattress new</td></tr><tr class="it" data-g="r0" data-e="20" data-c="12" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Changing mat</span></label></td><td class="q">1</td><td class="n">£20</td><td><span class="alt">Basic wipe-clean mat</span> <b>£12</b></td><td class="note">Estimate</td></tr><tr class="it" data-g="r0" data-e="8" data-c="8" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Anti-tip kit for the chest</span></label></td><td class="q">1</td><td class="n">£8</td><td><span class="same">Already the cheap option</span></td><td class="note">Estimate; needs landlord OK</td></tr><tr class="it" data-g="r0" data-e="50" data-c="25" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Cube storage 2×4 (KALLAX), white</span></label></td><td class="q">1</td><td class="n">£50</td><td><span class="alt">Second-hand KALLAX</span> <b>£25</b></td><td class="note">IKEA KALLAX 77×147</td></tr><tr class="it" data-g="r0" data-e="50" data-c="50" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Seagrass baskets for KALLAX</span></label></td><td class="q">×4</td><td class="n">£50</td><td><span class="same">Already the cheap option</span></td><td class="note">4 for £50</td></tr><tr class="it" data-g="r0" data-e="28" data-c="4" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Beige curtains layered over their dark grey blackouts + rods</span></label></td><td class="q">2 windows</td><td class="n">£28</td><td><span class="alt">Their existing blackouts only, rods</span> <b>£4</b></td><td class="note">IKEA BENGTA block-out, beige, 210×250, £12 per piece: one per window, cut into a pair and hemmed (DIY). Rods £2 each</td></tr><tr class="it" data-g="r0" data-e="40" data-c="40" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Slatted radiator cover</span></label></td><td class="q">1</td><td class="n">£40</td><td><span class="same">Already the cheap option</span></td><td class="note">B&amp;Q cover 152 wide × 82 high, £29 + finish. At 82 cm it's taller than the 75 cm sill, so cut ~10 cm off the legs (≤73 cm)</td></tr><tr class="it" data-g="r0" data-e="120" data-c="40" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Wall panelling, beige, 120 cm (~18 m²), DIY</span></label></td><td class="q">~18 m²</td><td class="n">£120</td><td><span class="alt">Paint-effect panelling (painted lines + ledge only)</span> <b>£40</b></td><td class="note">DIY: MDF strips, ledge, adhesive, paint</td></tr><tr class="it" data-g="r0" data-e="30" data-c="12" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Art rails ×3 + clips</span></label></td><td class="q">set</td><td class="n">£30</td><td><span class="alt">DIY wooden dowels + clips</span> <b>£12</b></td><td class="note">Estimate</td></tr><tr class="it" data-g="r0" data-e="60" data-c="35" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Framed prints: 6 woodland + 3 vehicles</span></label></td><td class="q">9</td><td class="n">£60</td><td><span class="alt">Printable prints + IKEA frames</span> <b>£35</b></td><td class="note">Estimate; lightweight acrylic frames over the cot</td></tr><tr class="sub"><td>Kids' room subtotal</td><td></td><td class="n"><span data-v="e_r0">£888</span></td><td>with cheaper options <b><span data-v="c_r0">£591</span></b></td><td></td></tr></tbody></table></div></div><div class="pgrp pm" data-g="r1"><h3 class="ptitle">Guest room &amp; study</h3><div class="pricewrap"><table><thead><tr><th><label class="ck"><input type="checkbox" class="gall" data-g="r1" checked> Item</label></th><th>Qty</th><th class="n">Estimate</th><th>Cheaper option</th><th>Example products &amp; notes</th></tr></thead><tbody><tr class="it" data-g="r1" data-e="40" data-c="20" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Headboard, DIY or thrifted</span></label></td><td class="q">1</td><td class="n">£40</td><td><span class="alt">Thrifted / Marketplace headboard</span> <b>£20</b></td><td class="note">DIY: plywood, foam, beige fabric, channel stitching with a staple gun</td></tr><tr class="it" data-g="r1" data-e="70" data-c="25" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Abstract canvas (~120 × 85), greige and sage</span></label></td><td class="q">1</td><td class="n">£70</td><td><span class="alt">DIY painted canvas</span> <b>£25</b></td><td class="note">Estimate</td></tr><tr class="it" data-g="r1" data-e="31" data-c="15" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Picture light</span></label></td><td class="q">1</td><td class="n">£31</td><td><span class="alt">Battery LED picture light (no socket needed)</span> <b>£15</b></td><td class="note">Searchlight Ionian large, brass (Next, on sale)</td></tr><tr class="it" data-g="r1" data-e="24" data-c="24" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Bamboo blinds</span></label></td><td class="q">×3</td><td class="n">£24</td><td><span class="same">Already the cheap option</span></td><td class="note">Habitat bamboo roller blinds, ~£8 each, light-filtering only</td></tr><tr class="sub"><td>Guest room &amp; study subtotal</td><td></td><td class="n"><span data-v="e_r1">£165</span></td><td>with cheaper options <b><span data-v="c_r1">£84</span></b></td><td></td></tr></tbody></table></div></div><div class="pgrp pa" data-g="a0"><h3 class="ptitle">Kids' room (Bar's room) <span>Alternative plan</span></h3><div class="pricewrap"><table><thead><tr><th><label class="ck"><input type="checkbox" class="gall" data-g="a0" checked> Item</label></th><th>Qty</th><th class="n">Estimate</th><th>Cheaper option</th><th>Example products &amp; notes</th></tr></thead><tbody><tr class="it tprow" data-g="a0" data-e="0" data-c="0" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Bar's bed 80 × 160, white</span></label></td><td class="q">1</td><td class="n"><span class="tp">To price</span></td><td><span class="same">&mdash;</span></td><td class="note">To price: Jonathan to confirm the model</td></tr><tr class="it tprow" data-g="a0" data-e="0" data-c="0" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Mattress (80 × 160)</span></label></td><td class="q">1</td><td class="n"><span class="tp">To price</span></td><td><span class="same">&mdash;</span></td><td class="note">To price, once the bed is chosen</td></tr><tr class="it" data-g="a0" data-e="20" data-c="20" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Clip-on bed guard</span></label></td><td class="q">1</td><td class="n">£20</td><td><span class="same">Already the cheap option</span></td><td class="note">Only if the bed has no rail of its own</td></tr><tr class="it" data-g="a0" data-e="150" data-c="150" data-l="1"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Cot + mattress <span class="later">Bought later (~6 months)</span></span></label></td><td class="q">1</td><td class="n">£150</td><td><span class="same">Already the cheap option</span></td><td class="note">Same as the main plan. Buy the cot mattress new</td></tr><tr class="it tprow" data-g="a0" data-e="0" data-c="0" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>White chest of drawers for changing</span></label></td><td class="q">1</td><td class="n"><span class="tp">To price</span></td><td><span class="same">&mdash;</span></td><td class="note">To price. Their walnut chest stays in the study</td></tr><tr class="it" data-g="a0" data-e="20" data-c="12" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Changing mat</span></label></td><td class="q">1</td><td class="n">£20</td><td><span class="alt">Basic wipe-clean mat</span> <b>£12</b></td><td class="note">Estimate</td></tr><tr class="it" data-g="a0" data-e="8" data-c="8" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Anti-tip kit for the changing chest</span></label></td><td class="q">1</td><td class="n">£8</td><td><span class="same">Already the cheap option</span></td><td class="note">Estimate; needs landlord OK</td></tr><tr class="it" data-g="a0" data-e="24" data-c="24" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Bamboo blinds + blackout lining</span></label></td><td class="q">×3</td><td class="n">£24</td><td><span class="same">Already the cheap option</span></td><td class="note">Habitat bamboo roller blinds, ~£8 each. A blackout lining for naps is extra</td></tr><tr class="it" data-g="a0" data-e="40" data-c="40" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Slatted radiator cover (~116 wide)</span></label></td><td class="q">1</td><td class="n">£40</td><td><span class="same">Already the cheap option</span></td><td class="note">Smaller radiator than the study; check the sill height</td></tr><tr class="it" data-g="a0" data-e="80" data-c="30" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Wall panelling, beige, 120 cm (~12 m²), DIY</span></label></td><td class="q">~12 m²</td><td class="n">£80</td><td><span class="alt">Paint-effect panelling (painted lines + ledge only)</span> <b>£30</b></td><td class="note">Fewer plain walls than the study, so less panelling</td></tr><tr class="sub"><td>Kids' room (Bar's room) subtotal</td><td></td><td class="n"><span data-v="e_a0">£342</span></td><td>with cheaper options <b><span data-v="c_a0">£284</span></b></td><td></td></tr></tbody></table></div></div><div class="pgrp pa" data-g="a1"><h3 class="ptitle">Study &amp; guest room <span>Alternative plan</span></h3><div class="pricewrap"><table><thead><tr><th><label class="ck"><input type="checkbox" class="gall" data-g="a1" checked> Item</label></th><th>Qty</th><th class="n">Estimate</th><th>Cheaper option</th><th>Example products &amp; notes</th></tr></thead><tbody><tr class="it" data-g="a1" data-e="50" data-c="25" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Cube storage 2×4 (KALLAX), white, next to the desk</span></label></td><td class="q">1</td><td class="n">£50</td><td><span class="alt">Second-hand KALLAX</span> <b>£25</b></td><td class="note">Holds the toys, as the kids' room has none</td></tr><tr class="it" data-g="a1" data-e="50" data-c="50" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Seagrass baskets for KALLAX</span></label></td><td class="q">×4</td><td class="n">£50</td><td><span class="same">Already the cheap option</span></td><td class="note">4 for £50</td></tr><tr class="it" data-g="a1" data-e="40" data-c="20" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Headboard, DIY or thrifted</span></label></td><td class="q">1</td><td class="n">£40</td><td><span class="alt">Thrifted / Marketplace headboard</span> <b>£20</b></td><td class="note">On the left wall, as the bed stands now</td></tr><tr class="it" data-g="a1" data-e="70" data-c="25" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Abstract canvas (~120 × 85), greige and sage</span></label></td><td class="q">1</td><td class="n">£70</td><td><span class="alt">DIY painted canvas</span> <b>£25</b></td><td class="note">Above the headboard</td></tr><tr class="it" data-g="a1" data-e="31" data-c="15" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Picture light</span></label></td><td class="q">1</td><td class="n">£31</td><td><span class="alt">Battery LED picture light (no socket needed)</span> <b>£15</b></td><td class="note">Searchlight Ionian large, brass (Next, on sale)</td></tr><tr class="sub"><td>Study &amp; guest room subtotal</td><td></td><td class="n"><span data-v="e_a1">£241</span></td><td>with cheaper options <b><span data-v="c_a1">£135</span></b></td><td></td></tr></tbody></table></div></div><div class="pgrp pb" data-g="r2"><h3 class="ptitle">Living room</h3><div class="pricewrap"><table><thead><tr><th><label class="ck"><input type="checkbox" class="gall" data-g="r2" checked> Item</label></th><th>Qty</th><th class="n">Estimate</th><th>Cheaper option</th><th>Example products &amp; notes</th></tr></thead><tbody><tr class="it" data-g="r2" data-e="240" data-c="150" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>EKET cabinet, 2 doors, 70×35×70, walnut effect</span></label></td><td class="q">×3</td><td class="n">£240</td><td><span class="alt">Second-hand EKET (Marketplace)</span> <b>£150</b></td><td class="note">IKEA, £80 each</td></tr><tr class="it" data-g="r2" data-e="30" data-c="30" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>EKET legs</span></label></td><td class="q">×3 sets</td><td class="n">£30</td><td><span class="same">Already the cheap option</span></td><td class="note">Estimate</td></tr><tr class="it saverow" data-g="r2" data-e="60" data-c="30" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>White storage boxes with handle hole (~31 × 29 × 27) <span class="save">Saving area</span></span></label></td><td class="q">×12</td><td class="n">£60</td><td><span class="alt">Fewer boxes: 6 to start (one shelf per cabinet)</span> <b>£30</b></td><td class="note">~£5 each. Saving area: buy only as many as the toys need. KUGGIS 26×35 won't fit two across</td></tr><tr class="it" data-g="r2" data-e="40" data-c="20" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>OXBERG doors for the bookcase's lower half</span></label></td><td class="q">×2</td><td class="n">£40</td><td><span class="alt">Second-hand OXBERG</span> <b>£20</b></td><td class="note">IKEA, £20 each; only fits a BILLY</td></tr><tr class="it" data-g="r2" data-e="5" data-c="5" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Wall strap for the bookcase</span></label></td><td class="q">1</td><td class="n">£5</td><td><span class="same">Already the cheap option</span></td><td class="note">Landlord OK</td></tr><tr class="it" data-g="r2" data-e="40" data-c="20" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Tall planter for the monstera (plant already theirs)</span></label></td><td class="q">1</td><td class="n">£40</td><td><span class="alt">Basket planter or thrifted pot</span> <b>£20</b></td><td class="note">Estimate</td></tr><tr class="it" data-g="r2" data-e="55" data-c="55" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>BILLY bookcase 80×28×202 + height extension, white (right recess)</span></label></td><td class="q">1</td><td class="n">£55</td><td><span class="same">Already the cheap option</span></td><td class="note">IKEA: bookcase £35 + height extension £20. Matches the left bookcase; needs a wall strap</td></tr><tr class="it" data-g="r2" data-e="50" data-c="25" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Rattan boxes for the BILLY</span></label></td><td class="q">×4</td><td class="n">£50</td><td><span class="alt">Plastic rattan-effect boxes</span> <b>£25</b></td><td class="note">4 for £50, on the bottom two shelves</td></tr><tr class="it" data-g="r2" data-e="50" data-c="50" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Slatted radiator cover (~220 wide)</span></label></td><td class="q">1</td><td class="n">£50</td><td><span class="same">Already the cheap option</span></td><td class="note">Two matching covers side by side, or DIY</td></tr><tr class="it" data-g="r2" data-e="150" data-c="75" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Plaster-relief artwork (~170 × 85)</span></label></td><td class="q">1</td><td class="n">£150</td><td><span class="alt">DIY: texture paste on a large canvas</span> <b>£50–75</b></td><td class="note">Estimate for a ready-made piece</td></tr><tr class="it" data-g="r2" data-e="30" data-c="30" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Picture lights</span></label></td><td class="q">×2</td><td class="n">£30</td><td><span class="same">Already the cheap option</span></td><td class="note">Battery LED picture lights, £15 each</td></tr><tr class="it" data-g="r2" data-e="25" data-c="25" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Squiggle table lamp, oxblood with glass globe</span></label></td><td class="q">1</td><td class="n">£25</td><td><span class="same">Already the cheap option</span></td><td class="note">AliExpress, about half the high-street price</td></tr><tr class="it" data-g="r2" data-e="20" data-c="20" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Cushion covers + inserts, burnt orange + light beige</span></label></td><td class="q">×5</td><td class="n">£20</td><td><span class="same">Already the cheap option</span></td><td class="note">AliExpress covers + IKEA inserts</td></tr><tr class="it" data-g="r2" data-e="15" data-c="15" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Table lamp for the radiator cover</span></label></td><td class="q">1</td><td class="n">£15</td><td><span class="same">Already the cheap option</span></td><td class="note">AliExpress, about half price</td></tr><tr class="it" data-g="r2" data-e="15" data-c="8" data-l="0"><td><label class="ck"><input type="checkbox" class="itck" checked><span>Paint or plaster finish for the floor lamp</span></label></td><td class="q">1</td><td class="n">£15</td><td><span class="alt">Leftover paint / tester pots</span> <b>£8</b></td><td class="note">Estimate</td></tr><tr class="sub"><td>Living room subtotal</td><td></td><td class="n"><span data-v="e_r2">£825</span></td><td>with cheaper options <b><span data-v="c_r2">£558</span></b></td><td></td></tr></tbody></table></div></div><div class="pgrp" data-g="all"><div class="totbar"><span>Total, all three rooms</span><b data-v="e_all"></b><span class="m"><span data-v="c_all"></span> with cheaper options · <span data-v="ne_all"></span> without the cot<span class="xin"></span><span class="tpn pa"> · 3 items still to price, not included</span></span></div></div><div class="pgrp" data-g="ext"><h3 class="ptitle">Optional extras <span>Tick any to add them to the total</span></h3><div class="pricewrap"><table><thead><tr><th><label class="ck"><input type="checkbox" class="gall" data-g="ext"> Item</label></th><th>Qty</th><th class="n">Estimate</th><th>Cheaper option</th><th>Notes</th></tr></thead><tbody><tr class="it" data-g="ext" data-e="75" data-c="40" data-l="0"><td><label class="ck"><input type="checkbox" class="itck"><span>Wardrobe kit: tension rails, kids' hangers, labelled boxes, laundry basket<div class="room">Kids' room</div></span></label></td><td class="q">set</td><td class="n">£75</td><td><span class="alt">Rails + hangers only, reuse boxes</span> <b>£40</b></td><td class="note">No drilling</td></tr><tr class="it" data-g="ext" data-e="60" data-c="35" data-l="0"><td><label class="ck"><input type="checkbox" class="itck"><span>Round pompom rug (~150 Ø)<div class="room">Kids' room</div></span></label></td><td class="q">1</td><td class="n">£60</td><td><span class="alt">Plain round cotton rug</span> <b>£35</b></td><td class="note">Low pile so the bed drawers clear it</td></tr><tr class="it" data-g="ext" data-e="90" data-c="30" data-l="0"><td><label class="ck"><input type="checkbox" class="itck"><span>LED strip under the panelling ledge, warm white, plug-in + dimmer<div class="room">Kids' room</div></span></label></td><td class="q">~15 m</td><td class="n">£90</td><td><span class="alt">1 dimmable kit + AliExpress extension</span> <b>£30</b></td><td class="note">10 m dimmable 3000K kits are ~£44</td></tr><tr class="it" data-g="ext" data-e="15" data-c="15" data-l="0"><td><label class="ck"><input type="checkbox" class="itck"><span>Window restrictors<div class="room">Kids' room</div></span></label></td><td class="q">×2</td><td class="n">£15</td><td><span class="same">Already the cheap option</span></td><td class="note">Stop the window opening more than ~10 cm. Check if the landlord already fitted them</td></tr><tr class="sub"><td>Extras ticked</td><td></td><td class="n"><span data-v="e_ext"></span></td><td>with cheaper options <b data-v="c_ext"></b></td><td></td></tr></tbody></table></div></div></div>
+<p class="resetline"><a href="#" class="preset">Reset ticks</a> to the original selection</p>
+<div class="owned pm"><h4>Already theirs, no cost</h4><p>Chest of drawers (changing station) · Play kitchen · Dark grey blackout curtains · Landlord's double bed · Desk and chair · White bookcase (left recess) · Old open shelf (moves elsewhere) · Monstera · Small planter + plant · White bouclé chaise sofa · Beige armchair · Round coffee table · Rattan floor lamp · TV and soundbar · Living-room rug</p></div><div class="owned pa"><h4>Already theirs, no cost</h4><p>Bar's room built-in wardrobes · Walnut chest of drawers (stays in the study) · Play kitchen (in the study hall) · Landlord's double bed (doesn't move) · Desk and chair · White bookcase (left recess) · Old open shelf · Monstera · Small planter + plant · White bouclé chaise sofa · Beige armchair · Round coffee table · Rattan floor lamp · TV and soundbar · Living-room rug</p></div>
+<h3 class="sec">Timeline</h3><ol class="tl" style="display:none"></ol><ol class="tl pm"><li><span class="dot"></span><div><h4>Measure &amp; confirm</h4><p>Final measurements, landlord approval for fixings, sign off the plan</p></div><span class="when">Dates TBC</span></li><li><span class="dot"></span><div><h4>Order</h4><p>Order the bed, cot, EKET and curtains first; start the DIY panelling, headboard and radiator covers</p></div><span class="when">Dates TBC</span></li><li><span class="dot"></span><div><h4>Kids' room</h4><p>Move the double bed out, panelling, furniture, storage, decor</p></div><span class="when">Dates TBC</span></li><li><span class="dot"></span><div><h4>Guest room &amp; study</h4><p>Bed, headboard, desk, blinds, art and lighting</p></div><span class="when">Dates TBC</span></li><li><span class="dot"></span><div><h4>Living room</h4><p>EKET run, bookcase doors, radiator cover, art, styling</p></div><span class="when">Dates TBC</span></li><li><span class="dot"></span><div><h4>Final styling &amp; snag list</h4><p>Boxes filled, everything anchored, last tweaks</p></div><span class="when">Dates TBC</span></li><li><span class="dot"></span><div><h4>Baby arrives</h4><p>Only the cot is added</p></div><span class="when">January 2027</span></li></ol><ol class="tl pa"><li><span class="dot"></span><div><h4>Measure &amp; confirm</h4><p>Final measurements, landlord approval for fixings, sign off the plan</p></div><span class="when">Dates TBC</span></li><li><span class="dot"></span><div><h4>Order</h4><p>Order Bar's 80 × 160 bed, the white changing chest, the cube unit and baskets; start the DIY panelling and radiator cover</p></div><span class="when">Dates TBC</span></li><li><span class="dot"></span><div><h4>Kids' room (Bar's room)</h4><p>Panelling, Bar's new bed, the changing chest, blinds, radiator cover</p></div><span class="when">Dates TBC</span></li><li><span class="dot"></span><div><h4>Study &amp; guest room</h4><p>Cube unit next to the desk, play kitchen in the hall, headboard and art</p></div><span class="when">Dates TBC</span></li><li><span class="dot"></span><div><h4>Living room</h4><p>EKET run, bookcase doors, radiator cover, art, styling</p></div><span class="when">Dates TBC</span></li><li><span class="dot"></span><div><h4>Final styling &amp; snag list</h4><p>Boxes filled, everything anchored, last tweaks</p></div><span class="when">Dates TBC</span></li><li><span class="dot"></span><div><h4>Baby arrives</h4><p>Only the cot is added</p></div><span class="when">January 2027</span></li></ol></section></main>
+<footer>3D sketches are to scale from the floor plans; furniture is illustrative. Exact products, finishes and fixings to be confirmed.</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>var VIEWS={},CTRL={};document.addEventListener('DOMContentLoaded',function(){function fmt(v){return '£'+Math.round(v).toLocaleString('en-GB');}
+function recalc(){var S={};var ALT=document.body.classList.contains('alt');document.querySelectorAll('tr.it').forEach(function(r){var on=r.querySelector('.itck').checked;r.classList.toggle('off',!on);var g=r.dataset.g;S[g]=S[g]||{e:0,c:0,le:0,lc:0,n:0};var pg=r.closest('.pgrp');if(pg&&(pg.classList.contains(ALT?'pm':'pa')))return;if(!on)return;var e=+r.dataset.e,c=+r.dataset.c;S[g].e+=e;S[g].c+=c;S[g].n++;if(r.dataset.l==='1'){S[g].le+=e;S[g].lc+=c;}});
+ var A={e:0,c:0,le:0,lc:0};Object.keys(S).forEach(function(g){if(g!=='ext'){A.e+=S[g].e;A.c+=S[g].c;A.le+=S[g].le;A.lc+=S[g].lc;}});var X=S.ext||{e:0,c:0,n:0};
+ var out={e_all:A.e+X.e,c_all:A.c+X.c,ne_all:A.e+X.e-A.le,nc_all:A.c+X.c-A.lc,e_ext:X.e,c_ext:X.c};
+ Object.keys(S).forEach(function(g){out['e_'+g]=S[g].e;out['c_'+g]=S[g].c;out['ne_'+g]=S[g].e-S[g].le;out['nc_'+g]=S[g].c-S[g].lc;});
+ Object.keys(out).forEach(function(k){document.querySelectorAll('[data-v="'+k+'"]').forEach(function(el){el.textContent=fmt(out[k]);});});
+ document.querySelectorAll('[data-v="n_ext"]').forEach(function(el){el.textContent=X.n;});
+ document.querySelectorAll('.xin').forEach(function(el){el.textContent=X.e?' · incl. '+fmt(X.e)+' extras':' · extras not included';});
+ document.querySelectorAll('.gall').forEach(function(h){var rs=[].slice.call(document.querySelectorAll('tr.it[data-g="'+h.dataset.g+'"] .itck'));var n=rs.filter(function(x){return x.checked;}).length;h.checked=n===rs.length;h.indeterminate=n>0&&n<rs.length;});}
+document.querySelectorAll('.itck').forEach(function(c){c.addEventListener('change',recalc);});
+document.querySelectorAll('.gall').forEach(function(h){h.addEventListener('change',function(){document.querySelectorAll('tr.it[data-g="'+h.dataset.g+'"] .itck').forEach(function(c){c.checked=h.checked;});recalc();});});
+document.querySelector('.preset').addEventListener('click',function(ev){ev.preventDefault();document.querySelectorAll('tr.it').forEach(function(r){r.querySelector('.itck').checked=r.dataset.g!=='ext';});recalc();});
+window.recalc=recalc;recalc();document.querySelectorAll('button.pc').forEach(function(b){b.onclick=function(){var g=b.dataset.g,was=b.classList.contains('on');
+ document.querySelectorAll('button.pc').forEach(function(x){x.classList.remove('on');});var box=document.querySelector('.pgroups');box.classList.remove('all');document.querySelectorAll('.pgrp').forEach(function(p){p.classList.remove('on');});
+ if(was){document.querySelector('.phint').style.display='';return;}b.classList.add('on');document.querySelector('.phint').style.display='none';
+ if(g==='all')box.classList.add('all');else document.querySelector('.pgrp[data-g="'+g+'"]').classList.add('on');box.scrollIntoView({behavior:'smooth',block:'start'});};});});
+var CUR='overview';function showTab(t,keep){CUR=t;var alt=document.body.classList.contains('alt'),id='p_'+t+((alt&&(t==='kids'||t==='guest'))?'C':'');document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('on',x.dataset.t===t);});document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('on',p.id===id);});if(!keep)window.scrollTo({top:0});}
+document.querySelectorAll('.tab').forEach(function(b){b.onclick=function(){showTab(b.dataset.t);};});
+function setPlan(p){document.body.classList.toggle('alt',p==='alt');document.querySelectorAll('.psb').forEach(function(x){x.classList.toggle('on',x.dataset.p===p);});document.querySelectorAll('button.pc.on').forEach(function(x){x.click();});showTab(CUR,true);if(window.recalc)recalc();}
+document.querySelectorAll('.psb').forEach(function(b){b.onclick=function(){setPlan(b.dataset.p);};});document.querySelector('.tomain').onclick=function(e){e.preventDefault();setPlan('main');};</script>
+<script>
+
+(function(){
+var cv=document.getElementById('cv_kids'),wrap=document.getElementById('wrap_kids');
+var R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+R.setPixelRatio(Math.min(2,window.devicePixelRatio||1));R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+var S=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(40,1,1,5000);
+var ctl=new THREE.OrbitControls(cam,cv);ctl.zoomSpeed=0.3;CTRL['kids']={cam:cam,ctl:ctl};ctl.enableDamping=true;ctl.maxPolarAngle=Math.PI/2-0.05;ctl.minDistance=60;ctl.maxDistance=3600;
+var C={x:222,z:430};ctl.target.set(C.x,60,C.z);
+S.add(new THREE.HemisphereLight(0xffffff,0xd8cbb8,0.75));
+var sun=new THREE.DirectionalLight(0xffffff,0.55);sun.position.set(600,700,900);sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048);var sc=sun.shadow.camera;sc.left=-500;sc.right=500;sc.top=500;sc.bottom=-500;sc.near=100;sc.far=2500;sun.target.position.set(C.x,0,C.z);S.add(sun);S.add(sun.target);
+function M(c,o){o=o||{};return new THREE.MeshStandardMaterial({color:c,roughness:o.r==null?0.8:o.r,metalness:0,transparent:o.t!=null,opacity:o.t==null?1:o.t});}
+var H=300,P=[[0,0],[103,0],[103,360],[403,360],[445,405],[300,612],[0,612]];
+var shape=new THREE.Shape();P.forEach(function(p,i){i?shape.lineTo(p[0],p[1]):shape.moveTo(p[0],p[1]);});
+var fc=document.createElement('canvas');fc.width=fc.height=512;var f=fc.getContext('2d');var tones=['#C8A47E','#BE9A73','#D1AE88','#C2A078','#CBA982','#B9956E'];
+for(var r=0;r<8;r++){var off=(r*137)%512,y0=r*64;for(var k=-2;k<3;k++){var x0=off+k*512;f.fillStyle=tones[(r*3+k+12)%tones.length];f.fillRect(x0,y0,512,64);
+ f.strokeStyle='rgba(90,60,30,0.10)';f.lineWidth=1;for(var g=0;g<5;g++){f.beginPath();var gy=y0+8+g*11+((r+k)%3);f.moveTo(x0,gy);f.bezierCurveTo(x0+160,gy-3,x0+340,gy+3,x0+512,gy);f.stroke();}
+ f.fillStyle='rgba(70,45,20,0.45)';f.fillRect(x0,y0,2,64);}
+ f.fillStyle='rgba(70,45,20,0.35)';f.fillRect(0,y0,512,2);}
+var ftex=new THREE.CanvasTexture(fc);ftex.wrapS=ftex.wrapT=THREE.RepeatWrapping;ftex.repeat.set(1/180,1/120);ftex.anisotropy=8;
+var flM=new THREE.MeshStandardMaterial({map:ftex,roughness:0.7});flM.side=THREE.DoubleSide;var fl=new THREE.Mesh(new THREE.ShapeGeometry(shape),flM);fl.rotation.x=Math.PI/2;fl.receiveShadow=true;S.add(fl);
+var OPEN={1:[[70,150,0,205,'door']],4:[[28,90,75,225,'win'],[163,225,75,225,'win']]};
+var walls=[];
+function edge(i){var a=P[i],b=P[(i+1)%P.length],dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy);return {a:a,ux:dx/L,uy:dy/L,L:L,nx:dy/L,ny:-dx/L};}
+var wallM=M(0xf3f1ec),glassM=M(0xbfd8f2,{t:0.45,r:0.1}),frameM=M(0xffffff);
+function wallPiece(e,s0,s1,z0,z1,g,mat,th){var w=s1-s0,h=z1-z0;if(w<=0.5||h<=0.5)return;th=th||8;
+ var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,th),mat||wallM);var mid=(s0+s1)/2;
+ m.position.set(e.a[0]+e.ux*mid+e.nx*th/2,(z0+z1)/2,e.a[1]+e.uy*mid+e.ny*th/2);m.rotation.y=-Math.atan2(e.uy,e.ux);m.receiveShadow=true;g.add(m);}
+var LEDM=new THREE.MeshBasicMaterial({color:0xffd8a0}),GLOWM=(function(){var c=document.createElement('canvas');c.width=4;c.height=128;var x=c.getContext('2d'),gr=x.createLinearGradient(0,0,0,128);gr.addColorStop(0,'rgba(255,196,120,0.95)');gr.addColorStop(0.3,'rgba(255,200,130,0.35)');gr.addColorStop(1,'rgba(255,205,140,0)');x.fillStyle=gr;x.fillRect(0,0,4,128);return new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthWrite:false});})();
+var PANEL={1:1,2:1,3:1,5:1,6:1},PH=120,panM=M(0xd8c6aa),grvM=M(0xbca78a),ledM=M(0xe4d5be);
+function inPiece(e,s0,s1,z0,z1,off,th,mat,g){var w=s1-s0,h=z1-z0;if(w<=0.3)return;var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,th),mat);var mid=(s0+s1)/2,dn=-(off+th/2);
+ m.position.set(e.a[0]+e.ux*mid+e.nx*dn,(z0+z1)/2,e.a[1]+e.uy*mid+e.ny*dn);m.rotation.y=-Math.atan2(e.uy,e.ux);m.receiveShadow=true;g.add(m);}
+function panelRun(e,s0,s1,g){inPiece(e,s0,s1,10,PH,0,1.2,panM,g);
+ for(var x=s0+10;x<s1-2;x+=10)inPiece(e,x-0.35,x+0.35,10.5,PH-4,1.2,0.25,grvM,g);
+ inPiece(e,s0,s1,PH-4,PH,1.2,2.2,ledM,g);inPiece(e,s0,s1,PH-0.01,PH+1.8,0,7,ledM,g);inPiece(e,s0+0.5,s1-0.5,PH-0.9,PH-0.05,4.2,1.2,LEDM,g);inPiece(e,s0,s1,PH-34,PH-0.1,2.3,0.05,GLOWM,g);}
+for(var i=0;i<P.length;i++){var e=edge(i),g=new THREE.Group(),ops=(OPEN[i]||[]).slice().sort(function(a,b){return a[0]-b[0];}),cur=0;
+ ops.forEach(function(o){wallPiece(e,cur,o[0],0,H,g);wallPiece(e,o[0],o[1],0,o[2],g);wallPiece(e,o[0],o[1],o[3],H,g);
+  if(o[4]==='win'){wallPiece(e,o[0],o[1],o[2],o[3],g,glassM,2);wallPiece(e,o[0],o[1],o[3]-48,o[3]-44,g,frameM,4);wallPiece(e,(o[0]+o[1])/2-2,(o[0]+o[1])/2+2,o[2],o[3]-48,g,frameM,4);wallPiece(e,o[0]-4,o[1]+4,o[2]-4,o[2],g,frameM,14);}
+  cur=o[1];});
+ wallPiece(e,cur,e.L,0,H,g);wallPiece(e,0,e.L,0,10,g,frameM,10.5);
+ if(PANEL[i]){var skip=(OPEN[i]||[]).filter(function(o){return o[4]==='door';}),segs=[[0,e.L]];
+  skip.forEach(function(o){var ns=[];segs.forEach(function(sg){if(o[1]<=sg[0]||o[0]>=sg[1])ns.push(sg);else{if(o[0]>sg[0])ns.push([sg[0],o[0]]);if(o[1]<sg[1])ns.push([o[1],sg[1]]);}});segs=ns;});
+  segs.forEach(function(sg){panelRun(e,sg[0]+0.3,sg[1]-0.3,g);});}
+ g.userData={mx:e.a[0]+e.ux*e.L/2,mz:e.a[1]+e.uy*e.L/2,nx:e.nx,nz:e.ny};S.add(g);walls.push(g);}
+(function(){var e=edge(6),g=walls[6],ang=-Math.atan2(e.uy,e.ux),RAIL=M(0xb8875a),BRASS=M(0xb89a5e,{r:0.4});
+ function at(s,z,off){return [e.a[0]+e.ux*s-e.nx*off,z,e.a[1]+e.uy*s-e.ny*off];}
+ function box(s0,s1,z0,z1,off,th,mat){var m=new THREE.Mesh(new THREE.BoxGeometry(s1-s0,z1-z0,th),mat),p=at((s0+s1)/2,(z0+z1)/2,off+th/2);m.position.set(p[0],p[1],p[2]);m.rotation.y=ang;m.castShadow=true;g.add(m);}
+ function art(kind,w,h){var c=document.createElement('canvas');c.width=160;c.height=Math.round(160*h/w);var x=c.getContext('2d'),W=c.width,Hh=c.height;x.fillStyle='#fbf8f2';x.fillRect(0,0,W,Hh);x.lineCap='round';
+  if(kind==0){['#e9a27f','#f3c98b','#a9c7a0','#9cb8d6','#c9a3c9'].forEach(function(cl,i){x.strokeStyle=cl;x.lineWidth=9;x.beginPath();x.arc(W/2,Hh*0.85,W*0.38-i*10,Math.PI,0);x.stroke();});}
+  else if(kind==1){x.fillStyle='#e8a3a8';x.beginPath();x.moveTo(W/2,Hh*0.8);x.bezierCurveTo(W*0.05,Hh*0.45,W*0.3,Hh*0.08,W/2,Hh*0.3);x.bezierCurveTo(W*0.7,Hh*0.08,W*0.95,Hh*0.45,W/2,Hh*0.8);x.fill();}
+  else if(kind==2){x.fillStyle='#3f5a7a';x.fillRect(0,0,W,Hh);x.fillStyle='#2b2b2b';x.beginPath();x.moveTo(W*0.25,Hh*0.68);x.lineTo(W*0.75,Hh*0.68);x.lineTo(W*0.65,Hh*0.8);x.lineTo(W*0.35,Hh*0.8);x.fill();x.fillStyle='#d8d2c4';x.beginPath();x.moveTo(W*0.5,Hh*0.2);x.lineTo(W*0.5,Hh*0.65);x.lineTo(W*0.3,Hh*0.65);x.fill();x.fillStyle='#f2d67a';x.beginPath();x.arc(W*0.8,Hh*0.2,10,0,7);x.fill();}
+  else if(kind==3){x.fillStyle='#8fb3d9';x.beginPath();x.arc(W/2,Hh/2,W*0.3,0,7);x.fill();x.fillStyle='#8fbf8a';x.beginPath();x.arc(W*0.42,Hh*0.42,W*0.11,0,7);x.arc(W*0.6,Hh*0.6,W*0.09,0,7);x.fill();}
+  else if(kind==4){x.strokeStyle='#6d6a66';x.lineWidth=4;x.beginPath();x.arc(W/2,Hh*0.28,12,0,7);x.moveTo(W/2,Hh*0.36);x.lineTo(W/2,Hh*0.65);x.moveTo(W*0.35,Hh*0.48);x.lineTo(W*0.65,Hh*0.48);x.moveTo(W/2,Hh*0.65);x.lineTo(W*0.4,Hh*0.85);x.moveTo(W/2,Hh*0.65);x.lineTo(W*0.6,Hh*0.85);x.stroke();x.fillStyle='#e9a27f';x.fillRect(W*0.42,Hh*0.4,W*0.16,Hh*0.22);}
+  else if(kind==5){for(var i=0;i<40;i++){x.fillStyle=['#9fbf8f','#b7cf9f','#8aa97f'][i%3];x.beginPath();x.ellipse(15+(i*37)%(W-30),15+(i*53)%(Hh-30),7,4,i,0,7);x.fill();}}
+  else if(kind==6){x.fillStyle='#f2c75c';x.beginPath();x.arc(W/2,Hh/2,W*0.16,0,7);x.fill();x.strokeStyle='#f2c75c';x.lineWidth=5;for(var i=0;i<10;i++){var a=i*Math.PI/5;x.beginPath();x.moveTo(W/2+Math.cos(a)*W*0.22,Hh/2+Math.sin(a)*W*0.22);x.lineTo(W/2+Math.cos(a)*W*0.32,Hh/2+Math.sin(a)*W*0.32);x.stroke();}}
+  else if(kind==7){for(var i=0;i<18;i++){x.fillStyle=['#b48fc8','#d9a0c0','#9b86c9','#e2b7d4'][i%4];x.beginPath();x.arc(W*0.2+(i*41)%(W*0.6),Hh*0.2+(i*29)%(Hh*0.5),9+(i%3)*3,0,7);x.fill();}x.strokeStyle='#7da06f';x.lineWidth=3;x.beginPath();x.moveTo(W/2,Hh*0.65);x.lineTo(W/2,Hh*0.95);x.stroke();}
+  else{for(var i=0;i<25;i++){x.fillStyle=['#f0a986','#f3cf8a','#9cc3a8','#e8a3a8'][i%4];x.beginPath();x.arc((i*47)%W,(i*31)%Hh,4+(i%4)*2,0,7);x.fill();}}
+  return new THREE.CanvasTexture(c);}
+ function paper(s,ztop,w,h,kind,tilt){var m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshStandardMaterial({map:art(kind,w,h),roughness:0.9})),p=at(s,ztop-h/2,1.9);m.position.set(p[0],p[1],p[2]);m.rotation.y=ang;m.rotation.z=tilt||0;g.add(m);
+  box(s-w/2+5,s-w/2+8,ztop-3,ztop+2,1.6,1.4,BRASS);box(s+w/2-8,s+w/2-5,ztop-3,ztop+2,1.6,1.4,BRASS);}
+ var S0=170,S1=415,rails=[[226,[[0,32,26],[2,36,28],[6,30,26],[8,34,24],[1,32,26]]],[188,[[3,30,27],[4,26,28],[5,34,26],[1,30,26],[0,34,25]]],[150,[[7,32,24],[0,34,24],[4,26,25],[5,30,24],[6,32,23]]]];
+ rails.forEach(function(r){box(S0,S1,r[0],r[0]+3,0,2,RAIL);var tot=r[1].reduce(function(a,b){return a+b[1];},0),gap=(S1-S0-tot)/(r[1].length+1),s=S0+gap;
+  r[1].forEach(function(p,i){paper(s+p[1]/2,r[0]-0.5,p[1],p[2],p[0],(i%2?0.015:-0.012));s+=p[1]+gap;});});
+})();
+(function(){var FR=M(0xd2b48c);
+ function cv(w,h,draw){var c=document.createElement('canvas');c.width=240;c.height=Math.round(240*h/w);var x=c.getContext('2d');draw(x,c.width,c.height);return new THREE.CanvasTexture(c);}
+ function framed(ei,s,z0,w,h,tex){var e=edge(ei),g=walls[ei],ang=-Math.atan2(e.uy,e.ux);
+  function put(m,ss,zz,off){m.position.set(e.a[0]+e.ux*ss-e.nx*off,zz,e.a[1]+e.uy*ss-e.ny*off);m.rotation.y=ang;m.castShadow=true;g.add(m);}
+  var fw=2.2,d=2.5;[[s-w/2,s-w/2+fw,z0,z0+h],[s+w/2-fw,s+w/2,z0,z0+h],[s-w/2,s+w/2,z0,z0+fw],[s-w/2,s+w/2,z0+h-fw,z0+h]].forEach(function(b){put(new THREE.Mesh(new THREE.BoxGeometry(b[1]-b[0],b[3]-b[2],d),FR),(b[0]+b[1])/2,(b[2]+b[3])/2,d/2);});
+  put(new THREE.Mesh(new THREE.PlaneGeometry(w-2*fw,h-2*fw),new THREE.MeshStandardMaterial({map:tex,roughness:0.85})),s,z0+h/2,1.2);}
+ function bgPink(x,W,H,kind){x.fillStyle=kind==1?'#f4ece6':'#d8b4ae';x.fillRect(0,0,W,H);
+  if(kind==2){x.fillStyle='#f4ece6';for(var i=0;i<W;i+=16)x.fillRect(i,0,7,H);}
+  else{x.strokeStyle=kind==1?'rgba(200,170,165,0.6)':'rgba(255,255,255,0.45)';x.lineWidth=1;for(var i=-H;i<W;i+=22){x.beginPath();x.moveTo(i,0);x.lineTo(i+H,H);x.moveTo(i+H,0);x.lineTo(i,H);x.stroke();}}}
+ function critter(x,W,H,t){var cx=W/2,cy=H*0.55,r=W*0.2,brown=t=='fox'?'#c98f62':(t=='squirrel'?'#b8987e':'#8a6448');
+  if(t=='deer'||t=='fawn'){x.strokeStyle='#6b4a32';x.lineWidth=6;[-1,1].forEach(function(sd){x.beginPath();x.moveTo(cx+sd*r*0.5,cy-r*0.8);x.lineTo(cx+sd*r*1.1,cy-r*1.9);x.moveTo(cx+sd*r*0.85,cy-r*1.4);x.lineTo(cx+sd*r*1.4,cy-r*1.6);x.moveTo(cx+sd*r*1.0,cy-r*1.75);x.lineTo(cx+sd*r*0.8,cy-r*2.2);x.stroke();});}
+  if(t=='squirrel'){x.fillStyle='#cbb39e';x.beginPath();x.ellipse(cx+r*1.3,cy+r*1.3,r*0.7,r*1.3,0.3,0,7);x.fill();}
+  x.fillStyle=brown;x.beginPath();x.ellipse(cx,cy+r*1.7,r*1.15,r*1.1,0,0,7);x.fill();x.fillStyle='#f6f1ea';x.beginPath();x.ellipse(cx,cy+r*1.8,r*0.7,r*0.9,0,0,7);x.fill();
+  x.fillStyle=brown;[-1,1].forEach(function(sd){x.beginPath();if(t=='fox'){x.moveTo(cx+sd*r*0.3,cy-r*0.6);x.lineTo(cx+sd*r*1.0,cy-r*1.5);x.lineTo(cx+sd*r*1.05,cy-r*0.3);}else if(t=='deer'||t=='fawn'){x.ellipse(cx+sd*r*1.15,cy-r*0.5,r*0.5,r*0.22,sd*0.4,0,7);}else{x.arc(cx+sd*r*0.8,cy-r*0.75,r*0.32,0,7);}x.fill();});
+  x.beginPath();x.arc(cx,cy,r,0,7);x.fill();
+  if(t=='raccoon'){x.fillStyle='#3e3530';x.beginPath();x.ellipse(cx,cy-r*0.05,r*0.85,r*0.28,0,0,7);x.fill();}
+  x.fillStyle='#f6f1ea';x.beginPath();x.ellipse(cx,cy+r*0.45,r*0.5,r*0.38,0,0,7);x.fill();
+  x.fillStyle=t=='raccoon'?'#ffffff':'#2d2420';[-1,1].forEach(function(sd){x.beginPath();x.arc(cx+sd*r*0.38,cy-r*0.05,r*0.1,0,7);x.fill();});
+  if(t=='raccoon'){x.fillStyle='#2d2420';[-1,1].forEach(function(sd){x.beginPath();x.arc(cx+sd*r*0.38,cy-r*0.05,r*0.06,0,7);x.fill();});}
+  x.fillStyle='#2d2420';x.beginPath();x.ellipse(cx,cy+r*0.3,r*0.13,r*0.09,0,0,7);x.fill();
+  x.fillStyle='rgba(232,150,150,0.55)';[-1,1].forEach(function(sd){x.beginPath();x.arc(cx+sd*r*0.62,cy+r*0.3,r*0.15,0,7);x.fill();});}
+ var animals=[['deer',0],['bear',2],['fox',1],['raccoon',2],['fawn',1],['squirrel',0]];
+ var e2s=150.5,fw=30,fh=40,gp=6;
+ animals.forEach(function(a,i){var col=i%3,row=Math.floor(i/3),s=e2s+(col-1)*(fw+gp),z0=row==0?182:136;
+  framed(2,s,z0,fw,fh,cv(fw,fh,function(x,W,H){bgPink(x,W,H,a[1]);critter(x,W,H,a[0]);}));});
+ function car(x,cx,cy,sc,col,taxi){x.fillStyle=col;x.beginPath();x.moveTo(cx-40*sc,cy);x.lineTo(cx-40*sc,cy-14*sc);x.lineTo(cx-18*sc,cy-16*sc);x.lineTo(cx-8*sc,cy-30*sc);x.lineTo(cx+20*sc,cy-30*sc);x.lineTo(cx+30*sc,cy-16*sc);x.lineTo(cx+42*sc,cy-12*sc);x.lineTo(cx+42*sc,cy);x.fill();
+  x.fillStyle='#e8eef2';x.fillRect(cx-4*sc,cy-26*sc,10*sc,9*sc);x.fillRect(cx+9*sc,cy-26*sc,9*sc,9*sc);
+  if(taxi){x.fillStyle='#2d2d2d';for(var i=0;i<6;i++)x.fillRect(cx-20*sc+i*8*sc,cy-9*sc,4*sc,4*sc);x.fillStyle='#f2d26b';x.fillRect(cx+2*sc,cy-36*sc,10*sc,6*sc);}
+  x.fillStyle='#2b2b2b';[-24,26].forEach(function(o){x.beginPath();x.arc(cx+o*sc,cy,8*sc,0,7);x.fill();x.fillStyle='#ddd';x.beginPath();x.arc(cx+o*sc,cy,3*sc,0,7);x.fill();x.fillStyle='#2b2b2b';});}
+ var W5=[ function(x,W,H){x.fillStyle='#f8f5ef';x.fillRect(0,0,W,H);car(x,W/2,H*0.3,1.3,'#2f3e55');car(x,W/2,H*0.55,1.3,'#e2b546',true);car(x,W/2,H*0.8,1.3,'#d8553f');},
+  function(x,W,H){x.fillStyle='#f8f5ef';x.fillRect(0,0,W,H);var L='BEEP',cl=['#d9a441','#c9553f','#9db8c9','#3f4f5f','#6a7f5a','#3f4f5f','#c9c3a0','#9db8c9'];x.font='bold 54px sans-serif';x.textAlign='center';
+   for(var i=0;i<4;i++){x.fillStyle=cl[i];x.fillText(L[i],W*0.2+i*W*0.2,H*0.38);x.fillStyle=cl[i+4];x.fillText(L[i],W*0.2+i*W*0.2,H*0.6);}
+   x.fillStyle='#c9bfb4';for(var i=0;i<6;i++)x.fillRect(W*0.12+i*W*0.13,H*0.72,W*0.08,5);},
+  function(x,W,H){x.fillStyle='#f8f5ef';x.fillRect(0,0,W,H);var bx=W*0.12,by=H*0.35,bw=W*0.74,bh=H*0.38;x.fillStyle='#cf4e3b';x.fillRect(bx,by,bw,bh);x.fillStyle='#f3efe6';
+   for(var r=0;r<2;r++)for(var i=0;i<4;i++){x.fillRect(bx+10+i*(bw-20)/4,by+12+r*bh*0.5,(bw-20)/4-8,bh*0.28);}
+   x.fillStyle='#2f2f2f';x.fillRect(bx+20,by+bh*0.42,bw-40,10);var ac=['#d9a441','#8a8f96','#3a3a3a','#b07a4f'];for(var i=0;i<4;i++){x.fillStyle=ac[i];x.beginPath();x.arc(bx+10+(i+0.5)*(bw-20)/4,by+bh*0.62,9,0,7);x.fill();}
+   x.fillStyle='#d9a441';x.fillRect(bx+bw*0.28,by-34,6,36);x.beginPath();x.arc(bx+bw*0.28+3,by-38,9,0,7);x.fill();
+   x.fillStyle='#2b2b2b';[0.2,0.8].forEach(function(f){x.beginPath();x.arc(bx+bw*f,by+bh,14,0,7);x.fill();});}];
+ var e5=edge(5),bedS=300-98.25,bw2=40,bh2=50,g2=8;
+ W5.forEach(function(fn,i){framed(5,bedS+(i-1)*(bw2+g2),130,bw2,bh2,cv(bw2,bh2,fn));});
+})();
+function item(cx,cz,rotDeg,parts){var g=new THREE.Group();parts.forEach(function(p){var m=new THREE.Mesh(p.geo||new THREE.BoxGeometry(p.x1-p.x0,p.z1-p.z0,p.y1-p.y0),p.m);
+ m.position.set((p.x0+p.x1)/2,(p.z0+p.z1)/2,(p.y0+p.y1)/2);if(p.ry)m.rotation.y=p.ry;m.castShadow=true;m.receiveShadow=true;g.add(m);});
+ g.position.set(cx,0,cz);g.rotation.y=-rotDeg*Math.PI/180;S.add(g);return g;}
+function B(x0,x1,y0,y1,z0,z1,m){return {x0:x0,x1:x1,y0:y0,y1:y1,z0:z0,z1:z1,m:m};}
+var WH=M(0xfafaf7),WH2=M(0xe9e7e0),WOOD=M(0xcfa57a),DARK=M(0x7b4e33),GAP=M(0x9a978d),BLK=M(0x3a3a3a),MAT=M(0xffffff),
+ BLUE=M(0x9cc3e6),PIL=M(0xf2f2f2),MINT=M(0xbfe3d0),KNOB=M(0x8d8a80);
+function doors(a,b,zb,zt,cols,rows,yf){var o=[],w=(b-a)/cols,h=(zt-zb)/rows;for(var i=0;i<cols;i++)for(var j=0;j<rows;j++){
+ o.push(B(a+i*w+1,a+(i+1)*w-1,yf,yf+0.8,zb+j*h+1,zb+(j+1)*h-1,WH2));
+ var kx=cols>1&&rows==1?(i%2==0?a+(i+1)*w-6:a+i*w+6):a+(i+0.5)*w;var kz=rows>1?zb+(j+0.5)*h:zt-(zt-zb)*0.15;o.push(B(kx-1.5,kx+1.5,yf+0.8,yf+2.5,kz-1.5,kz+1.5,KNOB));}return o;}
+function bedKid(w,d){var a=w/2,b=d/2,t=5,H=60.7,o=[];
+ [[-a,-b],[a-t,-b],[-a,b-t],[a-t,b-t]].forEach(function(c){o.push(B(c[0],c[0]+t,c[1],c[1]+t,0,H,WH));});
+ [-a,a-t].forEach(function(x){o.push(B(x,x+t,-b+t,b-t,H-7,H,WH),B(x,x+t,-b+t,b-t,22,30,WH));
+  for(var i=1;i<6;i++){var y=-b+t+(d-2*t)*i/6;o.push(B(x+0.5,x+t-0.5,y-2.5,y+2.5,30,H-7,WH));}});
+ o.push(B(-a+t,a-t,-b,-b+3,22,34,WH),B(-a+t,a-t,b-3,b,22,34,WH));
+ o.push(B(-a+t,a-t,-b+3,b-3,30,44,MAT),B(-a+t+2,a-t-50,-b+4,b-2,44,46.5,M(0xefe8da)),B(a-t-42,a-t-6,-b+10,b-14,44,55,PIL),B(a-t-60,a-t-34,-b+20,b-20,44,53,M(0xd9a85b)));
+ var dw=(w-2*t-6)/2;[0,1].forEach(function(i){var x0=-a+t+2+i*(dw+2);o.push(B(x0,x0+dw,-b+6,b-1,2,21,WH2),B(x0+dw/2-9,x0+dw/2+9,b-1,b+0.3,14,17,M(0x9a8f80)));});
+ return o;}
+function cot(w,d){var a=w/2,b=d/2,p=4,o=[B(-a,a,-b,b,22,26,WOOD),B(-a+3,a-3,-b+3,b-3,26,36,MAT)];
+ [[-a,-b],[a-p,-b],[-a,b-p],[a-p,b-p]].forEach(function(c){o.push(B(c[0],c[0]+p,c[1],c[1]+p,0,90,WH));});
+ o.push(B(-a,a,-b,-b+p,86,90,WH),B(-a,a,b-p,b,86,90,WH),B(-a,-a+p,-b,b,86,90,WH),B(a-p,a,-b,b,86,90,WH));
+ for(var i=1;i<14;i++){var x=-a+p+(w-2*p)*i/14;o.push(B(x-1,x+1,-b+1,-b+3,26,86,WH),B(x-1,x+1,b-3,b-1,26,86,WH));}
+ for(var j=1;j<6;j++){var y=-b+p+(d-2*p)*j/6;o.push(B(-a+1,-a+3,y-1,y+1,26,86,WH),B(a-3,a-1,y-1,y+1,26,86,WH));}return o;}
+function chest(w,d,h){var a=w/2,b=d/2,o=[B(-a,a,-b,b,0,h,DARK),B(-a+4,a-4,-b+3,b-3,h,h+9,MINT),B(-a+10,a-10,-b+9,b-9,h+9,h+10,MAT)];
+ for(var j=1;j<5;j++)o.push(B(-a+1,a-1,b,b+0.6,h*j/5-0.6,h*j/5+0.6,M(0x4a2e1e)));
+ for(var j=0;j<5;j++){var z=h*(j+0.5)/5;o.push(B(-2,2,b,b+2,z-1.5,z+1.5,KNOB));}return o;}
+function kitchen(w,d,h){var a=w/2,b=d/2,o=[B(-a,a,-b,b,0,46,WH),B(-a,a,-b,b,46,50,WOOD),B(-a,a,-b,-b+5,50,h,WOOD),B(-a+6,a-6,-b+5,-b+14,62,64,WOOD),
+ B(a-34,a-8,-b+10,b-8,50,53,M(0xc9d6de))];
+ [[-a+14,-b+16],[-a+14,b-10],[-a+32,-b+16],[-a+32,b-10]].forEach(function(c){o.push({geo:new THREE.CylinderGeometry(5.5,5.5,1.2,24),m:BLK,x0:c[0],x1:c[0],y0:c[1],y1:c[1],z0:50,z1:51.2});});
+ return o.concat(doors(-a+2,a-2,4,44,3,1,b));}
+var SEA=M(0xc8a46e),SEA2=M(0x8a6a3e),MDF=M(0xc9ab88);
+function kallax(w,d,h,cols,rows){var a=w/2,b=d/2,t=3.5,s=1.6,o=[B(-a,-a+t,-b,b,0,h,WH),B(a-t,a,-b,b,0,h,WH),B(-a,a,-b,b,h-t,h,WH),B(-a+t,a-t,-b,b,0,t,WH),B(-a+t,a-t,-b,b,h/2-s/2,h/2+s/2,WH),B(-a+t,a-t,-b,-b+1,t,h-t,WH)];
+ var cw=(w-2*t-(cols-1)*s)/cols;for(var i=1;i<cols;i++){var x=-a+t+i*cw+(i-1)*s;o.push(B(x,x+s,-b,b,t,h-t,WH));}
+ var spines=[0xa9b8a0,0xe8dcc4,0xc9a46a,0x8fa39a,0xd8c7a8,0xb7c6b4,0xe2b77a,0x9aa88f];
+ for(var i=0;i<cols;i++){var x0=-a+t+i*(cw+s);
+  o.push(B(x0+1.5,x0+cw-1.5,-b+3,b-1.5,t+0.5,t+0.5+29,SEA),B(x0+cw/2-6,x0+cw/2+6,b-1.6,b-1.2,t+21,t+25,SEA2));
+  if(i%2==0){var bx=x0+2,n=7+i;for(var k=0;k<n;k++){var bw=2.2+((k*7+i)%3)*0.6,bh=20+((k*5+i*3)%4)*2.5;o.push(B(bx,bx+bw,-b+4,b-8,h/2+s/2,h/2+s/2+bh,M(spines[(k+i)%spines.length])));bx+=bw+0.2;if(bx>x0+cw-4)break;}}
+  else{o.push(B(x0+cw/2-6,x0+cw/2+6,-b+12,b-12,h/2+s/2,h/2+s/2+11,M(0xd9b48a)),B(x0+cw/2-4,x0+cw/2+4,-b+14,b-14,h/2+s/2+11,h/2+s/2+19,M(0xeee6d8)));}}
+ o.push(B(-a+14,-a+24,-b+12,b-12,h,h+14,M(0xd8c3a5)),B(-a+12,-a+26,-b+10,b-10,h+14,h+28,M(0xf4ead8)),B(a-30,a-12,-b+10,b-12,h,h+10,M(0xa9b8a0)));
+ return o;}
+function radCover(w,d,h){var a=w/2,b=d/2,o=[B(-a-1,a+1,-b,b+1.5,h-2,h,MDF),B(-a,-a+6,-b,b,0,h-2,MDF),B(a-6,a,-b,b,0,h-2,MDF),B(-3,3,b-2,b,0,h-2,MDF),
+ B(-a+6,a-6,b-2,b,h-14,h-2,MDF),B(-a+6,a-6,b-2,b,10,20,MDF)];
+ [[-a+6,-3],[3,a-6]].forEach(function(p){var L=p[1]-p[0],n=Math.floor((L-4)/5);for(var i=0;i<=n;i++){var x=p[0]+2+i*(L-4)/n;o.push(B(x-1.1,x+1.1,b-1.8,b-0.2,20,h-14,MDF));}});
+ return o;}
+function cab(w,d,h,cols,rows){var a=w/2,b=d/2;return [B(-a,a,-b,b,6,h,WH),B(-a+3,a-3,-b+2,b-4,0,6,M(0xd8d6cf))].concat(doors(-a+1,a-1,7,h-1,cols,rows||1,b));}
+function wardrobe(w,d,h){var a=w/2,b=d/2;return [B(-a,a,-b,b,0,h,M(0xf6f5f1))].concat(doors(-a+2,a-2,4,h-4,2,1,b));}
+function radiator(w){var o=[];for(var i=0;i<12;i++){var x=-w/2+w*(i+0.5)/12;o.push(B(x-3.6,x+3.6,-4,4,10,65,WH));}return o;}
+function onWall(ei,a,w,d){var e=edge(ei),nx=-e.nx,ny=-e.ny;return {x:e.a[0]+e.ux*(a+w/2)+nx*d/2,z:e.a[1]+e.uy*(a+w/2)+ny*d/2,rot:Math.atan2(e.uy,e.ux)*180/Math.PI};}
+item(97.65,564.35,180,bedKid(195.3,95.3));
+item(253.5,398,0,cot(145,76));
+item(364.5,381,0,chest(77,42,105));
+var LA=[],LB=[],SEATS={};
+LA.push(item(20,394.5,270,kitchen(109,40,72)));
+LA.push(item(19.5,263.5,270,kallax(147,39,77,4,2)));
+// Layout B: kitchen moves to the hall, low corner storage by Bar's bed and under the window, a seat in the corner by the corridor wall, next to the cot
+LB.push(item(20,263.5,270,kitchen(109,40,72)));
+function lowCubes(w,d,h,n){var a=w/2,b=d/2,t=1.8,o=[B(-a,-a+t,-b,b,0,h,WH),B(a-t,a,-b,b,0,h,WH),B(-a,a,-b,b,h-t,h,WH),B(-a+t,a-t,-b,b,4,4+t,WH),B(-a+t,a-t,-b,-b+0.8,4,h-t,WH),B(-a+t,a-t,-b+2,b-2,0,4,M(0xdedbd3))];
+ var cw=(w-2*t-(n-1)*t)/n;for(var i=0;i<n;i++){var x0=-a+t+i*(cw+t);if(i>0)o.push(B(x0-t,x0,-b,b,4,h-t,WH));
+  o.push(B(x0+1.2,x0+cw-1.2,-b+3,b-1.5,4+t,h-t-3,SEA),B(x0+cw/2-4,x0+cw/2+4,b-1.5,b-0.8,h-t-10,h-t-7.5,SEA2));}return o;}
+var ca=onWall(5,32,70,35);LB.push(item(ca.x,ca.z,ca.rot,lowCubes(70,35,62,2).concat([B(-26,-4,-10,8,62,65,M(0x8f9e7e)),B(-25,-5,-9,7,65,67.5,M(0xe2d8c6)),{geo:new THREE.CylinderGeometry(5,6,16,16),m:M(0xe9e3d6),x0:20,x1:20,y0:0,y1:0,z0:62,z1:78}])));
+var cb=onWall(4,168,80,35);LB.push(item(cb.x,cb.z,cb.rot,lowCubes(80,35,62,2).concat([B(-30,-8,-10,8,62,64,M(0xc49a72)),{geo:new THREE.SphereGeometry(7,14,10),m:M(0xd8c3a0),x0:22,x1:22,y0:0,y1:0,z0:62,z1:76}])));
+(function(){var g=new THREE.Group(),W=M(0xc9a57c),UP=M(0xe6dbc7);g.position.set(142,0,402);g.rotation.y=0;
+ function bx(x0,x1,y0,y1,z0,z1,m){var mm=new THREE.Mesh(new THREE.BoxGeometry(x1-x0,y1-y0,z1-z0),m);mm.position.set((x0+x1)/2,(y0+y1)/2,(z0+z1)/2);mm.castShadow=true;mm.receiveShadow=true;g.add(mm);}
+ [-27,27].forEach(function(x){var c=new THREE.QuadraticBezierCurve3(new THREE.Vector3(x,8,-40),new THREE.Vector3(x,-6,0),new THREE.Vector3(x,8,40));var r=new THREE.Mesh(new THREE.TubeGeometry(c,24,1.8,8,false),W);r.castShadow=true;g.add(r);
+  bx(x-1.6,x+1.6,4,42,-24,-20,W);bx(x-1.6,x+1.6,4,42,20,24,W);bx(x-1.6,x+1.6,42,92,-28,-24,W);bx(x-1.6,x+1.6,56,59,-26,22,W);bx(x-1.6,x+1.6,42,56,18,22,W);});
+ bx(-27,27,38,44,-24,24,W);bx(-24,24,44,52,-22,24,UP);bx(-24,24,46,90,-30,-22,UP);bx(-22,22,52,84,-25,-21,M(0xd8a85a));
+ S.add(g);SEATS.rock=g;LB.push(g);})();
+(function(){var g=new THREE.Group();g.position.set(142,0,400);var BB=new THREE.MeshStandardMaterial({map:bqt0(),color:0xcfc4ad,roughness:1});
+ var m=new THREE.Mesh(new THREE.SphereGeometry(38,32,20),BB);m.scale.set(1,0.62,1);m.position.y=23;m.castShadow=true;g.add(m);
+ var m2=new THREE.Mesh(new THREE.SphereGeometry(30,24,16),BB);m2.scale.set(1,0.55,0.8);m2.position.set(-10,38,0);m2.castShadow=true;g.add(m2);
+ S.add(g);g.visible=false;SEATS.bean=g;LB.push(g);})();
+function bqt0(){var c=document.createElement('canvas');c.width=c.height=64;var q=c.getContext('2d');q.fillStyle='#ddd3c0';q.fillRect(0,0,64,64);for(var i=0;i<300;i++){q.fillStyle=Math.random()<0.5?'rgba(255,255,250,0.7)':'rgba(170,155,130,0.4)';q.beginPath();q.arc(Math.random()*64,Math.random()*64,0.8+Math.random()*1.2,0,7);q.fill();}var t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(4,4);return t;}
+var LAYOUT='A',SEAT='rock';
+function applyLayout(){LA.forEach(function(g){g.visible=LAYOUT==='A';});LB.forEach(function(g){g.visible=LAYOUT==='B';});if(LAYOUT==='B'){SEATS.rock.visible=SEAT==='rock';SEATS.bean.visible=SEAT==='bean';}
+ var a=document.getElementById('layA'),b=document.getElementById('layB'),sb=document.getElementById('seatBtn');if(a){a.classList.toggle('sel',LAYOUT==='A');b.classList.toggle('sel',LAYOUT==='B');sb.style.display=LAYOUT==='B'?'':'none';document.getElementById('cornerBtn').style.display=LAYOUT==='B'?'':'none';sb.textContent=SEAT==='rock'?'Show bean bag instead':'Show rocking chair instead';}}
+window.setLayout=function(l){LAYOUT=l;applyLayout();};window.swapSeat=function(){SEAT=SEAT==='rock'?'bean':'rock';applyLayout();};
+setTimeout(applyLayout,0);
+var WD=[],wT=0,wV=0;
+(function(){var g=new THREE.Group();g.position.set(51.5,0,30);var W=103,D=60,Hh=235,a=W/2,b=D/2,t=1.8,CW=M(0xf6f5f1),IN=M(0xefece5);
+ function bx(x0,x1,y0,y1,z0,z1,m){var mm=new THREE.Mesh(new THREE.BoxGeometry(x1-x0,y1-y0,z1-z0),m);mm.position.set((x0+x1)/2,(y0+y1)/2,(z0+z1)/2);mm.castShadow=true;mm.receiveShadow=true;g.add(mm);return mm;}
+ function label(txt,w,h,x,y,z){var c=document.createElement('canvas');c.width=256;c.height=80;var q=c.getContext('2d');q.fillStyle='#f4ede1';q.fillRect(0,0,256,80);q.strokeStyle='#b89f7c';q.lineWidth=4;q.strokeRect(6,6,244,68);q.fillStyle='#5a4a38';q.font='600 30px sans-serif';q.textAlign='center';q.textBaseline='middle';q.fillText(txt,128,42);
+  var m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c)}));m.position.set(x,y,z);g.add(m);}
+ bx(-a,a,0,6,-b,b-2,CW);bx(-a,a,Hh-t,Hh,-b,b-2,CW);bx(-a,-a+t,0,Hh,-b,b-2,CW);bx(a-t,a,0,Hh,-b,b-2,CW);bx(-a+t,a-t,6,Hh-t,-b,-b+1,IN);bx(-0.9,0.9,6,Hh-t,-b+1,b-3,CW);
+ var ROD=M(0xb89a5e,{r:0.35});[200,112].forEach(function(y){var r=new THREE.Mesh(new THREE.CylinderGeometry(1,1,a-t-1,12),ROD);r.rotation.z=Math.PI/2;r.position.set(-a/2,y,0);g.add(r);});
+ var pal=[0x8f9e7e,0xd8a85a,0x3f5873,0xe9dfcf,0xb8693e,0xc7b8a3,0x6f8a5a,0xa9c0cf,0xe2c6a8];
+ function hang(y,n,hMin,hMax,dep){var x0=-a+t+4,step=(a-t-8)/n;for(var i=0;i<n;i++){var x=x0+i*step+step/2,h=hMin+((i*7)%5)/4*(hMax-hMin),col=pal[(i*4+(y>150?3:0))%pal.length];
+  bx(x-0.3,x+0.3,y-4,y+1,-dep/2+2,dep/2-2,M(0x9b7650));bx(x-1.1,x+1.1,y-4-h,y-4,-dep/2,dep/2,M(col));bx(x-0.25,x+0.25,y,y+3,-0.5,0.5,ROD);}}
+ hang(200,8,48,62,36);hang(112,9,34,44,30);
+ bx(-a+8,-6,6,46,-b+8,b-10,SEA);bx(-a+9,-7,44,47,-b+9,b-11,M(0xe9dfcf));
+ [30,75,115,155,200].forEach(function(y){bx(0.9,a-t,y-t,y,-b+1,b-4,CW);});
+ function boxL(x0,x1,y0,h,col,txt){bx(x0,x1,y0,y0+h,-b+3,b-7,M(col));if(txt)label(txt,(x1-x0)*0.8,h*0.3,(x0+x1)/2,y0+h*0.62,b-6.9);}
+ function stack(x0,x1,y0,n){for(var i=0;i<n;i++){bx(x0+((i%2)?0.6:0),x1-((i%2)?0.4:0),y0+i*3.6,y0+i*3.6+3.4,-b+6,b-12,M(pal[(i*3+Math.round(x0)+Math.round(y0/7))%pal.length]));}}
+ [[4,13],[16,25],[28,37]].forEach(function(p,i){bx(p[0],p[1],6,13,b-24,b-8,M([0xb8693e,0x3f5873,0xd8a85a][i]));bx(p[0],p[1],6,13,b-36,b-26,M([0xb8693e,0x3f5873,0xd8a85a][i]));});
+ boxL(2.5,25,30,30,0xd9cfc0,'PYJAMAS');boxL(26.5,a-t-1,30,30,0xd9cfc0,'SOCKS & PANTS');
+ stack(3,24,75,8);stack(27,a-t-2,75,7);stack(3,24,115,7);stack(27,a-t-2,115,8);
+ stack(3,24,155,6);boxL(26.5,a-t-1,155,28,0xcbbfa9,'HATS & GLOVES');
+ boxL(2.5,25,200,28,0xcbbfa9,'NEXT SIZE 4–5');boxL(26.5,a-t-1,200,28,0xcbbfa9,'SWIM & SPARE');
+ [[-a+0.4,1],[a-0.4,-1]].forEach(function(p){var pv=new THREE.Group();pv.position.set(p[0],Hh/2,b-1);var dw=a-0.8;
+  var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,Hh-6,2),M(0xe9e7e0));dm.position.set(p[1]*dw/2,0,0);dm.castShadow=true;pv.add(dm);
+  var kb=new THREE.Mesh(new THREE.BoxGeometry(3,3,1.7),KNOB);kb.position.set(p[1]*(dw-6),12,1.8);pv.add(kb);g.add(pv);WD.push({p:pv,s:p[1]});});
+ S.add(g);})();
+window.toggleWard=function(){wT=wT?0:1;document.getElementById('wardBtn').textContent=wT?'Close wardrobe':'Open wardrobe';if(wT)VIEWS['kids']('ward');};
+var rc=onWall(4,33,120,8);item(rc.x,rc.z,rc.rot,radiator(120));
+var cc=onWall(4,22,142,19);item(cc.x,cc.z,cc.rot,radCover(142,19,72));
+var rcv=document.createElement('canvas');rcv.width=rcv.height=512;var q=rcv.getContext('2d');q.fillStyle='#EDE4D6';q.fillRect(0,0,512,512);
+for(var n=0;n<5000;n++){var px=Math.random()*512,py=Math.random()*512;q.fillStyle=Math.random()<0.5?'rgba(255,255,255,0.35)':'rgba(170,150,120,0.22)';q.beginPath();q.arc(px,py,1.5+Math.random()*2.5,0,7);q.fill();}
+var dots=['#97A58E','#C9A77E','#A9ADA4','#B9A07A'];var ri=0;for(var gy=40;gy<512;gy+=64){for(var gx=(gy/64%2)*32+30;gx<512;gx+=64){var c=dots[(ri++)%dots.length];q.fillStyle=c;for(var p=0;p<8;p++){var an=p*Math.PI/4;q.beginPath();q.arc(gx+Math.cos(an)*6,gy+Math.sin(an)*6,4.5,0,7);q.fill();}q.beginPath();q.arc(gx,gy,5,0,7);q.fill();}}
+var rugM=new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(rcv),roughness:1});
+var rugE=new THREE.Mesh(new THREE.CylinderGeometry(75,75,1.6,64),[new THREE.MeshStandardMaterial({color:0xe2d8c8,roughness:1}),rugM,rugM]);rugE.position.set(275,0.8,476);rugE.receiveShadow=true;S.add(rugE);
+
+// curtains: linen panels drawn back either side of each window, hung from a slim oak pole
+(function(){var e=edge(4),g=walls[4],ang=-Math.atan2(e.uy,e.ux);
+ var LIN=new THREE.MeshStandardMaterial({color:0xe9dfcf,roughness:1,side:THREE.DoubleSide}),POLE=M(0xb8875a,{r:0.5});
+ function panel(s0,w,top,bot){var h=top-bot,geo=new THREE.PlaneGeometry(w,h,28,1),p=geo.attributes.position;
+  for(var i=0;i<p.count;i++){var x=p.getX(i);p.setZ(i,2.4*Math.sin((x+w/2)/w*Math.PI*7));}geo.computeVertexNormals();
+  var m=new THREE.Mesh(geo,LIN),s=s0+w/2,off=9;m.position.set(e.a[0]+e.ux*s-e.nx*off,(top+bot)/2,e.a[1]+e.uy*s-e.ny*off);m.rotation.y=ang;m.castShadow=true;g.add(m);}
+ OPEN[4].forEach(function(o){var a=o[0],b=o[1],top=244,bot=79;
+  var pole=new THREE.Mesh(new THREE.CylinderGeometry(1.2,1.2,(b-a)+44,12),POLE),s=(a+b)/2;pole.rotation.z=Math.PI/2;
+  var holder=new THREE.Group();holder.position.set(e.a[0]+e.ux*s-e.nx*9,top+3,e.a[1]+e.uy*s-e.ny*9);holder.rotation.y=ang;holder.add(pole);
+  [-1,1].forEach(function(k){var f=new THREE.Mesh(new THREE.SphereGeometry(2.2,12,10),POLE);f.position.set(k*((b-a)/2+22),0,0);holder.add(f);});g.add(holder);
+  panel(a-20,26,top,bot);panel(b-6,26,top,bot);});})();
+var V={'3d':[C.x-680,600,C.z-180],'top':[C.x,3200,C.z+0.01],'door':[50,150,345],'shelf':[150,175,500],'cotw':[250,165,600],'bedw':[150,160,380],'ward':[60,140,235],'corner':[200,150,420]};
+VIEWS['kids']=function(k){var p=V[k];cam.position.set(p[0],p[1],p[2]);cam.fov=k==='top'?13:((k==='door'||k==='shelf'||k==='cotw'||k==='bedw'||k==='ward'||k==='corner')?62:40);cam.updateProjectionMatrix();if(k==='door'){ctl.target.set(260,60,490);}else if(k==='shelf'){ctl.target.set(10,120,310);}else if(k==='cotw'){ctl.target.set(250,130,360);}else if(k==='bedw'){ctl.target.set(110,110,612);}else if(k==='ward'){ctl.target.set(51.5,112,20);}else if(k==='corner'){ctl.target.set(285,40,575);}else{ctl.target.set(C.x,k==='top'?0:40,C.z);};ctl.update();};
+VIEWS['kids']('3d');
+function size(){var w=wrap.clientWidth,h=wrap.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+new ResizeObserver(size).observe(wrap);size();
+var tmp=new THREE.Vector3();
+(function loop(){requestAnimationFrame(loop);if(!wrap.offsetParent)return;ctl.update();wV+=(wT-wV)*0.08;WD.forEach(function(d){d.p.rotation.y=-d.s*wV*1.5;});
+ walls.forEach(function(g){var u=g.userData;var vx=cam.position.x-u.mx,vz=cam.position.z-u.mz;var outside=(vx*u.nx+vz*u.nz)>0;g.visible=cam.position.y>1500||!outside;});
+ R.render(S,cam);})();
+})();
+
+</script>
+<script>
+
+(function(){
+var cv=document.getElementById('cv_guest'),wrap=document.getElementById('wrap_guest');
+var R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+R.setPixelRatio(Math.min(2,window.devicePixelRatio||1));R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+var S=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(40,1,1,5000);
+var ctl=new THREE.OrbitControls(cam,cv);ctl.zoomSpeed=0.3;CTRL['guest']={cam:cam,ctl:ctl};ctl.enableDamping=true;ctl.maxPolarAngle=Math.PI/2-0.05;ctl.minDistance=60;ctl.maxDistance=3600;
+var C={x:125,z:200};ctl.target.set(C.x,60,C.z);
+S.add(new THREE.HemisphereLight(0xffffff,0xd8cbb8,0.75));
+var sun=new THREE.DirectionalLight(0xffffff,0.55);sun.position.set(600,700,900);sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048);var sc=sun.shadow.camera;sc.left=-500;sc.right=500;sc.top=500;sc.bottom=-500;sc.near=100;sc.far=2500;sun.target.position.set(C.x,0,C.z);S.add(sun);S.add(sun.target);
+function M(c,o){o=o||{};return new THREE.MeshStandardMaterial({color:c,roughness:o.r==null?0.8:o.r,metalness:0,transparent:o.t!=null,opacity:o.t==null?1:o.t});}
+var H=300,P=[[0,0],[106,0],[106,70],[120,70],[120,0],[260,0],[260,357],[200,357],[110,412],[-15,350],[-15,265],[0,237]];
+var shape=new THREE.Shape();P.forEach(function(p,i){i?shape.lineTo(p[0],p[1]):shape.moveTo(p[0],p[1]);});
+var fc=document.createElement('canvas');fc.width=fc.height=512;var f=fc.getContext('2d');var tones=['#C8A47E','#BE9A73','#D1AE88','#C2A078','#CBA982','#B9956E'];
+for(var r=0;r<8;r++){var off=(r*137)%512,y0=r*64;for(var k=-2;k<3;k++){var x0=off+k*512;f.fillStyle=tones[(r*3+k+12)%tones.length];f.fillRect(x0,y0,512,64);
+ f.strokeStyle='rgba(90,60,30,0.10)';f.lineWidth=1;for(var g=0;g<5;g++){f.beginPath();var gy=y0+8+g*11+((r+k)%3);f.moveTo(x0,gy);f.bezierCurveTo(x0+160,gy-3,x0+340,gy+3,x0+512,gy);f.stroke();}
+ f.fillStyle='rgba(70,45,20,0.45)';f.fillRect(x0,y0,2,64);}
+ f.fillStyle='rgba(70,45,20,0.35)';f.fillRect(0,y0,512,2);}
+var ftex=new THREE.CanvasTexture(fc);ftex.wrapS=ftex.wrapT=THREE.RepeatWrapping;ftex.repeat.set(1/180,1/120);ftex.anisotropy=8;
+var flM=new THREE.MeshStandardMaterial({map:ftex,roughness:0.7});flM.side=THREE.DoubleSide;var fl=new THREE.Mesh(new THREE.ShapeGeometry(shape),flM);fl.rotation.x=Math.PI/2;fl.receiveShadow=true;S.add(fl);
+var OPEN={0:[[13,93,0,205,'door']],7:[[12,92,75,225,'win']],8:[[15,125,75,225,'win']],9:[[8,78,75,225,'win']]};
+var walls=[];
+function edge(i){var a=P[i],b=P[(i+1)%P.length],dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy);return {a:a,ux:dx/L,uy:dy/L,L:L,nx:dy/L,ny:-dx/L};}
+var wallM=M(0xf3f1ec),glassM=M(0xbfd8f2,{t:0.45,r:0.1}),frameM=M(0xffffff);
+function wallPiece(e,s0,s1,z0,z1,g,mat,th){var w=s1-s0,h=z1-z0;if(w<=0.5||h<=0.5)return;th=th||8;
+ var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,th),mat||wallM);var mid=(s0+s1)/2;
+ m.position.set(e.a[0]+e.ux*mid+e.nx*th/2,(z0+z1)/2,e.a[1]+e.uy*mid+e.ny*th/2);m.rotation.y=-Math.atan2(e.uy,e.ux);m.receiveShadow=true;g.add(m);}
+var PANEL={},PH=120,panM=M(0xd8c6aa),grvM=M(0xbca78a),ledM=M(0xe4d5be);
+function inPiece(e,s0,s1,z0,z1,off,th,mat,g){var w=s1-s0,h=z1-z0;if(w<=0.3)return;var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,th),mat);var mid=(s0+s1)/2,dn=-(off+th/2);
+ m.position.set(e.a[0]+e.ux*mid+e.nx*dn,(z0+z1)/2,e.a[1]+e.uy*mid+e.ny*dn);m.rotation.y=-Math.atan2(e.uy,e.ux);m.receiveShadow=true;g.add(m);}
+function panelRun(e,s0,s1,g){inPiece(e,s0,s1,10,PH,0,1.2,panM,g);
+ for(var x=s0+10;x<s1-2;x+=10)inPiece(e,x-0.35,x+0.35,10.5,PH-4,1.2,0.25,grvM,g);
+ inPiece(e,s0,s1,PH-4,PH,1.2,2.2,ledM,g);inPiece(e,s0,s1,PH-0.01,PH+1.8,0,7,ledM,g);}
+for(var i=0;i<P.length;i++){var e=edge(i),g=new THREE.Group(),ops=(OPEN[i]||[]).slice().sort(function(a,b){return a[0]-b[0];}),cur=0;
+ ops.forEach(function(o){wallPiece(e,cur,o[0],0,H,g);wallPiece(e,o[0],o[1],0,o[2],g);wallPiece(e,o[0],o[1],o[3],H,g);
+  if(o[4]==='win'){wallPiece(e,o[0],o[1],o[2],o[3],g,glassM,2);wallPiece(e,o[0],o[1],o[3]-48,o[3]-44,g,frameM,4);wallPiece(e,(o[0]+o[1])/2-2,(o[0]+o[1])/2+2,o[2],o[3]-48,g,frameM,4);wallPiece(e,o[0]-4,o[1]+4,o[2]-4,o[2],g,frameM,14);}
+  cur=o[1];});
+ wallPiece(e,cur,e.L,0,H,g);wallPiece(e,0,e.L,0,10,g,frameM,10.5);
+ if(PANEL[i]){var skip=(OPEN[i]||[]).filter(function(o){return o[4]==='door';}),segs=[[0,e.L]];
+  skip.forEach(function(o){var ns=[];segs.forEach(function(sg){if(o[1]<=sg[0]||o[0]>=sg[1])ns.push(sg);else{if(o[0]>sg[0])ns.push([sg[0],o[0]]);if(o[1]<sg[1])ns.push([o[1],sg[1]]);}});segs=ns;});
+  segs.forEach(function(sg){panelRun(e,sg[0]+0.3,sg[1]-0.3,g);});}
+ g.userData={mx:e.a[0]+e.ux*e.L/2,mz:e.a[1]+e.uy*e.L/2,nx:e.nx,nz:e.ny};S.add(g);walls.push(g);}
+(function(){var bc=document.createElement('canvas');bc.width=256;bc.height=256;var b=bc.getContext('2d');var tn=['#c9a46c','#bf9860','#d2b07a','#b88f58','#c59f66'];
+ for(var y=0;y<256;y+=4){b.fillStyle=tn[(y*7)%5];b.fillRect(0,y,256,4);b.fillStyle='rgba(90,60,25,0.35)';b.fillRect(0,y+3,256,1);
+  for(var k=0;k<3;k++){b.fillStyle='rgba(110,75,35,0.4)';b.fillRect(Math.random()*256,y,2,3);}}
+ b.fillStyle='rgba(70,50,30,0.55)';[64,192].forEach(function(xx){b.fillRect(xx,0,2,256);});
+ var bt=new THREE.CanvasTexture(bc);bt.wrapS=bt.wrapT=THREE.RepeatWrapping;
+ [7,8,9].forEach(function(i){var e=edge(i),o=OPEN[i][0],g=walls[i],ang=-Math.atan2(e.uy,e.ux),w=o[1]-o[0]+8,mid=(o[0]+o[1])/2,top=o[3]+6,drop=62;
+  function put(m,z,off){m.position.set(e.a[0]+e.ux*mid-e.nx*off,z,e.a[1]+e.uy*mid-e.ny*off);m.rotation.y=ang;m.castShadow=true;g.add(m);}
+  var t=bt.clone();t.needsUpdate=true;t.repeat.set(w/60,drop/60);
+  put(new THREE.Mesh(new THREE.BoxGeometry(w,drop,0.8),new THREE.MeshStandardMaterial({map:t,roughness:0.9})),top-drop/2,5);
+  put(new THREE.Mesh(new THREE.BoxGeometry(w+2,5,4),M(0xb08a58)),top+2.5,4);
+  [0,1,2].forEach(function(f){put(new THREE.Mesh(new THREE.BoxGeometry(w,3.5,3),new THREE.MeshStandardMaterial({map:t,roughness:0.9})),top-drop-1.5-f*3,6+f*0.6);});
+ });})();
+function item(cx,cz,rotDeg,parts){var g=new THREE.Group();parts.forEach(function(p){var m=new THREE.Mesh(p.geo||new THREE.BoxGeometry(p.x1-p.x0,p.z1-p.z0,p.y1-p.y0),p.m);
+ m.position.set((p.x0+p.x1)/2,(p.z0+p.z1)/2,(p.y0+p.y1)/2);if(p.ry)m.rotation.y=p.ry;m.castShadow=true;m.receiveShadow=true;g.add(m);});
+ g.position.set(cx,0,cz);g.rotation.y=-rotDeg*Math.PI/180;S.add(g);return g;}
+function B(x0,x1,y0,y1,z0,z1,m){return {x0:x0,x1:x1,y0:y0,y1:y1,z0:z0,z1:z1,m:m};}
+var WH=M(0xfafaf7),WH2=M(0xe9e7e0),WOOD=M(0xcfa57a),DARK=M(0x7b4e33),GAP=M(0x9a978d),BLK=M(0x3a3a3a),MAT=M(0xffffff),
+ BLUE=M(0x9cc3e6),PIL=M(0xf2f2f2),MINT=M(0xbfe3d0),KNOB=M(0x8d8a80);
+function doors(a,b,zb,zt,cols,rows,yf){var o=[],w=(b-a)/cols,h=(zt-zb)/rows;for(var i=0;i<cols;i++)for(var j=0;j<rows;j++){
+ o.push(B(a+i*w+1,a+(i+1)*w-1,yf,yf+0.8,zb+j*h+1,zb+(j+1)*h-1,WH2));
+ var kx=cols>1&&rows==1?(i%2==0?a+(i+1)*w-6:a+i*w+6):a+(i+0.5)*w;var kz=rows>1?zb+(j+0.5)*h:zt-(zt-zb)*0.15;o.push(B(kx-1.5,kx+1.5,yf+0.8,yf+2.5,kz-1.5,kz+1.5,KNOB));}return o;}
+function cab(w,d,h,cols,rows){var a=w/2,b=d/2;return [B(-a,a,-b,b,6,h,WH),B(-a+3,a-3,-b+2,b-4,0,6,M(0xd8d6cf))].concat(doors(-a+1,a-1,7,h-1,cols,rows||1,b));}
+function wardrobe(w,d,h){var a=w/2,b=d/2;return [B(-a,a,-b,b,0,h,M(0xf6f5f1))].concat(doors(-a+2,a-2,4,h-4,2,1,b));}
+function radiator(w){var o=[];for(var i=0;i<12;i++){var x=-w/2+w*(i+0.5)/12;o.push(B(x-3.6,x+3.6,-4,4,10,65,WH));}return o;}
+function onWall(ei,a,w,d){var e=edge(ei),nx=-e.nx,ny=-e.ny;return {x:e.a[0]+e.ux*(a+w/2)+nx*d/2,z:e.a[1]+e.uy*(a+w/2)+ny*d/2,rot:Math.atan2(e.uy,e.ux)*180/Math.PI};}
+function divan(w,d){var a=w/2,b=d/2;return [B(-a,a,-b,b,2,25,M(0xc9c4ba)),B(-a+2,a-2,-b+2,b-2,0,2,M(0x6b6660)),B(-a+1,a-1,-b+1,b-1,25,43,MAT),B(-a,a,-b+55,b+1,43,46,M(0xd9cdb8)),B(-a-1,a+1,b-25,b+1.5,30,46,M(0xd9cdb8)),
+ B(-a+8,-3,-b+6,-b+40,43,55,PIL),B(3,a-8,-b+6,-b+40,43,55,PIL),B(-a+20,a-20,-b+38,-b+50,43,52,M(0xb9a88f))];}
+function desk(w,d){var a=w/2,b=d/2,o=[B(-a+8,-a+14,-3,3,3,72,BLK),B(a-14,a-8,-3,3,3,72,BLK),B(-a+8,-a+14,-b+4,b-4,0,3,BLK),B(a-14,a-8,-b+4,b-4,0,3,BLK),B(-a,a,-b,b,72,75,M(0xb08a62)),
+ B(-28,28,-b+5,-b+8,93,126,M(0x222222)),B(-3,3,-b+8,-b+14,75,95,M(0x555555)),B(-12,12,-b+8,-b+20,75,76,M(0x555555)),B(-22,22,-b+28,-b+42,75,77,M(0xdddddd)),B(28,36,-b+32,-b+42,75,77,M(0xbbbbbb))];return o;}
+function chair(){var o=[];for(var i=0;i<5;i++){var an=i*Math.PI*2/5;o.push({geo:new THREE.BoxGeometry(28,3,4),m:M(0x333333),x0:Math.cos(an)*13,x1:Math.cos(an)*13,y0:Math.sin(an)*13,y1:Math.sin(an)*13,z0:2,z1:5,ry:-an});}
+ o.push(B(-2.5,2.5,-2.5,2.5,5,44,M(0x777777)),B(-25,25,-24,24,44,52,M(0x2b2b2b)),B(-22,22,-30,-26,54,108,M(0x3a3a3a)),B(-14,14,-31,-27,108,122,M(0x2b2b2b)),
+  B(-28,-24,-16,10,60,64,M(0x444444)),B(24,28,-16,10,60,64,M(0x444444)),B(-27,-25,-6,-2,50,60,M(0x444444)),B(25,27,-6,-2,50,60,M(0x444444)));return o;}
+function wardrobe3(w,d,h){var a=w/2,b=d/2;return [B(-a,a,-b,b,0,h,M(0xf6f5f1))].concat(doors(-a+2,a-2,4,h-4,3,1,b));}
+item(190,35,0,wardrobe3(140,70,235));
+item(230,326,90,wardrobe(62,60,220));
+item(154,190.5,90,divan(155,200));
+function headboard(w,d,h){var a=w/2,b=d/2,o=[B(-a,a,-b,b,4,h,M(0xd9ccb8)),B(-a+3,a-3,-b-0.5,-b+1,0,4,M(0x8a7f70)),B(a-6,a-3,-b-0.5,-b+1,0,4,M(0x8a7f70))];
+ for(var x=-a+16;x<a-4;x+=16)o.push(B(x-0.4,x+0.4,b,b+0.4,8,h-4,M(0xc4b59e)));return o;}
+var hb=onWall(5,110,164,7);item(hb.x,hb.z,hb.rot,headboard(164,7,120));
+(function(){var e=edge(11),g=walls[11],ang=-Math.atan2(e.uy,e.ux);
+ function put(m,s,z,off){m.position.set(e.a[0]+e.ux*s-e.nx*off,z,e.a[1]+e.uy*s-e.ny*off);m.rotation.y=ang;m.castShadow=true;g.add(m);}
+ var c=document.createElement('canvas');c.width=560;c.height=400;var x=c.getContext('2d');function R_(a,b){return a+Math.random()*(b-a);}
+ var gt=x.createLinearGradient(0,0,0,250);gt.addColorStop(0,'#ddd3c4');gt.addColorStop(1,'#d3cbbf');x.fillStyle=gt;x.fillRect(0,0,560,260);
+ for(var i=0;i<260;i++){x.fillStyle='rgba('+(Math.random()<0.5?'240,232,220':'200,188,172')+','+R_(0.05,0.15)+')';x.beginPath();x.ellipse(R_(0,560),R_(0,240),R_(20,70),R_(8,25),0,0,7);x.fill();}
+ for(var i=0;i<120;i++){x.fillStyle='rgba(176,190,160,'+R_(0.05,0.2)+')';x.fillRect(R_(0,560),R_(140,215),R_(10,50),R_(1,4));}
+ x.fillStyle='rgba(185,190,180,0.55)';x.fillRect(0,195,560,42);
+ for(var i=0;i<500;i++){var g_=Math.random();x.fillStyle=g_<0.4?'rgba(150,170,135,'+R_(0.2,0.5)+')':(g_<0.75?'rgba(205,205,195,'+R_(0.3,0.6)+')':'rgba(120,145,110,'+R_(0.2,0.45)+')');x.fillRect(R_(0,560),R_(190,240),R_(4,24),R_(1,5));}
+ x.strokeStyle='rgba(120,130,110,0.35)';x.lineWidth=0.7;for(var i=0;i<22;i++){var px=R_(20,540);x.beginPath();x.moveTo(px,R_(218,228));x.lineTo(px+R_(-2,2),R_(244,250));x.stroke();}
+ x.fillStyle='#ece8de';x.fillRect(0,247,560,6);for(var i=0;i<80;i++){x.fillStyle='rgba(250,248,240,'+R_(0.3,0.8)+')';x.fillRect(R_(0,560),R_(244,254),R_(6,30),R_(1,3));}
+ var gb=x.createLinearGradient(0,253,0,400);gb.addColorStop(0,'#93a183');gb.addColorStop(0.15,'#7e9270');gb.addColorStop(1,'#71865f');x.fillStyle=gb;x.fillRect(0,253,560,147);
+ for(var i=0;i<150;i++){x.fillStyle='rgba('+(Math.random()<0.5?'150,168,130':'95,115,80')+','+R_(0.08,0.25)+')';x.beginPath();x.ellipse(R_(0,560),R_(258,400),R_(15,60),R_(5,18),0,0,7);x.fill();}
+ for(var i=0;i<60;i++){x.fillStyle='rgba(170,180,160,'+R_(0.2,0.5)+')';x.fillRect(R_(0,560),R_(254,268),R_(8,40),R_(1,3));}
+ x.globalAlpha=0.035;for(var yy=0;yy<400;yy+=2){x.fillStyle=yy%4?'#fff':'#000';x.fillRect(0,yy,560,1);}for(var xx=0;xx<560;xx+=2){x.fillStyle=xx%4?'#fff':'#000';x.fillRect(xx,0,1,400);}x.globalAlpha=1;
+ var W=120,Hh=86,z0=108,sC=64;
+ put(new THREE.Mesh(new THREE.BoxGeometry(W,Hh,4),M(0xdccdb6)),sC,z0+Hh/2,2);
+ put(new THREE.Mesh(new THREE.PlaneGeometry(W-0.4,Hh-0.4),new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(c),roughness:1})),sC,z0+Hh/2,4.05);
+ var BR=M(0x9c8459,{r:0.35});put(new THREE.Mesh(new THREE.BoxGeometry(92,3,4),BR),sC,z0+Hh+9,12);put(new THREE.Mesh(new THREE.BoxGeometry(2,2,11),BR),sC,z0+Hh+8,5.5);put(new THREE.Mesh(new THREE.BoxGeometry(8,8,1.5),BR),sC,z0+Hh+8,0.75);
+ var gl=new THREE.Mesh(new THREE.BoxGeometry(88,0.6,2.5),new THREE.MeshBasicMaterial({color:0xfff2cc}));put(gl,sC,z0+Hh+7.3,12);
+ var sp=new THREE.SpotLight(0xffe2b0,0.6,180,0.9,0.7,1);var pp=[e.a[0]+e.ux*sC-e.nx*14,z0+Hh+6,e.a[1]+e.uy*sC-e.ny*14];sp.position.set(pp[0],pp[1],pp[2]);
+ sp.target.position.set(e.a[0]+e.ux*sC-e.nx*2,z0+Hh*0.35,e.a[1]+e.uy*sC-e.ny*2);g.add(sp);g.add(sp.target);})();
+var rc=onWall(8,20,100,8);item(rc.x,rc.z,rc.rot,radiator(100));
+var dk=onWall(8,10,120,70);item(dk.x,dk.z,dk.rot,desk(120,60));
+var ch=onWall(8,10,120,175);item(ch.x,ch.z,ch.rot+180,chair());
+var V={'3d':[C.x-430,560,C.z-430],'top':[C.x,2800,C.z+0.01],'door':[55,160,30],'desk':[200,150,110],'art':[230,150,190],'bed':[40,150,190]};
+VIEWS['guest']=function(k){var p=V[k];cam.position.set(p[0],p[1],p[2]);cam.fov=k==='top'?13:((k==='door'||k==='desk'||k==='art'||k==='bed')?66:40);cam.updateProjectionMatrix();if(k==='door'){ctl.target.set(90,70,330);}else if(k==='desk'){ctl.target.set(50,80,370);}else if(k==='art'){ctl.target.set(0,150,175);}else if(k==='bed'){ctl.target.set(260,70,190);}else{ctl.target.set(C.x,k==='top'?0:40,C.z);};ctl.update();};
+VIEWS['guest']('3d');
+function size(){var w=wrap.clientWidth,h=wrap.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+new ResizeObserver(size).observe(wrap);size();
+var tmp=new THREE.Vector3();
+(function loop(){requestAnimationFrame(loop);if(!wrap.offsetParent)return;ctl.update();
+ walls.forEach(function(g){var u=g.userData;var vx=cam.position.x-u.mx,vz=cam.position.z-u.mz;var outside=(vx*u.nx+vz*u.nz)>0;g.visible=cam.position.y>1500||!outside;});
+ R.render(S,cam);})();
+})();
+
+</script>
+<script>
+
+(function(){
+var cv=document.getElementById('cv_living'),wrap=document.getElementById('wrap_living');
+var R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+R.setPixelRatio(Math.min(2,window.devicePixelRatio||1));R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+var S=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(40,1,1,5000);
+var ctl=new THREE.OrbitControls(cam,cv);ctl.zoomSpeed=0.3;CTRL['living']={cam:cam,ctl:ctl};ctl.enableDamping=true;ctl.maxPolarAngle=Math.PI/2-0.05;ctl.minDistance=60;ctl.maxDistance=3600;
+var C={x:240,z:160};ctl.target.set(C.x,60,C.z);
+S.add(new THREE.HemisphereLight(0xffffff,0xd8cbb8,0.75));
+var sun=new THREE.DirectionalLight(0xffffff,0.55);sun.position.set(600,700,900);sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048);var sc=sun.shadow.camera;sc.left=-500;sc.right=500;sc.top=500;sc.bottom=-500;sc.near=100;sc.far=2500;sun.target.position.set(C.x,0,C.z);S.add(sun);S.add(sun.target);
+function M(c,o){o=o||{};return new THREE.MeshStandardMaterial({color:c,roughness:o.r==null?0.8:o.r,metalness:0,transparent:o.t!=null,opacity:o.t==null?1:o.t});}
+var H=300,P=[[0,0],[85,0],[85,26],[300,26],[300,0],[427,0],[480,-55],[480,345],[0,345]];
+var shape=new THREE.Shape();P.forEach(function(p,i){i?shape.lineTo(p[0],p[1]):shape.moveTo(p[0],p[1]);});
+var fc=document.createElement('canvas');fc.width=fc.height=512;var f=fc.getContext('2d');var tones=['#C8A47E','#BE9A73','#D1AE88','#C2A078','#CBA982','#B9956E'];
+for(var r=0;r<8;r++){var off=(r*137)%512,y0=r*64;for(var k=-2;k<3;k++){var x0=off+k*512;f.fillStyle=tones[(r*3+k+12)%tones.length];f.fillRect(x0,y0,512,64);
+ f.strokeStyle='rgba(90,60,30,0.10)';f.lineWidth=1;for(var g=0;g<5;g++){f.beginPath();var gy=y0+8+g*11+((r+k)%3);f.moveTo(x0,gy);f.bezierCurveTo(x0+160,gy-3,x0+340,gy+3,x0+512,gy);f.stroke();}
+ f.fillStyle='rgba(70,45,20,0.45)';f.fillRect(x0,y0,2,64);}
+ f.fillStyle='rgba(70,45,20,0.35)';f.fillRect(0,y0,512,2);}
+var ftex=new THREE.CanvasTexture(fc);ftex.wrapS=ftex.wrapT=THREE.RepeatWrapping;ftex.repeat.set(1/180,1/120);ftex.anisotropy=8;
+var flM=new THREE.MeshStandardMaterial({map:ftex,roughness:0.7});flM.side=THREE.DoubleSide;var fl=new THREE.Mesh(new THREE.ShapeGeometry(shape),flM);fl.rotation.x=Math.PI/2;fl.receiveShadow=true;S.add(fl);
+var OPEN={5:[[10,65,75,225,'win']]},OPENEDGE={6:1,7:1};
+var walls=[];
+function edge(i){var a=P[i],b=P[(i+1)%P.length],dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy);return {a:a,ux:dx/L,uy:dy/L,L:L,nx:dy/L,ny:-dx/L};}
+var wallM=M(0xf3f1ec),glassM=M(0xbfd8f2,{t:0.45,r:0.1}),frameM=M(0xffffff);
+function wallPiece(e,s0,s1,z0,z1,g,mat,th){var w=s1-s0,h=z1-z0;if(w<=0.5||h<=0.5)return;th=th||8;
+ var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,th),mat||wallM);var mid=(s0+s1)/2;
+ m.position.set(e.a[0]+e.ux*mid+e.nx*th/2,(z0+z1)/2,e.a[1]+e.uy*mid+e.ny*th/2);m.rotation.y=-Math.atan2(e.uy,e.ux);m.receiveShadow=true;g.add(m);}
+var PANEL={},PH=120,panM=M(0xd8c6aa),grvM=M(0xbca78a),ledM=M(0xe4d5be);
+function inPiece(e,s0,s1,z0,z1,off,th,mat,g){var w=s1-s0,h=z1-z0;if(w<=0.3)return;var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,th),mat);var mid=(s0+s1)/2,dn=-(off+th/2);
+ m.position.set(e.a[0]+e.ux*mid+e.nx*dn,(z0+z1)/2,e.a[1]+e.uy*mid+e.ny*dn);m.rotation.y=-Math.atan2(e.uy,e.ux);m.receiveShadow=true;g.add(m);}
+function panelRun(e,s0,s1,g){inPiece(e,s0,s1,10,PH,0,1.2,panM,g);
+ for(var x=s0+10;x<s1-2;x+=10)inPiece(e,x-0.35,x+0.35,10.5,PH-4,1.2,0.25,grvM,g);
+ inPiece(e,s0,s1,PH-4,PH,1.2,2.2,ledM,g);inPiece(e,s0,s1,PH-0.01,PH+1.8,0,7,ledM,g);}
+for(var i=0;i<P.length;i++){var e=edge(i),g=new THREE.Group();if(OPENEDGE[i]){g.userData={mx:0,mz:0,nx:0,nz:0};walls.push(g);continue;}var ops=(OPEN[i]||[]).slice().sort(function(a,b){return a[0]-b[0];}),cur=0;
+ ops.forEach(function(o){wallPiece(e,cur,o[0],0,H,g);wallPiece(e,o[0],o[1],0,o[2],g);wallPiece(e,o[0],o[1],o[3],H,g);
+  if(o[4]==='win'){wallPiece(e,o[0],o[1],o[2],o[3],g,glassM,2);wallPiece(e,o[0],o[1],o[3]-48,o[3]-44,g,frameM,4);wallPiece(e,(o[0]+o[1])/2-2,(o[0]+o[1])/2+2,o[2],o[3]-48,g,frameM,4);wallPiece(e,o[0]-4,o[1]+4,o[2]-4,o[2],g,frameM,14);}
+  cur=o[1];});
+ wallPiece(e,cur,e.L,0,H,g);wallPiece(e,0,e.L,0,10,g,frameM,10.5);
+ if(PANEL[i]){var skip=(OPEN[i]||[]).filter(function(o){return o[4]==='door';}),segs=[[0,e.L]];
+  skip.forEach(function(o){var ns=[];segs.forEach(function(sg){if(o[1]<=sg[0]||o[0]>=sg[1])ns.push(sg);else{if(o[0]>sg[0])ns.push([sg[0],o[0]]);if(o[1]<sg[1])ns.push([o[1],sg[1]]);}});segs=ns;});
+  segs.forEach(function(sg){panelRun(e,sg[0]+0.3,sg[1]-0.3,g);});}
+ g.userData={mx:e.a[0]+e.ux*e.L/2,mz:e.a[1]+e.uy*e.L/2,nx:e.nx,nz:e.ny};S.add(g);walls.push(g);}
+function item(cx,cz,rotDeg,parts){var g=new THREE.Group();parts.forEach(function(p){var m=new THREE.Mesh(p.geo||new THREE.BoxGeometry(p.x1-p.x0,p.z1-p.z0,p.y1-p.y0),p.m);
+ m.position.set((p.x0+p.x1)/2,(p.z0+p.z1)/2,(p.y0+p.y1)/2);if(p.ry)m.rotation.y=p.ry;m.castShadow=true;m.receiveShadow=true;g.add(m);});
+ g.position.set(cx,0,cz);g.rotation.y=-rotDeg*Math.PI/180;S.add(g);return g;}
+function B(x0,x1,y0,y1,z0,z1,m){return {x0:x0,x1:x1,y0:y0,y1:y1,z0:z0,z1:z1,m:m};}
+var WH=M(0xfafaf7),WH2=M(0xe9e7e0),WOOD=M(0xcfa57a),DARK=M(0x7b4e33),GAP=M(0x9a978d),BLK=M(0x3a3a3a),MAT=M(0xffffff),
+ BLUE=M(0x9cc3e6),PIL=M(0xf2f2f2),MINT=M(0xbfe3d0),KNOB=M(0x8d8a80);
+function radiator(w){var o=[];for(var i=0;i<12;i++){var x=-w/2+w*(i+0.5)/12;o.push(B(x-3.6,x+3.6,-4,4,10,65,WH));}return o;}
+function onWall(ei,a,w,d){var e=edge(ei),nx=-e.nx,ny=-e.ny;return {x:e.a[0]+e.ux*(a+w/2)+nx*d/2,z:e.a[1]+e.uy*(a+w/2)+ny*d/2,rot:Math.atan2(e.uy,e.ux)*180/Math.PI};}
+var OAK=M(0xc9a57c),FR=M(0xf3f0e9),FR2=M(0xebe7de);
+function fdoors(a,b,zb,zt,n,yf){var o=[],w=(b-a)/n;for(var i=0;i<n;i++){var x0=a+i*w;o.push(B(x0+0.6,x0+w-0.6,yf,yf+1.2,zb,zt,FR2));
+ for(var f=x0+3;f<x0+w-2;f+=3.2)o.push(B(f-0.5,f+0.5,yf+1.2,yf+1.8,zb+1,zt-1,FR));
+ var kx=i%2==0?x0+w-5:x0+5;o.push(B(kx-0.7,kx+0.7,yf+1.8,yf+3.5,zt-22,zt-6,OAK));}return o;}
+var bq=document.createElement('canvas');bq.width=bq.height=128;var q_=bq.getContext('2d');q_.fillStyle='#f1ede5';q_.fillRect(0,0,128,128);
+for(var i=0;i<900;i++){q_.fillStyle=Math.random()<0.5?'rgba(255,255,252,0.9)':'rgba(205,198,185,0.55)';q_.beginPath();q_.arc(Math.random()*128,Math.random()*128,0.8+Math.random()*1.6,0,7);q_.fill();}
+var bqt=new THREE.CanvasTexture(bq);bqt.wrapS=bqt.wrapT=THREE.RepeatWrapping;bqt.repeat.set(1/30,1/30);
+var BOU=new THREE.MeshStandardMaterial({map:bqt,roughness:1,color:0xf6f3ee}),BOU2=new THREE.MeshStandardMaterial({map:bqt,roughness:1,color:0xffffff});
+function sofa(w,d,h,ch){var a=w/2,b=d/2,arm=18,bk=22,o=[B(-a,a,-b,b,12,40,BOU),B(-a,-a+arm,-b,b,12,62,BOU),B(a-arm,a,-b,b,12,62,BOU),B(-a+arm,a-arm,-b,-b+bk,40,h,BOU)];
+ var n=3,seg=(w-2*arm)/n;for(var i=0;i<n;i++){var x0=-a+arm+i*seg,front=(i===0)?b+ch-2:b-2;o.push(B(x0+1,x0+seg-1,-b+bk,front,40,50,BOU2),B(x0+3,x0+seg-3,-b+3,-b+bk,50,h+4,BOU2));}
+ o.push(B(-a,-a+arm+seg,b,b+ch,12,40,BOU),B(-a,-a+arm,b-1,b+ch,12,46,BOU));
+ var ORG=new THREE.MeshStandardMaterial({map:bqt,color:0xc0602a,roughness:1}),LBG=new THREE.MeshStandardMaterial({map:bqt,color:0xe6d6bb,roughness:1});
+ [[a-arm-40,ORG,40],[a-arm-74,LBG,36],[-a+arm+seg+4,LBG,36],[-a+arm+seg+36,ORG,40],[-a+arm+6,ORG,34]].forEach(function(p,i){var w2=p[2];o.push(B(p[0],p[0]+w2,-b+bk+(i===4?6:-2),-b+bk+(i===4?18:9),50,50+w2*0.85,p[1]));});
+ [[-a+4,-b+4],[a-8,-b+4],[-a+4,b+ch-8],[a-8,b-8],[-a+arm+seg-8,b+ch-8]].forEach(function(p){o.push(B(p[0],p[0]+4,p[1],p[1]+4,0,12,M(0x6b5038)));});return o;}
+function armchair(){var o=[],C1=M(0xdccfb8),C2=M(0xe6dbc7),W=M(0x9b7650);
+ o.push(B(-30,30,-34,32,30,44,C1),B(-29,29,-32,30,44,50,C2),B(-30,30,-36,-24,44,84,C1),B(-28,28,-26,-18,50,80,C2));
+ [-1,1].forEach(function(sd){var x=sd*35;o.push(B(x-3,x+3,-36,34,56,60,W),B(x-3,x+3,-34,-30,0,56,W),B(x-3,x+3,28,32,0,56,W),B(x-2,x+2,-30,28,24,28,W));
+  o.push(B(x-sd*3-2.5,x-sd*3+2.5,-34,32,26,30,W));});
+ o.push(B(-32,32,-34,-30,24,30,W),B(-32,32,28,32,24,30,W));return o;}
+function coffee(d,h){var r=d/2,o=[{geo:new THREE.CylinderGeometry(r,r,4,48),m:M(0xd2b28c),x0:0,x1:0,y0:0,y1:0,z0:h-4,z1:h},{geo:new THREE.CylinderGeometry(r-8,r-6,h-4,48),m:OAK,x0:0,x1:0,y0:0,y1:0,z0:0,z1:h-4}];
+ o.push(B(-16,6,-14,6,h,h+3,M(0x7d8c6c)),B(-14,4,-12,4,h+3,h+5,M(0xe8e1d3)),{geo:new THREE.CylinderGeometry(6,5,14,16),m:M(0xe9e3d6),x0:18,x1:18,y0:12,y1:12,z0:h,z1:h+14});return o;}
+function lamp(){return [{geo:new THREE.CylinderGeometry(7,9,26,20),m:M(0xd9cdb6),x0:0,x1:0,y0:0,y1:0,z0:0,z1:26},{geo:new THREE.CylinderGeometry(1,1,12,6),m:OAK,x0:0,x1:0,y0:0,y1:0,z0:26,z1:38},
+ {geo:new THREE.CylinderGeometry(11,16,20,24,1,true),m:new THREE.MeshStandardMaterial({color:0xf7efe0,emissive:0x5a4a30,side:THREE.DoubleSide,roughness:1}),x0:0,x1:0,y0:0,y1:0,z0:36,z1:56}];}
+function books(){return [B(-14,14,-10,10,0,3,M(0x8f9e7e)),B(-13,13,-9,9,3,6,M(0xe2d8c6)),B(-12,12,-10,8,6,8.5,M(0xc49a72))];}
+var MDF=M(0xc9ab88);
+function radCover(w,d,h){var a=w/2,b=d/2,o=[B(-a-1,a+1,-b,b+1.5,h-2,h,MDF),B(-a,-a+6,-b,b,0,h-2,MDF),B(a-6,a,-b,b,0,h-2,MDF),B(-3,3,b-2,b,0,h-2,MDF),
+ B(-a+6,a-6,b-2,b,h-14,h-2,MDF),B(-a+6,a-6,b-2,b,10,20,MDF)];
+ [[-a+6,-3],[3,a-6]].forEach(function(p){var L=p[1]-p[0],n=Math.floor((L-4)/5);for(var i=0;i<=n;i++){var x=p[0]+2+i*(L-4)/n;o.push(B(x-1.1,x+1.1,b-1.8,b-0.2,20,h-14,MDF));}});return o;}
+// walnut texture
+var wc=document.createElement('canvas');wc.width=256;wc.height=512;var w_=wc.getContext('2d');w_.fillStyle='#6f553f';w_.fillRect(0,0,256,512);
+for(var i=0;i<140;i++){var gx=Math.random()*256;w_.strokeStyle=Math.random()<0.5?'rgba(50,34,22,0.35)':'rgba(140,110,80,0.25)';w_.lineWidth=0.5+Math.random()*1.5;w_.beginPath();w_.moveTo(gx,0);w_.bezierCurveTo(gx+Math.random()*16-8,170,gx+Math.random()*16-8,340,gx+Math.random()*10-5,512);w_.stroke();}
+var WAL=new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(wc),roughness:0.6}),WALd=M(0x4a3727);
+function eket(w,d,h,leg){var a=w/2,b=d/2,o=[B(-a,a,-b,b-1.6,leg,leg+h,WAL),B(-a+0.6,-0.4,b-1.6,b,leg+0.6,leg+h-0.6,WAL),B(0.4,a-0.6,b-1.6,b,leg+0.6,leg+h-0.6,WAL),B(-0.4,0.4,b-1.7,b-0.2,leg,leg+h,WALd)];
+ [[-a+4,-b+4],[a-6,-b+4],[-a+4,b-7],[a-6,b-7]].forEach(function(p){o.push(B(p[0],p[0]+2.5,p[1],p[1]+2.5,0,leg,M(0x3a2c20)));});return o;}
+var DOORS=[],doorT=0,doorV=0;
+var KW=new THREE.MeshStandardMaterial({color:0xf7f6f2,roughness:0.55}),KW2=M(0xe4e1da);
+function kuggis(g,cx,cy,cz,w,d,h){var t=0.8;
+ [[0,-h/2+t/2,0,w,t,d],[ -w/2+t/2,0,0,t,h,d],[w/2-t/2,0,0,t,h,d],[0,0,-d/2+t/2,w,h,t]].forEach(function(p){var m=new THREE.Mesh(new THREE.BoxGeometry(p[3],p[4],p[5]),p===null?KW:KW);m.position.set(cx+p[0],cy+p[1],cz+p[2]);m.castShadow=true;m.receiveShadow=true;g.add(m);});
+ var sh=new THREE.Shape();sh.moveTo(-w/2,-h/2);sh.lineTo(w/2,-h/2);sh.lineTo(w/2,h/2);sh.lineTo(-w/2,h/2);sh.lineTo(-w/2,-h/2);
+ var hw=5.5,hh=1.6,hy=h/2-5,hole=new THREE.Path();hole.moveTo(-hw+hh,hy-hh);hole.lineTo(hw-hh,hy-hh);hole.absarc(hw-hh,hy,hh,-Math.PI/2,Math.PI/2,false);hole.lineTo(-hw+hh,hy+hh);hole.absarc(-hw+hh,hy,hh,Math.PI/2,Math.PI*1.5,false);sh.holes.push(hole);
+ var fr=new THREE.Mesh(new THREE.ExtrudeGeometry(sh,{depth:t,bevelEnabled:false,curveSegments:12}),KW);fr.position.set(cx,cy,cz+d/2-t);fr.castShadow=true;g.add(fr);
+ var inner=new THREE.Mesh(new THREE.BoxGeometry(w-2*t,h-t-2,0.2),KW2);inner.position.set(cx,cy+0.5,cz+d/2-6);g.add(inner);}
+function eketOpen(cx,cz){var w=70,d=35,h=70,leg=11,t=1.6,a=w/2,b=d/2,g=new THREE.Group();g.position.set(cx,0,cz);
+ function bx(x0,x1,y0,y1,z0,z1,m){var mm=new THREE.Mesh(new THREE.BoxGeometry(x1-x0,y1-y0,z1-z0),m);mm.position.set((x0+x1)/2,(y0+y1)/2,(z0+z1)/2);mm.castShadow=true;mm.receiveShadow=true;g.add(mm);return mm;}
+ var fb=b-t;bx(-a,-a+t,leg,leg+h,-b,fb,WAL);bx(a-t,a,leg,leg+h,-b,fb,WAL);bx(-a,a,leg+h-t,leg+h,-b,fb,WAL);bx(-a,a,leg,leg+t,-b,fb,WAL);bx(-a+t,a-t,leg+t,leg+h-t,-b,-b+0.8,WALd);
+ var mid=leg+h/2;bx(-a+t,a-t,mid-t/2,mid+t/2,-b+0.8,fb-0.5,WAL);
+ [[-a+4,-b+4],[a-6.5,-b+4],[-a+4,b-6.5],[a-6.5,b-6.5]].forEach(function(p){bx(p[0],p[0]+2.5,0,leg,p[1],p[1]+2.5,M(0x3a2c20));});
+ var bw=31,bd=29,bh=27,zc=-b+0.8+bd/2+0.5;
+ [leg+t+bh/2+0.2,mid+t/2+bh/2+0.2].forEach(function(y){[-a+t+1.4+bw/2,a-t-1.4-bw/2].forEach(function(x){kuggis(g,x,y,zc,bw,bd,bh);});});
+ [[-a+0.3,1],[a-0.3,-1]].forEach(function(p){var pv=new THREE.Group();pv.position.set(p[0],leg+h/2,b-t/2);var dw=a-0.6;
+  var dm=new THREE.Mesh(new THREE.BoxGeometry(dw,h-1.2,t),WAL);dm.position.set(p[1]*dw/2,0,0);dm.castShadow=true;dm.receiveShadow=true;pv.add(dm);g.add(pv);DOORS.push({p:pv,s:p[1]});});
+ S.add(g);}
+for(var k=0;k<3;k++){var ek=onWall(2,2.5+k*70,70,35);eketOpen(ek.x,ek.z);}
+window.toggleCab=function(){doorT=doorT?0:1;document.getElementById('cabBtn').textContent=doorT?'Close cabinets':'Open cabinets';if(doorT)VIEWS['living']('cab');};
+// left recess: existing white open bookcase, 2 new doors on the lower half
+function bookcase(w,d,h){var a=w/2,b=d/2,o=[],WB=M(0xf6f5f1);o.push(B(-a,-a+1.8,-b,b,0,h,WB),B(a-1.8,a,-b,b,0,h,WB),B(-a,a,-b,-b+0.6,0,h,WB),B(-a,a,-b,b,h-1.8,h,WB),B(-a,a,-b,b-1,0,7,WB));
+ [97,132,167].forEach(function(z){o.push(B(-a+1.8,a-1.8,-b,b-1,z-1.8,z,WB));});
+ o.push(B(-a+0.4,-0.3,b-1,b+0.8,7.4,97,M(0xefede6)),B(0.3,a-0.4,b-1,b+0.8,7.4,97,M(0xefede6)),B(-4,-2.5,b+0.8,b+2.6,72,88,OAK),B(2.5,4,b+0.8,b+2.6,72,88,OAK));
+ var cols=[0xc49a72,0x8f9e7e,0xe2d8c6,0xb7a58b,0x7a6a58,0xd8c8ad,0x9aa889];
+ [97,132,167].forEach(function(z,ri){var x=-a+3;var n=0;while(x<a-12){var bw=2.5+((n*7+ri*3)%4),bh=22+((n*5+ri)%9);if(ri===1&&n===6){o.push(B(x+2,x+20,-b+4,b-6,z,z+16,M(0xd8cdb9)));x+=24;n++;continue;}o.push(B(x,x+bw,-b+4,b-5,z,z+Math.min(bh,30),M(cols[(n+ri*2)%7])));x+=bw+0.4;n++;if(ri===2&&n>9)break;}});
+ return o;}
+var bc=onWall(0,2.5,80,28);item(bc.x,bc.z,bc.rot,bookcase(80,28,202));
+// side wall: double-width radiator + slatted cover (storage unit removed)
+var rc=onWall(8,72.5,200,8);item(rc.x,rc.z,rc.rot,radiator(200));
+var cv_=onWall(8,62.5,220,19);item(cv_.x,cv_.z,cv_.rot,radCover(220,19,82));
+item(cv_.x+4,cv_.z+40,0,lamp().map(function(p){p.z0+=82;p.z1+=82;return p;}));
+item(cv_.x+3,cv_.z-50,90,books().map(function(p){p.z0+=82;p.z1+=82;return p;}));
+// plaster relief art + 2 picture lights on the side wall
+(function(){var e=edge(8),g=walls[8],ang=-Math.atan2(e.uy,e.ux),sC=172.5;
+ function put(m,s,z,off){m.position.set(e.a[0]+e.ux*s-e.nx*off,z,e.a[1]+e.uy*s-e.ny*off);m.rotation.y=ang;m.castShadow=true;g.add(m);}
+ var c=document.createElement('canvas');c.width=800;c.height=400;var x=c.getContext('2d');function R_(a,b){return a+Math.random()*(b-a);}
+ x.fillStyle='#e4d9c6';x.fillRect(0,0,800,400);
+ for(var i=0;i<300;i++){x.fillStyle='rgba('+(Math.random()<0.5?'245,238,226':'190,170,140')+','+R_(0.05,0.14)+')';x.beginPath();x.ellipse(R_(0,800),R_(0,400),R_(20,80),R_(10,40),R_(0,3),0,7);x.fill();}
+ for(var i=0;i<40;i++){x.fillStyle='rgba(150,120,85,'+R_(0.05,0.15)+')';x.beginPath();x.arc(R_(0,800),R_(0,400),R_(4,18),0,7);x.fill();}
+ x.strokeStyle='rgba(120,100,75,0.35)';x.lineWidth=0.8;for(var i=0;i<14;i++){var px=R_(0,800),py=R_(0,400);x.beginPath();x.moveTo(px,py);for(var k=0;k<6;k++){px+=R_(-30,30);py+=R_(-20,20);x.lineTo(px,py);}x.stroke();}
+ function ridge(x0,y0,x1,y1,w){x.lineCap='round';x.strokeStyle='rgba(120,98,70,0.45)';x.lineWidth=w;x.beginPath();x.moveTo(x0+1.5,y0+1.5);x.lineTo(x1+1.5,y1+1.5);x.stroke();
+  x.strokeStyle='#efe6d6';x.lineWidth=w;x.beginPath();x.moveTo(x0,y0);x.lineTo(x1,y1);x.stroke();x.strokeStyle='rgba(255,252,244,0.8)';x.lineWidth=w*0.35;x.beginPath();x.moveTo(x0-w*0.2,y0);x.lineTo(x1-w*0.2,y1);x.stroke();}
+ for(var i=0;i<70;i++){var px=R_(70,370),t=R_(20,120),bt=t+R_(60,200);ridge(px,t,px+R_(-1,1),Math.min(bt,330),R_(1.5,5));}
+ for(var i=0;i<45;i++){var px=R_(130,350),t=R_(170,230);ridge(px,t,px,t+R_(40,110),R_(2,5));}
+ for(var i=0;i<260;i++){var px=R_(340,640),py=200+R_(-1,1)*R_(0,1)*R_(0,90),r=R_(1.5,5)*(1-Math.abs(py-200)/140);if(r<1)continue;x.fillStyle='rgba(120,98,70,0.45)';x.beginPath();x.arc(px+1.2,py+1.2,r,0,7);x.fill();x.fillStyle='#efe6d6';x.beginPath();x.arc(px,py,r,0,7);x.fill();x.fillStyle='rgba(255,252,244,0.85)';x.beginPath();x.arc(px-r*0.3,py-r*0.3,r*0.4,0,7);x.fill();}
+ for(var i=0;i<70;i++){var py=R_(110,310),px=R_(560,770);ridge(px,py,px+R_(15,55),py,R_(2,4));}
+ var W=170,Hh=85,z0=118;
+ put(new THREE.Mesh(new THREE.BoxGeometry(W+3,Hh+3,4.5),OAK),sC,z0+Hh/2,2.25);
+ put(new THREE.Mesh(new THREE.PlaneGeometry(W,Hh),new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(c),roughness:1})),sC,z0+Hh/2,4.6);
+ var BR=M(0x9c8459,{r:0.35});[-42,42].forEach(function(dx){var s=sC+dx;put(new THREE.Mesh(new THREE.BoxGeometry(56,3,4),BR),s,z0+Hh+11,12);put(new THREE.Mesh(new THREE.BoxGeometry(2,2,11),BR),s,z0+Hh+10,5.5);put(new THREE.Mesh(new THREE.BoxGeometry(8,8,1.5),BR),s,z0+Hh+10,0.75);
+  put(new THREE.Mesh(new THREE.BoxGeometry(52,0.6,2.5),new THREE.MeshBasicMaterial({color:0xfff2cc})),s,z0+Hh+9.3,12);
+  var sp=new THREE.SpotLight(0xffe2b0,0.45,180,0.9,0.7,1);sp.position.set(e.a[0]+e.ux*s-e.nx*14,z0+Hh+8,e.a[1]+e.uy*s-e.ny*14);sp.target.position.set(e.a[0]+e.ux*s-e.nx*2,z0+Hh*0.3,e.a[1]+e.uy*s-e.ny*2);g.add(sp);g.add(sp.target);});})();
+// TV on the chimney breast above the EKET run
+(function(){var e=edge(2),g=walls[2],ang=-Math.atan2(e.uy,e.ux),s=107.5;
+ function put(m,z,off){m.position.set(e.a[0]+e.ux*s-e.nx*off,z,e.a[1]+e.uy*s-e.ny*off);m.rotation.y=ang;m.castShadow=true;g.add(m);}
+ put(new THREE.Mesh(new THREE.BoxGeometry(145,83,4),M(0x1d1d1d,{r:0.3})),142,4);put(new THREE.Mesh(new THREE.BoxGeometry(141,79,0.3),M(0x2c3138,{r:0.15})),142,6.1);
+ put(new THREE.Mesh(new THREE.BoxGeometry(60,4,3),M(0x2a2a2a)),83,20);})();
+// right recess: tall planter with monstera, then their existing shelf
+(function(){var px=300+26,pz=24;
+ var pot=new THREE.Mesh(new THREE.CylinderGeometry(20,16,62,32),M(0xcbbfa9));pot.position.set(px,31,pz);pot.castShadow=true;S.add(pot);
+ var soil=new THREE.Mesh(new THREE.CylinderGeometry(19,19,1,32),M(0x4a3a2a));soil.position.set(px,61.6,pz);S.add(soil);
+ var LF=new THREE.MeshStandardMaterial({color:0x2f5a34,roughness:0.6,side:THREE.DoubleSide}),ST=M(0x5c7a45);
+ var lv=[[0,0,95,26,0.2],[50,-0.6,120,24,0.35],[110,0.4,140,22,0.5],[170,-0.4,110,25,0.3],[220,0.5,150,20,0.6],[280,-0.3,130,23,0.4],[320,0.2,165,18,0.7],[140,-0.2,175,17,0.8],[30,0.3,160,19,0.7]];
+ lv.forEach(function(l){var an=l[0]*Math.PI/180,dist=14+l[3]*0.9,tx=px+Math.cos(an)*dist,tz=pz+Math.sin(an)*dist*0.7,ty=l[2];
+  if(tz<6)tz=6+Math.random()*4;
+  var dx=tx-px,dy=ty-62,dz=tz-pz,L=Math.hypot(dx,dy,dz);var st=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.9,L,6),ST);st.position.set((px+tx)/2,(62+ty)/2,(pz+tz)/2);
+  st.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),new THREE.Vector3(dx,dy,dz).normalize());S.add(st);
+  var sh=new THREE.Shape();var r=l[3];sh.moveTo(0,0);sh.bezierCurveTo(r*0.9,r*0.2,r*0.9,r*1.4,0,r*1.6);sh.bezierCurveTo(-r*0.9,r*1.4,-r*0.9,r*0.2,0,0);
+  for(var k=0;k<4;k++){var hp=new THREE.Path(),yy=r*(0.35+k*0.3),xx=r*0.42;hp.moveTo(xx,yy);hp.lineTo(xx+r*0.3,yy+r*0.05);hp.lineTo(xx+r*0.3,yy+r*0.1);hp.lineTo(xx,yy+r*0.06);sh.holes.push(hp);var hp2=new THREE.Path();hp2.moveTo(-xx,yy);hp2.lineTo(-xx,yy+r*0.06);hp2.lineTo(-xx-r*0.3,yy+r*0.1);hp2.lineTo(-xx-r*0.3,yy+r*0.05);sh.holes.push(hp2);}
+  var lf=new THREE.Mesh(new THREE.ShapeGeometry(sh,12),LF);lf.position.set(tx,ty,tz);lf.rotation.set(-Math.PI/2+0.55+l[4]*0.6,0,0);lf.rotateOnWorldAxis(new THREE.Vector3(0,1,0),-an+Math.PI/2);lf.castShadow=true;S.add(lf);});})();
+var RATb;function shelf(w,d,h){RATb=RAT(0.45,0.35);var a=w/2,b=d/2,o=[],WB=M(0xf3f1ec);o.push(B(-a,-a+1.8,-b,b,0,h,WB),B(a-1.8,a,-b,b,0,h,WB),B(-a,a,-b,-b+0.6,0,h,WB));
+ [6,42,80,118,h].forEach(function(z){o.push(B(-a,a,-b,b,z-1.8,z,WB));});
+ var bw=(w-3.6-3*1.2)/2;[6,42].forEach(function(z0){for(var i=0;i<2;i++){var x0=-a+1.8+1.2+i*(bw+1.2);o.push(B(x0,x0+bw,-b+3,b-2,z0,z0+30,RATb),B(x0+bw/2-4,x0+bw/2+4,b-2,b-1.4,z0+24,z0+26.5,M(0x8a6a40)));}});
+ o.push({geo:new THREE.CylinderGeometry(6,7,18,16),m:M(0xe9e3d6),x0:a-14,x1:a-14,y0:0,y1:0,z0:80,z1:98},B(-a+6,-a+30,-b+5,b-5,80,84,M(0xe2d8c6)),B(-a+7,-a+29,-b+6,b-6,84,87,M(0xb7a58b)),
+  {geo:new THREE.SphereGeometry(8,12,10),m:M(0x6f8a5a),x0:-6,x1:-6,y0:0,y1:0,z0:126,z1:142},{geo:new THREE.CylinderGeometry(6,5,10,14),m:M(0xd8cdb9),x0:-6,x1:-6,y0:0,y1:0,z0:118,z1:128});return o;}
+var SEAm=M(0xc8a46e);
+var rt=document.createElement('canvas');rt.width=rt.height=128;var r_=rt.getContext('2d');r_.fillStyle='#b98f5c';r_.fillRect(0,0,128,128);
+for(var yy=0;yy<128;yy+=8)for(var xx=0;xx<128;xx+=8){var hz=((xx+yy)/8)%2;r_.fillStyle=hz?'#d2ae7a':'#c49c66';r_.fillRect(xx+1,yy+1,6,6);r_.strokeStyle='rgba(90,60,30,0.5)';r_.lineWidth=1;r_.strokeRect(xx+0.5,yy+0.5,7,7);
+ r_.strokeStyle='rgba(255,235,200,0.35)';r_.beginPath();if(hz){r_.moveTo(xx+2,yy+4);r_.lineTo(xx+6,yy+4);}else{r_.moveTo(xx+4,yy+2);r_.lineTo(xx+4,yy+6);}r_.stroke();}
+var rtt=new THREE.CanvasTexture(rt);rtt.wrapS=rtt.wrapT=THREE.RepeatWrapping;
+function RAT(rx,ry,side){var t=rtt.clone();t.needsUpdate=true;t.repeat.set(rx,ry);return new THREE.MeshStandardMaterial({map:t,roughness:0.9,side:side||THREE.FrontSide});}
+// floor lamp behind the armchair: plaster-finish beige pole, two-tier rattan shade
+(function(){var x=40,z=262,PL=M(0xd8ccb6,{r:1});
+ var base=new THREE.Mesh(new THREE.CylinderGeometry(15,16,3,32),PL);base.position.set(x,1.5,z);S.add(base);
+ var pole=new THREE.Mesh(new THREE.CylinderGeometry(1.4,1.6,140,12),PL);pole.position.set(x,72,z);pole.castShadow=true;S.add(pole);
+ var s1=new THREE.Mesh(new THREE.CylinderGeometry(13,20,15,32,1,true),RAT(5,1,THREE.DoubleSide));s1.position.set(x,160,z);s1.castShadow=true;S.add(s1);
+ var s2=new THREE.Mesh(new THREE.CylinderGeometry(21,30,14,32,1,true),RAT(7,1,THREE.DoubleSide));s2.position.set(x,145,z);s2.castShadow=true;S.add(s2);
+ var bulb=new THREE.Mesh(new THREE.SphereGeometry(5,12,10),new THREE.MeshBasicMaterial({color:0xfff0c8}));bulb.position.set(x,150,z);S.add(bulb);
+ var pl=new THREE.PointLight(0xffd9a0,0.5,220,1.5);pl.position.set(x,140,z);S.add(pl);})();
+// EKET top: small planter (left) and mushroom lamp (right)
+(function(){var e=edge(2);function at(s,d){return [e.a[0]+e.ux*s-e.nx*d,e.a[1]+e.uy*s-e.ny*d];}var top=81;
+ var p=at(18,17),pot=new THREE.Mesh(new THREE.CylinderGeometry(7,5.5,11,20),M(0xe9e2d4));pot.position.set(p[0],top+5.5,p[1]);pot.castShadow=true;S.add(pot);
+ var LG=M(0x6f9a5a);for(var i=0;i<11;i++){var an=i*2.4,rr=2+((i*3)%6),hh=top+15+((i*5)%9);var st=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.3,hh-top-10,4),M(0x7a9a5e));st.position.set(p[0]+Math.cos(an)*rr*0.5,(top+10+hh)/2,p[1]+Math.sin(an)*rr*0.5);S.add(st);
+  var lf=new THREE.Mesh(new THREE.CircleGeometry(3.2,16),new THREE.MeshStandardMaterial({color:0x6f9a5a,side:THREE.DoubleSide,roughness:0.6}));lf.position.set(p[0]+Math.cos(an)*rr,hh,p[1]+Math.sin(an)*rr);lf.rotation.set(-1.1+(i%3)*0.3,an,0);lf.castShadow=true;S.add(lf);}
+ var OX=new THREE.MeshStandardMaterial({color:0x6a1d18,roughness:0.22,metalness:0.05});
+ var pts=[[0,0],[0,9],[1.2,14],[5,16.5],[8.6,14],[9.3,8],[10.6,2.4],[14,0.8],[17,3.2],[17.6,8],[17.6,13]].map(function(u){var w=at(186+u[0],17);return new THREE.Vector3(w[0],top+2.4+u[1],w[1]);});
+ var tube=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),80,2.4,20,false),OX);tube.castShadow=true;S.add(tube);
+ [pts[0],pts[pts.length-1]].forEach(function(pp,i){var cp=new THREE.Mesh(new THREE.CircleGeometry(2.4,20),OX);cp.position.set(pp.x,pp.y-(i?0:0.01),pp.z);cp.rotation.x=i?-Math.PI/2:Math.PI/2;S.add(cp);});
+ var gp=pts[pts.length-1],globe=new THREE.Mesh(new THREE.SphereGeometry(6,32,24),new THREE.MeshStandardMaterial({color:0xefe4cf,emissive:0x3a2a14,roughness:0.3}));globe.position.set(gp.x,gp.y+5.6,gp.z);globe.castShadow=true;S.add(globe);
+ var pl=new THREE.PointLight(0xffd9a0,0.35,120,1.5);pl.position.set(gp.x,gp.y+6,gp.z+8);S.add(pl);})();
+
+var sf=onWall(4,50,72,30);item(sf.x,sf.z,sf.rot,shelf(72,30,150));
+item(225,155,0,coffee(90,40));
+item(235,288,180,sofa(240,95,80,65));
+item(92,192,240,armchair());
+(function(){var c=document.createElement('canvas');c.width=512;c.height=360;var x=c.getContext('2d');x.fillStyle='#e9e1d2';x.fillRect(0,0,512,360);
+ for(var i=0;i<5000;i++){x.fillStyle=Math.random()<0.5?'rgba(255,252,245,0.35)':'rgba(170,155,130,0.18)';x.fillRect(Math.random()*512,Math.random()*360,3,2);}
+ x.strokeStyle='#b9a98c';x.lineWidth=6;x.strokeRect(22,22,468,316);x.lineWidth=2;x.strokeRect(36,36,440,288);
+ var m=new THREE.Mesh(new THREE.PlaneGeometry(220,155),new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(c),roughness:1}));m.rotation.x=-Math.PI/2;m.position.set(228,0.6,175);m.receiveShadow=true;S.add(m);})();
+var V={'3d':[C.x+420,560,C.z+560],'top':[C.x,2800,C.z+0.01],'sofa':[235,120,300],'left':[340,150,180],'win':[150,150,230],'tv':[300,150,120],'cab':[192,105,175]};
+VIEWS['living']=function(k){var p=V[k];cam.position.set(p[0],p[1],p[2]);cam.fov=k==='top'?13:(k==='3d'?40:62);cam.updateProjectionMatrix();
+ var T={'sofa':[190,90,20],'left':[0,120,150],'win':[380,100,20],'tv':[60,110,20],'cab':[192,48,20]}[k];if(T)ctl.target.set(T[0],T[1],T[2]);else ctl.target.set(C.x,k==='top'?0:40,C.z);ctl.update();};
+
+VIEWS['living']('3d');
+function size(){var w=wrap.clientWidth,h=wrap.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+new ResizeObserver(size).observe(wrap);size();
+var tmp=new THREE.Vector3();
+(function loop(){requestAnimationFrame(loop);if(!wrap.offsetParent)return;ctl.update();doorV+=(doorT-doorV)*0.08;DOORS.forEach(function(d){d.p.rotation.y=-d.s*doorV*1.48;});
+ walls.forEach(function(g){var u=g.userData;var vx=cam.position.x-u.mx,vz=cam.position.z-u.mz;var outside=(vx*u.nx+vz*u.nz)>0;g.visible=cam.position.y>1500||!outside;});
+ R.render(S,cam);})();
+})();
+
+</script>
+<script>
+
+(function(){
+var cv=document.getElementById('cv_kidsC'),wrap=document.getElementById('wrap_kidsC');
+var R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+R.setPixelRatio(Math.min(2,window.devicePixelRatio||1));R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+var S=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(40,1,1,5000);
+var ctl=new THREE.OrbitControls(cam,cv);ctl.zoomSpeed=0.3;CTRL['kidsC']={cam:cam,ctl:ctl};ctl.enableDamping=true;ctl.maxPolarAngle=Math.PI/2-0.05;ctl.minDistance=60;ctl.maxDistance=3600;
+var C={x:125,z:200};ctl.target.set(C.x,60,C.z);
+S.add(new THREE.HemisphereLight(0xffffff,0xd8cbb8,0.75));
+var sun=new THREE.DirectionalLight(0xffffff,0.55);sun.position.set(600,700,900);sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048);var sc=sun.shadow.camera;sc.left=-500;sc.right=500;sc.top=500;sc.bottom=-500;sc.near=100;sc.far=2500;sun.target.position.set(C.x,0,C.z);S.add(sun);S.add(sun.target);
+function M(c,o){o=o||{};return new THREE.MeshStandardMaterial({color:c,roughness:o.r==null?0.8:o.r,metalness:0,transparent:o.t!=null,opacity:o.t==null?1:o.t});}
+var H=300,P=[[0,0],[106,0],[106,70],[120,70],[120,0],[260,0],[260,357],[200,357],[110,412],[-15,350],[-15,265],[0,237]];
+var shape=new THREE.Shape();P.forEach(function(p,i){i?shape.lineTo(p[0],p[1]):shape.moveTo(p[0],p[1]);});
+var fc=document.createElement('canvas');fc.width=fc.height=512;var f=fc.getContext('2d');var tones=['#C8A47E','#BE9A73','#D1AE88','#C2A078','#CBA982','#B9956E'];
+for(var r=0;r<8;r++){var off=(r*137)%512,y0=r*64;for(var k=-2;k<3;k++){var x0=off+k*512;f.fillStyle=tones[(r*3+k+12)%tones.length];f.fillRect(x0,y0,512,64);
+ f.strokeStyle='rgba(90,60,30,0.10)';f.lineWidth=1;for(var g=0;g<5;g++){f.beginPath();var gy=y0+8+g*11+((r+k)%3);f.moveTo(x0,gy);f.bezierCurveTo(x0+160,gy-3,x0+340,gy+3,x0+512,gy);f.stroke();}
+ f.fillStyle='rgba(70,45,20,0.45)';f.fillRect(x0,y0,2,64);}
+ f.fillStyle='rgba(70,45,20,0.35)';f.fillRect(0,y0,512,2);}
+var ftex=new THREE.CanvasTexture(fc);ftex.wrapS=ftex.wrapT=THREE.RepeatWrapping;ftex.repeat.set(1/180,1/120);ftex.anisotropy=8;
+var flM=new THREE.MeshStandardMaterial({map:ftex,roughness:0.7});flM.side=THREE.DoubleSide;var fl=new THREE.Mesh(new THREE.ShapeGeometry(shape),flM);fl.rotation.x=Math.PI/2;fl.receiveShadow=true;S.add(fl);
+var OPEN={0:[[13,93,0,205,'door']],7:[[12,92,75,225,'win']],8:[[15,125,75,225,'win']],9:[[8,78,75,225,'win']]};
+var walls=[];
+function edge(i){var a=P[i],b=P[(i+1)%P.length],dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy);return {a:a,ux:dx/L,uy:dy/L,L:L,nx:dy/L,ny:-dx/L};}
+var wallM=M(0xf3f1ec),glassM=M(0xbfd8f2,{t:0.45,r:0.1}),frameM=M(0xffffff);
+function wallPiece(e,s0,s1,z0,z1,g,mat,th){var w=s1-s0,h=z1-z0;if(w<=0.5||h<=0.5)return;th=th||8;
+ var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,th),mat||wallM);var mid=(s0+s1)/2;
+ m.position.set(e.a[0]+e.ux*mid+e.nx*th/2,(z0+z1)/2,e.a[1]+e.uy*mid+e.ny*th/2);m.rotation.y=-Math.atan2(e.uy,e.ux);m.receiveShadow=true;g.add(m);}
+var PANEL={0:1,5:1,11:1},PH=120,panM=M(0xd8c6aa),grvM=M(0xbca78a),ledM=M(0xe4d5be);
+function inPiece(e,s0,s1,z0,z1,off,th,mat,g){var w=s1-s0,h=z1-z0;if(w<=0.3)return;var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,th),mat);var mid=(s0+s1)/2,dn=-(off+th/2);
+ m.position.set(e.a[0]+e.ux*mid+e.nx*dn,(z0+z1)/2,e.a[1]+e.uy*mid+e.ny*dn);m.rotation.y=-Math.atan2(e.uy,e.ux);m.receiveShadow=true;g.add(m);}
+function panelRun(e,s0,s1,g){inPiece(e,s0,s1,10,PH,0,1.2,panM,g);
+ for(var x=s0+10;x<s1-2;x+=10)inPiece(e,x-0.35,x+0.35,10.5,PH-4,1.2,0.25,grvM,g);
+ inPiece(e,s0,s1,PH-4,PH,1.2,2.2,ledM,g);inPiece(e,s0,s1,PH-0.01,PH+1.8,0,7,ledM,g);}
+for(var i=0;i<P.length;i++){var e=edge(i),g=new THREE.Group(),ops=(OPEN[i]||[]).slice().sort(function(a,b){return a[0]-b[0];}),cur=0;
+ ops.forEach(function(o){wallPiece(e,cur,o[0],0,H,g);wallPiece(e,o[0],o[1],0,o[2],g);wallPiece(e,o[0],o[1],o[3],H,g);
+  if(o[4]==='win'){wallPiece(e,o[0],o[1],o[2],o[3],g,glassM,2);wallPiece(e,o[0],o[1],o[3]-48,o[3]-44,g,frameM,4);wallPiece(e,(o[0]+o[1])/2-2,(o[0]+o[1])/2+2,o[2],o[3]-48,g,frameM,4);wallPiece(e,o[0]-4,o[1]+4,o[2]-4,o[2],g,frameM,14);}
+  cur=o[1];});
+ wallPiece(e,cur,e.L,0,H,g);wallPiece(e,0,e.L,0,10,g,frameM,10.5);
+ if(PANEL[i]){var skip=(OPEN[i]||[]).filter(function(o){return o[4]==='door';}),segs=[[0,e.L]];
+  skip.forEach(function(o){var ns=[];segs.forEach(function(sg){if(o[1]<=sg[0]||o[0]>=sg[1])ns.push(sg);else{if(o[0]>sg[0])ns.push([sg[0],o[0]]);if(o[1]<sg[1])ns.push([o[1],sg[1]]);}});segs=ns;});
+  segs.forEach(function(sg){panelRun(e,sg[0]+0.3,sg[1]-0.3,g);});}
+ g.userData={mx:e.a[0]+e.ux*e.L/2,mz:e.a[1]+e.uy*e.L/2,nx:e.nx,nz:e.ny};S.add(g);walls.push(g);}
+(function(){var bc=document.createElement('canvas');bc.width=256;bc.height=256;var b=bc.getContext('2d');var tn=['#c9a46c','#bf9860','#d2b07a','#b88f58','#c59f66'];
+ for(var y=0;y<256;y+=4){b.fillStyle=tn[(y*7)%5];b.fillRect(0,y,256,4);b.fillStyle='rgba(90,60,25,0.35)';b.fillRect(0,y+3,256,1);
+  for(var k=0;k<3;k++){b.fillStyle='rgba(110,75,35,0.4)';b.fillRect(Math.random()*256,y,2,3);}}
+ b.fillStyle='rgba(70,50,30,0.55)';[64,192].forEach(function(xx){b.fillRect(xx,0,2,256);});
+ var bt=new THREE.CanvasTexture(bc);bt.wrapS=bt.wrapT=THREE.RepeatWrapping;
+ [7,8,9].forEach(function(i){OPEN[i].forEach(function(o){var e=edge(i),g=walls[i],ang=-Math.atan2(e.uy,e.ux),w=o[1]-o[0]+8,mid=(o[0]+o[1])/2,top=o[3]+6,drop=62;
+  function put(m,z,off){m.position.set(e.a[0]+e.ux*mid-e.nx*off,z,e.a[1]+e.uy*mid-e.ny*off);m.rotation.y=ang;m.castShadow=true;g.add(m);}
+  var t=bt.clone();t.needsUpdate=true;t.repeat.set(w/60,drop/60);
+  put(new THREE.Mesh(new THREE.BoxGeometry(w,drop,0.8),new THREE.MeshStandardMaterial({map:t,roughness:0.9})),top-drop/2,5);
+  put(new THREE.Mesh(new THREE.BoxGeometry(w+2,5,4),M(0xb08a58)),top+2.5,4);
+  [0,1,2].forEach(function(f){put(new THREE.Mesh(new THREE.BoxGeometry(w,3.5,3),new THREE.MeshStandardMaterial({map:t,roughness:0.9})),top-drop-1.5-f*3,6+f*0.6);});
+ });});})();
+function item(cx,cz,rotDeg,parts){var g=new THREE.Group();parts.forEach(function(p){var m=new THREE.Mesh(p.geo||new THREE.BoxGeometry(p.x1-p.x0,p.z1-p.z0,p.y1-p.y0),p.m);
+ m.position.set((p.x0+p.x1)/2,(p.z0+p.z1)/2,(p.y0+p.y1)/2);if(p.ry)m.rotation.y=p.ry;m.castShadow=true;m.receiveShadow=true;g.add(m);});
+ g.position.set(cx,0,cz);g.rotation.y=-rotDeg*Math.PI/180;S.add(g);return g;}
+function B(x0,x1,y0,y1,z0,z1,m){return {x0:x0,x1:x1,y0:y0,y1:y1,z0:z0,z1:z1,m:m};}
+var WH=M(0xfafaf7),WH2=M(0xe9e7e0),WOOD=M(0xcfa57a),DARK=M(0x7b4e33),GAP=M(0x9a978d),BLK=M(0x3a3a3a),MAT=M(0xffffff),
+ BLUE=M(0x9cc3e6),PIL=M(0xf2f2f2),MINT=M(0xbfe3d0),KNOB=M(0x8d8a80);
+function doors(a,b,zb,zt,cols,rows,yf){var o=[],w=(b-a)/cols,h=(zt-zb)/rows;for(var i=0;i<cols;i++)for(var j=0;j<rows;j++){
+ o.push(B(a+i*w+1,a+(i+1)*w-1,yf,yf+0.8,zb+j*h+1,zb+(j+1)*h-1,WH2));
+ var kx=cols>1&&rows==1?(i%2==0?a+(i+1)*w-6:a+i*w+6):a+(i+0.5)*w;var kz=rows>1?zb+(j+0.5)*h:zt-(zt-zb)*0.15;o.push(B(kx-1.5,kx+1.5,yf+0.8,yf+2.5,kz-1.5,kz+1.5,KNOB));}return o;}
+function wardrobe(w,d,h){var a=w/2,b=d/2;return [B(-a,a,-b,b,0,h,M(0xf6f5f1))].concat(doors(-a+2,a-2,4,h-4,2,1,b));}
+function radiator(w){var o=[];for(var i=0;i<12;i++){var x=-w/2+w*(i+0.5)/12;o.push(B(x-3.6,x+3.6,-4,4,10,65,WH));}return o;}
+function onWall(ei,a,w,d){var e=edge(ei),nx=-e.nx,ny=-e.ny;return {x:e.a[0]+e.ux*(a+w/2)+nx*d/2,z:e.a[1]+e.uy*(a+w/2)+ny*d/2,rot:Math.atan2(e.uy,e.ux)*180/Math.PI};}
+function bedKid(w,d){var a=w/2,b=d/2,t=5,H=60.7,o=[];
+ [[-a,-b],[a-t,-b],[-a,b-t],[a-t,b-t]].forEach(function(c){o.push(B(c[0],c[0]+t,c[1],c[1]+t,0,H,WH));});
+ [-a,a-t].forEach(function(x){o.push(B(x,x+t,-b+t,b-t,H-7,H,WH),B(x,x+t,-b+t,b-t,22,30,WH));
+  for(var i=1;i<6;i++){var y=-b+t+(d-2*t)*i/6;o.push(B(x+0.5,x+t-0.5,y-2.5,y+2.5,30,H-7,WH));}});
+ o.push(B(-a+t,a-t,-b,-b+3,22,34,WH),B(-a+t,a-t,b-3,b,22,34,WH));
+ o.push(B(-a+t,a-t,-b+3,b-3,30,44,MAT),B(-a+t+2,a-t-50,-b+4,b-2,44,46.5,M(0xefe8da)),B(a-t-42,a-t-6,-b+10,b-14,44,55,PIL),B(a-t-60,a-t-34,-b+20,b-20,44,53,M(0xd9a85b)));
+ var dw=(w-2*t-6)/2;[0,1].forEach(function(i){var x0=-a+t+2+i*(dw+2);o.push(B(x0,x0+dw,-b+6,b-1,2,21,WH2),B(x0+dw/2-9,x0+dw/2+9,b-1,b+0.3,14,17,M(0x9a8f80)));});
+ return o;}
+function cot(w,d){var a=w/2,b=d/2,p=4,o=[B(-a,a,-b,b,22,26,WOOD),B(-a+3,a-3,-b+3,b-3,26,36,MAT)];
+ [[-a,-b],[a-p,-b],[-a,b-p],[a-p,b-p]].forEach(function(c){o.push(B(c[0],c[0]+p,c[1],c[1]+p,0,90,WH));});
+ o.push(B(-a,a,-b,-b+p,86,90,WH),B(-a,a,b-p,b,86,90,WH),B(-a,-a+p,-b,b,86,90,WH),B(a-p,a,-b,b,86,90,WH));
+ for(var i=1;i<14;i++){var x=-a+p+(w-2*p)*i/14;o.push(B(x-1,x+1,-b+1,-b+3,26,86,WH),B(x-1,x+1,b-3,b-1,26,86,WH));}
+ for(var j=1;j<6;j++){var y=-b+p+(d-2*p)*j/6;o.push(B(-a+1,-a+3,y-1,y+1,26,86,WH),B(a-3,a-1,y-1,y+1,26,86,WH));}return o;}
+var SEA=M(0xc8a46e),SEA2=M(0x8a6a3e),MDF=M(0xc9ab88);
+function radCover(w,d,h){var a=w/2,b=d/2,o=[B(-a-1,a+1,-b,b+1.5,h-2,h,MDF),B(-a,-a+6,-b,b,0,h-2,MDF),B(a-6,a,-b,b,0,h-2,MDF),B(-3,3,b-2,b,0,h-2,MDF),
+ B(-a+6,a-6,b-2,b,h-14,h-2,MDF),B(-a+6,a-6,b-2,b,10,20,MDF)];
+ [[-a+6,-3],[3,a-6]].forEach(function(p){var L=p[1]-p[0],n=Math.floor((L-4)/5);for(var i=0;i<=n;i++){var x=p[0]+2+i*(L-4)/n;o.push(B(x-1.1,x+1.1,b-1.8,b-0.2,20,h-14,MDF));}});
+ return o;}
+function lowCubes(w,d,h,n){var a=w/2,b=d/2,t=1.8,o=[B(-a,-a+t,-b,b,0,h,WH),B(a-t,a,-b,b,0,h,WH),B(-a,a,-b,b,h-t,h,WH),B(-a+t,a-t,-b,b,4,4+t,WH),B(-a+t,a-t,-b,-b+0.8,4,h-t,WH),B(-a+t,a-t,-b+2,b-2,0,4,M(0xdedbd3))];
+ var cw=(w-2*t-(n-1)*t)/n;for(var i=0;i<n;i++){var x0=-a+t+i*(cw+t);if(i>0)o.push(B(x0-t,x0,-b,b,4,h-t,WH));
+  o.push(B(x0+1.2,x0+cw-1.2,-b+3,b-1.5,4+t,h-t-3,SEA),B(x0+cw/2-4,x0+cw/2+4,b-1.5,b-0.8,h-t-10,h-t-7.5,SEA2));}return o;}
+function wardrobe3(w,d,h){var a=w/2,b=d/2;return [B(-a,a,-b,b,0,h,M(0xf6f5f1))].concat(doors(-a+2,a-2,4,h-4,3,1,b));}
+item(190,35,0,wardrobe3(140,70,235));
+item(230,326,90,wardrobe(62,60,220));
+item(220,213,90,bedKid(160,80));
+item(38,163,90,cot(140,70));
+function chestW(w,d,h){var a=w/2,b=d/2,LN=M(0xdcd9d1),o=[B(-a,a,-b,b,0,h,WH),B(-a+2,a-2,-b+2,b-2,0,6,M(0xe4e1d9))];
+ for(var j=1;j<4;j++){var z=6+(h-6)*j/4;o.push(B(-a+1,a-1,b,b+0.6,z-0.5,z+0.5,LN));}
+ for(var j=0;j<4;j++){var z=6+(h-6)*(j+0.5)/4;o.push(B(-14,14,b,b+1.6,z-1,z+1,M(0xc9b28e)));}
+ o.push(B(-a+3,a-3,-b+2,b-2,h,h+2,WH),B(-a+5,a-5,-b+4,b-4,h+2,h+9,MINT),B(-a+3,-a+5,-b+2,b-2,h+2,h+11,WH),B(a-5,a-3,-b+2,b-2,h+2,h+11,WH),B(-a+3,a-3,-b+2,-b+4,h+2,h+11,WH));
+ o.push({geo:new THREE.CylinderGeometry(4,4,14,14),m:M(0xe9e3d6),x0:a-14,x1:a-14,y0:-b+10,y1:-b+10,z0:h,z1:h+14});return o;}
+var c9=onWall(9,4,77,48);item(c9.x,c9.z,c9.rot,chestW(77,48,95));
+var rc=onWall(8,20,100,8);item(rc.x,rc.z,rc.rot,radiator(100));
+var cc=onWall(8,12,116,19);item(cc.x,cc.z,cc.rot,radCover(116,19,72));
+var rcv=document.createElement('canvas');rcv.width=rcv.height=512;var q=rcv.getContext('2d');q.fillStyle='#EDE4D6';q.fillRect(0,0,512,512);
+for(var n=0;n<5000;n++){var px=Math.random()*512,py=Math.random()*512;q.fillStyle=Math.random()<0.5?'rgba(255,255,255,0.35)':'rgba(170,150,120,0.22)';q.beginPath();q.arc(px,py,1.5+Math.random()*2.5,0,7);q.fill();}
+var dots=['#97A58E','#C9A77E','#A9ADA4','#B9A07A'];var ri=0;for(var gy=40;gy<512;gy+=64){for(var gx=(gy/64%2)*32+30;gx<512;gx+=64){var c=dots[(ri++)%dots.length];q.fillStyle=c;for(var p=0;p<8;p++){var an=p*Math.PI/4;q.beginPath();q.arc(gx+Math.cos(an)*6,gy+Math.sin(an)*6,4.5,0,7);q.fill();}q.beginPath();q.arc(gx,gy,5,0,7);q.fill();}}
+var rugM=new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(rcv),roughness:1});
+var rugE=new THREE.Mesh(new THREE.CylinderGeometry(50,50,1.6,64),[new THREE.MeshStandardMaterial({color:0xe2d8c8,roughness:1}),rugM,rugM]);rugE.position.set(125,0.8,215);rugE.receiveShadow=true;S.add(rugE);
+var V={'3d':[C.x-430,560,C.z-430],'top':[C.x,2800,C.z+0.01],'door':[55,160,30],'bed':[40,150,190],'cot':[200,150,180],'bay':[150,150,200]};
+VIEWS['kidsC']=function(k){var p=V[k];cam.position.set(p[0],p[1],p[2]);cam.fov=k==='top'?13:((k==='door'||k==='bay'||k==='cot'||k==='bed')?66:40);cam.updateProjectionMatrix();if(k==='door'){ctl.target.set(90,70,330);}else if(k==='desk'){ctl.target.set(50,80,370);}else if(k==='cot'){ctl.target.set(0,90,165);}else if(k==='bay'){ctl.target.set(-10,70,300);}else if(k==='bed'){ctl.target.set(260,70,190);}else{ctl.target.set(C.x,k==='top'?0:40,C.z);};ctl.update();};
+VIEWS['kidsC']('3d');
+function size(){var w=wrap.clientWidth,h=wrap.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+new ResizeObserver(size).observe(wrap);size();
+var tmp=new THREE.Vector3();
+(function loop(){requestAnimationFrame(loop);if(!wrap.offsetParent)return;ctl.update();
+ walls.forEach(function(g){var u=g.userData;var vx=cam.position.x-u.mx,vz=cam.position.z-u.mz;var outside=(vx*u.nx+vz*u.nz)>0;g.visible=cam.position.y>1500||!outside;});
+ R.render(S,cam);})();
+})();
+
+</script>
+<script>
+
+(function(){
+var cv=document.getElementById('cv_guestC'),wrap=document.getElementById('wrap_guestC');
+var R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+R.setPixelRatio(Math.min(2,window.devicePixelRatio||1));R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+var S=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(40,1,1,5000);
+var ctl=new THREE.OrbitControls(cam,cv);ctl.zoomSpeed=0.3;CTRL['guestC']={cam:cam,ctl:ctl};ctl.enableDamping=true;ctl.maxPolarAngle=Math.PI/2-0.05;ctl.minDistance=60;ctl.maxDistance=3600;
+var C={x:220,z:330};ctl.target.set(C.x,60,C.z);
+S.add(new THREE.HemisphereLight(0xffffff,0xd8cbb8,0.75));
+var sun=new THREE.DirectionalLight(0xffffff,0.55);sun.position.set(600,700,900);sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048);var sc=sun.shadow.camera;sc.left=-500;sc.right=500;sc.top=500;sc.bottom=-500;sc.near=100;sc.far=2500;sun.target.position.set(C.x,0,C.z);S.add(sun);S.add(sun.target);
+function M(c,o){o=o||{};return new THREE.MeshStandardMaterial({color:c,roughness:o.r==null?0.8:o.r,metalness:0,transparent:o.t!=null,opacity:o.t==null?1:o.t});}
+var H=300,P=[[0,0],[103,0],[103,360],[403,360],[445,405],[300,612],[0,612]];
+var shape=new THREE.Shape();P.forEach(function(p,i){i?shape.lineTo(p[0],p[1]):shape.moveTo(p[0],p[1]);});
+var fc=document.createElement('canvas');fc.width=fc.height=512;var f=fc.getContext('2d');var tones=['#C8A47E','#BE9A73','#D1AE88','#C2A078','#CBA982','#B9956E'];
+for(var r=0;r<8;r++){var off=(r*137)%512,y0=r*64;for(var k=-2;k<3;k++){var x0=off+k*512;f.fillStyle=tones[(r*3+k+12)%tones.length];f.fillRect(x0,y0,512,64);
+ f.strokeStyle='rgba(90,60,30,0.10)';f.lineWidth=1;for(var g=0;g<5;g++){f.beginPath();var gy=y0+8+g*11+((r+k)%3);f.moveTo(x0,gy);f.bezierCurveTo(x0+160,gy-3,x0+340,gy+3,x0+512,gy);f.stroke();}
+ f.fillStyle='rgba(70,45,20,0.45)';f.fillRect(x0,y0,2,64);}
+ f.fillStyle='rgba(70,45,20,0.35)';f.fillRect(0,y0,512,2);}
+var ftex=new THREE.CanvasTexture(fc);ftex.wrapS=ftex.wrapT=THREE.RepeatWrapping;ftex.repeat.set(1/180,1/120);ftex.anisotropy=8;
+var flM=new THREE.MeshStandardMaterial({map:ftex,roughness:0.7});flM.side=THREE.DoubleSide;var fl=new THREE.Mesh(new THREE.ShapeGeometry(shape),flM);fl.rotation.x=Math.PI/2;fl.receiveShadow=true;S.add(fl);
+var OPEN={1:[[70,150,0,205,'door']],4:[[28,90,75,225,'win'],[163,225,75,225,'win']]};
+var walls=[];
+function edge(i){var a=P[i],b=P[(i+1)%P.length],dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy);return {a:a,ux:dx/L,uy:dy/L,L:L,nx:dy/L,ny:-dx/L};}
+var wallM=M(0xf3f1ec),glassM=M(0xbfd8f2,{t:0.45,r:0.1}),frameM=M(0xffffff);
+function wallPiece(e,s0,s1,z0,z1,g,mat,th){var w=s1-s0,h=z1-z0;if(w<=0.5||h<=0.5)return;th=th||8;
+ var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,th),mat||wallM);var mid=(s0+s1)/2;
+ m.position.set(e.a[0]+e.ux*mid+e.nx*th/2,(z0+z1)/2,e.a[1]+e.uy*mid+e.ny*th/2);m.rotation.y=-Math.atan2(e.uy,e.ux);m.receiveShadow=true;g.add(m);}
+var PANEL={},PH=120,panM=M(0xd8c6aa),grvM=M(0xbca78a),ledM=M(0xe4d5be);
+function inPiece(e,s0,s1,z0,z1,off,th,mat,g){var w=s1-s0,h=z1-z0;if(w<=0.3)return;var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,th),mat);var mid=(s0+s1)/2,dn=-(off+th/2);
+ m.position.set(e.a[0]+e.ux*mid+e.nx*dn,(z0+z1)/2,e.a[1]+e.uy*mid+e.ny*dn);m.rotation.y=-Math.atan2(e.uy,e.ux);m.receiveShadow=true;g.add(m);}
+function panelRun(e,s0,s1,g){inPiece(e,s0,s1,10,PH,0,1.2,panM,g);
+ for(var x=s0+10;x<s1-2;x+=10)inPiece(e,x-0.35,x+0.35,10.5,PH-4,1.2,0.25,grvM,g);
+ inPiece(e,s0,s1,PH-4,PH,1.2,2.2,ledM,g);inPiece(e,s0,s1,PH-0.01,PH+1.8,0,7,ledM,g);}
+for(var i=0;i<P.length;i++){var e=edge(i),g=new THREE.Group(),ops=(OPEN[i]||[]).slice().sort(function(a,b){return a[0]-b[0];}),cur=0;
+ ops.forEach(function(o){wallPiece(e,cur,o[0],0,H,g);wallPiece(e,o[0],o[1],0,o[2],g);wallPiece(e,o[0],o[1],o[3],H,g);
+  if(o[4]==='win'){wallPiece(e,o[0],o[1],o[2],o[3],g,glassM,2);wallPiece(e,o[0],o[1],o[3]-48,o[3]-44,g,frameM,4);wallPiece(e,(o[0]+o[1])/2-2,(o[0]+o[1])/2+2,o[2],o[3]-48,g,frameM,4);wallPiece(e,o[0]-4,o[1]+4,o[2]-4,o[2],g,frameM,14);}
+  cur=o[1];});
+ wallPiece(e,cur,e.L,0,H,g);wallPiece(e,0,e.L,0,10,g,frameM,10.5);
+ if(PANEL[i]){var skip=(OPEN[i]||[]).filter(function(o){return o[4]==='door';}),segs=[[0,e.L]];
+  skip.forEach(function(o){var ns=[];segs.forEach(function(sg){if(o[1]<=sg[0]||o[0]>=sg[1])ns.push(sg);else{if(o[0]>sg[0])ns.push([sg[0],o[0]]);if(o[1]<sg[1])ns.push([o[1],sg[1]]);}});segs=ns;});
+  segs.forEach(function(sg){panelRun(e,sg[0]+0.3,sg[1]-0.3,g);});}
+ g.userData={mx:e.a[0]+e.ux*e.L/2,mz:e.a[1]+e.uy*e.L/2,nx:e.nx,nz:e.ny};S.add(g);walls.push(g);}
+(function(){var bc=document.createElement('canvas');bc.width=256;bc.height=256;var b=bc.getContext('2d');var tn=['#c9a46c','#bf9860','#d2b07a','#b88f58','#c59f66'];
+ for(var y=0;y<256;y+=4){b.fillStyle=tn[(y*7)%5];b.fillRect(0,y,256,4);b.fillStyle='rgba(90,60,25,0.35)';b.fillRect(0,y+3,256,1);
+  for(var k=0;k<3;k++){b.fillStyle='rgba(110,75,35,0.4)';b.fillRect(Math.random()*256,y,2,3);}}
+ b.fillStyle='rgba(70,50,30,0.55)';[64,192].forEach(function(xx){b.fillRect(xx,0,2,256);});
+ var bt=new THREE.CanvasTexture(bc);bt.wrapS=bt.wrapT=THREE.RepeatWrapping;
+ [4].forEach(function(i){OPEN[i].forEach(function(o){var e=edge(i),g=walls[i],ang=-Math.atan2(e.uy,e.ux),w=o[1]-o[0]+8,mid=(o[0]+o[1])/2,top=o[3]+6,drop=62;
+  function put(m,z,off){m.position.set(e.a[0]+e.ux*mid-e.nx*off,z,e.a[1]+e.uy*mid-e.ny*off);m.rotation.y=ang;m.castShadow=true;g.add(m);}
+  var t=bt.clone();t.needsUpdate=true;t.repeat.set(w/60,drop/60);
+  put(new THREE.Mesh(new THREE.BoxGeometry(w,drop,0.8),new THREE.MeshStandardMaterial({map:t,roughness:0.9})),top-drop/2,5);
+  put(new THREE.Mesh(new THREE.BoxGeometry(w+2,5,4),M(0xb08a58)),top+2.5,4);
+  [0,1,2].forEach(function(f){put(new THREE.Mesh(new THREE.BoxGeometry(w,3.5,3),new THREE.MeshStandardMaterial({map:t,roughness:0.9})),top-drop-1.5-f*3,6+f*0.6);});
+ });});})();
+function item(cx,cz,rotDeg,parts){var g=new THREE.Group();parts.forEach(function(p){var m=new THREE.Mesh(p.geo||new THREE.BoxGeometry(p.x1-p.x0,p.z1-p.z0,p.y1-p.y0),p.m);
+ m.position.set((p.x0+p.x1)/2,(p.z0+p.z1)/2,(p.y0+p.y1)/2);if(p.ry)m.rotation.y=p.ry;m.castShadow=true;m.receiveShadow=true;g.add(m);});
+ g.position.set(cx,0,cz);g.rotation.y=-rotDeg*Math.PI/180;S.add(g);return g;}
+function B(x0,x1,y0,y1,z0,z1,m){return {x0:x0,x1:x1,y0:y0,y1:y1,z0:z0,z1:z1,m:m};}
+var WH=M(0xfafaf7),WH2=M(0xe9e7e0),WOOD=M(0xcfa57a),DARK=M(0x7b4e33),GAP=M(0x9a978d),BLK=M(0x3a3a3a),MAT=M(0xffffff),
+ BLUE=M(0x9cc3e6),PIL=M(0xf2f2f2),MINT=M(0xbfe3d0),KNOB=M(0x8d8a80);
+function doors(a,b,zb,zt,cols,rows,yf){var o=[],w=(b-a)/cols,h=(zt-zb)/rows;for(var i=0;i<cols;i++)for(var j=0;j<rows;j++){
+ o.push(B(a+i*w+1,a+(i+1)*w-1,yf,yf+0.8,zb+j*h+1,zb+(j+1)*h-1,WH2));
+ var kx=cols>1&&rows==1?(i%2==0?a+(i+1)*w-6:a+i*w+6):a+(i+0.5)*w;var kz=rows>1?zb+(j+0.5)*h:zt-(zt-zb)*0.15;o.push(B(kx-1.5,kx+1.5,yf+0.8,yf+2.5,kz-1.5,kz+1.5,KNOB));}return o;}
+function wardrobe(w,d,h){var a=w/2,b=d/2;return [B(-a,a,-b,b,0,h,M(0xf6f5f1))].concat(doors(-a+2,a-2,4,h-4,2,1,b));}
+function radiator(w){var o=[];for(var i=0;i<12;i++){var x=-w/2+w*(i+0.5)/12;o.push(B(x-3.6,x+3.6,-4,4,10,65,WH));}return o;}
+function onWall(ei,a,w,d){var e=edge(ei),nx=-e.nx,ny=-e.ny;return {x:e.a[0]+e.ux*(a+w/2)+nx*d/2,z:e.a[1]+e.uy*(a+w/2)+ny*d/2,rot:Math.atan2(e.uy,e.ux)*180/Math.PI};}
+function divan(w,d){var a=w/2,b=d/2;return [B(-a,a,-b,b,2,25,M(0xc9c4ba)),B(-a+2,a-2,-b+2,b-2,0,2,M(0x6b6660)),B(-a+1,a-1,-b+1,b-1,25,43,MAT),B(-a,a,-b+55,b+1,43,46,M(0xd9cdb8)),B(-a-1,a+1,b-25,b+1.5,30,46,M(0xd9cdb8)),
+ B(-a+8,-3,-b+6,-b+40,43,55,PIL),B(3,a-8,-b+6,-b+40,43,55,PIL),B(-a+20,a-20,-b+38,-b+50,43,52,M(0xb9a88f))];}
+function desk(w,d){var a=w/2,b=d/2,o=[B(-a+8,-a+14,-3,3,3,72,BLK),B(a-14,a-8,-3,3,3,72,BLK),B(-a+8,-a+14,-b+4,b-4,0,3,BLK),B(a-14,a-8,-b+4,b-4,0,3,BLK),B(-a,a,-b,b,72,75,M(0xb08a62)),
+ B(-28,28,-b+5,-b+8,93,126,M(0x222222)),B(-3,3,-b+8,-b+14,75,95,M(0x555555)),B(-12,12,-b+8,-b+20,75,76,M(0x555555)),B(-22,22,-b+28,-b+42,75,77,M(0xdddddd)),B(28,36,-b+32,-b+42,75,77,M(0xbbbbbb))];return o;}
+function chair(){var o=[];for(var i=0;i<5;i++){var an=i*Math.PI*2/5;o.push({geo:new THREE.BoxGeometry(28,3,4),m:M(0x333333),x0:Math.cos(an)*13,x1:Math.cos(an)*13,y0:Math.sin(an)*13,y1:Math.sin(an)*13,z0:2,z1:5,ry:-an});}
+ o.push(B(-2.5,2.5,-2.5,2.5,5,44,M(0x777777)),B(-25,25,-24,24,44,52,M(0x2b2b2b)),B(-22,22,-30,-26,54,108,M(0x3a3a3a)),B(-14,14,-31,-27,108,122,M(0x2b2b2b)),
+  B(-28,-24,-16,10,60,64,M(0x444444)),B(24,28,-16,10,60,64,M(0x444444)),B(-27,-25,-6,-2,50,60,M(0x444444)),B(25,27,-6,-2,50,60,M(0x444444)));return o;}
+function kitchen(w,d,h){var a=w/2,b=d/2,o=[B(-a,a,-b,b,0,46,WH),B(-a,a,-b,b,46,50,WOOD),B(-a,a,-b,-b+5,50,h,WOOD),B(-a+6,a-6,-b+5,-b+14,62,64,WOOD),
+ B(a-34,a-8,-b+10,b-8,50,53,M(0xc9d6de))];
+ [[-a+14,-b+16],[-a+14,b-10],[-a+32,-b+16],[-a+32,b-10]].forEach(function(c){o.push({geo:new THREE.CylinderGeometry(5.5,5.5,1.2,24),m:BLK,x0:c[0],x1:c[0],y0:c[1],y1:c[1],z0:50,z1:51.2});});
+ return o.concat(doors(-a+2,a-2,4,44,3,1,b));}
+var SEA=M(0xc8a46e),SEA2=M(0x8a6a3e),MDF=M(0xc9ab88);
+function kallax(w,d,h,cols,rows){var a=w/2,b=d/2,t=3.5,s=1.6,o=[B(-a,-a+t,-b,b,0,h,WH),B(a-t,a,-b,b,0,h,WH),B(-a,a,-b,b,h-t,h,WH),B(-a+t,a-t,-b,b,0,t,WH),B(-a+t,a-t,-b,b,h/2-s/2,h/2+s/2,WH),B(-a+t,a-t,-b,-b+1,t,h-t,WH)];
+ var cw=(w-2*t-(cols-1)*s)/cols;for(var i=1;i<cols;i++){var x=-a+t+i*cw+(i-1)*s;o.push(B(x,x+s,-b,b,t,h-t,WH));}
+ var spines=[0xa9b8a0,0xe8dcc4,0xc9a46a,0x8fa39a,0xd8c7a8,0xb7c6b4,0xe2b77a,0x9aa88f];
+ for(var i=0;i<cols;i++){var x0=-a+t+i*(cw+s);
+  o.push(B(x0+1.5,x0+cw-1.5,-b+3,b-1.5,t+0.5,t+0.5+29,SEA),B(x0+cw/2-6,x0+cw/2+6,b-1.6,b-1.2,t+21,t+25,SEA2));
+  if(i%2==0){var bx=x0+2,n=7+i;for(var k=0;k<n;k++){var bw=2.2+((k*7+i)%3)*0.6,bh=20+((k*5+i*3)%4)*2.5;o.push(B(bx,bx+bw,-b+4,b-8,h/2+s/2,h/2+s/2+bh,M(spines[(k+i)%spines.length])));bx+=bw+0.2;if(bx>x0+cw-4)break;}}
+  else{o.push(B(x0+cw/2-6,x0+cw/2+6,-b+12,b-12,h/2+s/2,h/2+s/2+11,M(0xd9b48a)),B(x0+cw/2-4,x0+cw/2+4,-b+14,b-14,h/2+s/2+11,h/2+s/2+19,M(0xeee6d8)));}}
+ o.push(B(-a+14,-a+24,-b+12,b-12,h,h+14,M(0xd8c3a5)),B(-a+12,-a+26,-b+10,b-10,h+14,h+28,M(0xf4ead8)),B(a-30,a-12,-b+10,b-12,h,h+10,M(0xa9b8a0)));
+ return o;}
+function wardrobe3(w,d,h){var a=w/2,b=d/2;return [B(-a,a,-b,b,0,h,M(0xf6f5f1))].concat(doors(-a+2,a-2,4,h-4,3,1,b));}
+item(51.5,30,0,wardrobe(103,60,235));
+item(100,530,270,divan(155,200));
+function headboard(w,d,h){var a=w/2,b=d/2,o=[B(-a,a,-b,b,4,h,M(0xd9ccb8)),B(-a+3,a-3,-b-0.5,-b+1,0,4,M(0x8a7f70)),B(a-6,a-3,-b-0.5,-b+1,0,4,M(0x8a7f70))];for(var x=-a+16;x<a-4;x+=16)o.push(B(x-0.4,x+0.4,b,b+0.4,8,h-4,M(0xc4b59e)));return o;}
+var hb=onWall(6,0,164,7);item(hb.x,hb.z,hb.rot,headboard(164,7,120));
+var dk=onWall(2,152,120,60);item(dk.x,dk.z,dk.rot,desk(120,60));
+var ch=onWall(2,152,120,150);item(ch.x,ch.z,ch.rot+180,chair());
+function chestP(w,d,h){var a=w/2,b=d/2,o=[B(-a,a,-b,b,0,h,DARK)];for(var j=1;j<5;j++)o.push(B(-a+1,a-1,b,b+0.6,h*j/5-0.6,h*j/5+0.6,M(0x4a2e1e)));for(var j=0;j<5;j++){var z=h*(j+0.5)/5;o.push(B(-2,2,b,b+2,z-1.5,z+1.5,KNOB));}
+ o.push({geo:new THREE.CylinderGeometry(7,8,22,18),m:M(0xe9e3d6),x0:-20,x1:-20,y0:0,y1:0,z0:h,z1:h+22},B(8,30,-10,10,h,h+4,M(0xb7a58b)));return o;}
+var cp=onWall(5,19,77,42);item(cp.x,cp.z,cp.rot,chestP(77,42,105));
+var rc=onWall(4,33,120,8);item(rc.x,rc.z,rc.rot,radiator(120));
+item(20,136,270,kitchen(109,40,72));
+var kx=onWall(2,1,147,39);item(kx.x,kx.z,kx.rot,kallax(147,39,77,4,2));
+(function(){var e=edge(6),g=walls[6],ang=-Math.atan2(e.uy,e.ux);
+ function put(m,s,z,off){m.position.set(e.a[0]+e.ux*s-e.nx*off,z,e.a[1]+e.uy*s-e.ny*off);m.rotation.y=ang;m.castShadow=true;g.add(m);}
+ var c=document.createElement('canvas');c.width=560;c.height=400;var x=c.getContext('2d');function R_(a,b){return a+Math.random()*(b-a);}
+ var gt=x.createLinearGradient(0,0,0,250);gt.addColorStop(0,'#ddd3c4');gt.addColorStop(1,'#d3cbbf');x.fillStyle=gt;x.fillRect(0,0,560,260);
+ for(var i=0;i<260;i++){x.fillStyle='rgba('+(Math.random()<0.5?'240,232,220':'200,188,172')+','+R_(0.05,0.15)+')';x.beginPath();x.ellipse(R_(0,560),R_(0,240),R_(20,70),R_(8,25),0,0,7);x.fill();}
+ for(var i=0;i<120;i++){x.fillStyle='rgba(176,190,160,'+R_(0.05,0.2)+')';x.fillRect(R_(0,560),R_(140,215),R_(10,50),R_(1,4));}
+ x.fillStyle='rgba(185,190,180,0.55)';x.fillRect(0,195,560,42);
+ for(var i=0;i<500;i++){var g_=Math.random();x.fillStyle=g_<0.4?'rgba(150,170,135,'+R_(0.2,0.5)+')':(g_<0.75?'rgba(205,205,195,'+R_(0.3,0.6)+')':'rgba(120,145,110,'+R_(0.2,0.45)+')');x.fillRect(R_(0,560),R_(190,240),R_(4,24),R_(1,5));}
+ x.strokeStyle='rgba(120,130,110,0.35)';x.lineWidth=0.7;for(var i=0;i<22;i++){var px=R_(20,540);x.beginPath();x.moveTo(px,R_(218,228));x.lineTo(px+R_(-2,2),R_(244,250));x.stroke();}
+ x.fillStyle='#ece8de';x.fillRect(0,247,560,6);for(var i=0;i<80;i++){x.fillStyle='rgba(250,248,240,'+R_(0.3,0.8)+')';x.fillRect(R_(0,560),R_(244,254),R_(6,30),R_(1,3));}
+ var gb=x.createLinearGradient(0,253,0,400);gb.addColorStop(0,'#93a183');gb.addColorStop(0.15,'#7e9270');gb.addColorStop(1,'#71865f');x.fillStyle=gb;x.fillRect(0,253,560,147);
+ for(var i=0;i<150;i++){x.fillStyle='rgba('+(Math.random()<0.5?'150,168,130':'95,115,80')+','+R_(0.08,0.25)+')';x.beginPath();x.ellipse(R_(0,560),R_(258,400),R_(15,60),R_(5,18),0,0,7);x.fill();}
+ for(var i=0;i<60;i++){x.fillStyle='rgba(170,180,160,'+R_(0.2,0.5)+')';x.fillRect(R_(0,560),R_(254,268),R_(8,40),R_(1,3));}
+ x.globalAlpha=0.035;for(var yy=0;yy<400;yy+=2){x.fillStyle=yy%4?'#fff':'#000';x.fillRect(0,yy,560,1);}for(var xx=0;xx<560;xx+=2){x.fillStyle=xx%4?'#fff':'#000';x.fillRect(xx,0,1,400);}x.globalAlpha=1;
+ var W=120,Hh=86,z0=138,sC=82;
+ put(new THREE.Mesh(new THREE.BoxGeometry(W,Hh,4),M(0xdccdb6)),sC,z0+Hh/2,2);
+ put(new THREE.Mesh(new THREE.PlaneGeometry(W-0.4,Hh-0.4),new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(c),roughness:1})),sC,z0+Hh/2,4.05);
+ var BR=M(0x9c8459,{r:0.35});put(new THREE.Mesh(new THREE.BoxGeometry(92,3,4),BR),sC,z0+Hh+9,12);put(new THREE.Mesh(new THREE.BoxGeometry(2,2,11),BR),sC,z0+Hh+8,5.5);put(new THREE.Mesh(new THREE.BoxGeometry(8,8,1.5),BR),sC,z0+Hh+8,0.75);
+ var gl=new THREE.Mesh(new THREE.BoxGeometry(88,0.6,2.5),new THREE.MeshBasicMaterial({color:0xfff2cc}));put(gl,sC,z0+Hh+7.3,12);
+ var sp=new THREE.SpotLight(0xffe2b0,0.6,180,0.9,0.7,1);var pp=[e.a[0]+e.ux*sC-e.nx*14,z0+Hh+6,e.a[1]+e.uy*sC-e.ny*14];sp.position.set(pp[0],pp[1],pp[2]);
+ sp.target.position.set(e.a[0]+e.ux*sC-e.nx*2,z0+Hh*0.35,e.a[1]+e.uy*sC-e.ny*2);g.add(sp);g.add(sp.target);})();
+var V={'3d':[C.x-680,600,C.z-180],'top':[C.x,3200,C.z+0.01],'door':[50,150,345],'hall':[88,165,350],'desk':[250,165,590],'bed':[330,150,470]};
+VIEWS['guestC']=function(k){var p=V[k];cam.position.set(p[0],p[1],p[2]);cam.fov=k==='top'?13:((k==='door'||k==='desk'||k==='hall'||k==='bed')?66:40);cam.updateProjectionMatrix();if(k==='door'){ctl.target.set(260,60,490);}else if(k==='hall'){ctl.target.set(0,70,170);}else if(k==='desk'){ctl.target.set(240,70,365);}else if(k==='bed'){ctl.target.set(0,90,530);}else{ctl.target.set(C.x,k==='top'?0:40,C.z);};ctl.update();};
+VIEWS['guestC']('3d');
+function size(){var w=wrap.clientWidth,h=wrap.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+new ResizeObserver(size).observe(wrap);size();
+var tmp=new THREE.Vector3();
+(function loop(){requestAnimationFrame(loop);if(!wrap.offsetParent)return;ctl.update();
+ walls.forEach(function(g){var u=g.userData;var vx=cam.position.x-u.mx,vz=cam.position.z-u.mz;var outside=(vx*u.nx+vz*u.nz)>0;g.visible=cam.position.y>1500||!outside;});
+ R.render(S,cam);})();
+})();
+
+</script>
+<script>function zSync(){Object.keys(CTRL).forEach(function(r){var o=CTRL[r],z=document.querySelector('.zoom[data-r="'+r+'"]');if(!z||!z.offsetParent||z._drag)return;var d=o.cam.position.distanceTo(o.ctl.target),mn=o.ctl.minDistance,mx=o.ctl.maxDistance,v=Math.round(100*(1-Math.log(d/mn)/Math.log(mx/mn)));v=Math.max(0,Math.min(100,v));var inp=z.querySelector('input');if(+inp.value!==v)inp.value=v;z.querySelector('.zv').textContent=v+'%';});requestAnimationFrame(zSync);}
+function zSet(r,v){var o=CTRL[r];if(!o)return;v=Math.max(0,Math.min(100,v));var mn=o.ctl.minDistance,mx=o.ctl.maxDistance,d=mn*Math.pow(mx/mn,1-v/100),dir=o.cam.position.clone().sub(o.ctl.target).normalize();o.cam.position.copy(o.ctl.target).add(dir.multiplyScalar(d));o.ctl.update();}
+document.querySelectorAll('.zoom').forEach(function(z){var r=z.dataset.r,inp=z.querySelector('input');
+ inp.addEventListener('input',function(){z._drag=true;zSet(r,+inp.value);z.querySelector('.zv').textContent=inp.value+'%';});
+ inp.addEventListener('change',function(){z._drag=false;});['pointerup','touchend'].forEach(function(ev){inp.addEventListener(ev,function(){z._drag=false;});});
+ z.querySelectorAll('.zb').forEach(function(b){b.onclick=function(){zSet(r,+inp.value+8*(+b.dataset.d));};});});
+requestAnimationFrame(zSync);</script>
+</body></html>
